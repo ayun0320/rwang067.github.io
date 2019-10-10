@@ -11,7 +11,7 @@
 
     <title>
         
-        Hexo部署错误 - Rui&#39;s Blog
+        IMM(SAN) Journal扩展 -- TKDE - Rui&#39;s Blog
         
     </title>
 
@@ -89,7 +89,7 @@
     </div>
     
         <div id="toc" class="toc-article">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hexo部署错误"><span class="toc-text">Hexo部署错误</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尝试过的方法"><span class="toc-text">尝试过的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最终解决方案"><span class="toc-text">最终解决方案</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#IMM-SAN-Journal扩展-—-TKDE"><span class="toc-text">IMM(SAN) Journal扩展 — TKDE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#会议版本论文大纲"><span class="toc-text">会议版本论文大纲</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Journal扩展点"><span class="toc-text">Journal扩展点</span></a></li></ol></li></ol>
 </div>
     
 </div>
@@ -120,23 +120,11 @@
 
 <div class="post-container">
     <div class="post-title">
-        Hexo部署错误
+        IMM(SAN) Journal扩展 -- TKDE
     </div>
 
     <div class="post-meta">
-        <span class="attr">发布于：<span>2019-10-09 22:15:07</span></span>
-        
-        <span class="attr">标签：/
-        
-        <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
-        <span>/</span>
-        
-        <a class="tag" href="/tags/#github" title="github">github</a>
-        <span>/</span>
-        
-        <a class="tag" href="/tags/#ssh" title="ssh">ssh</a>
-        <span>/</span>
-        
+        <span class="attr">发布于：<span>2019-10-10 08:53:09</span></span>
         
         </span>
         <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
@@ -144,33 +132,20 @@
 </span>
     </div>
     <div class="post-content ">
-        <h2 id="Hexo部署错误"><a href="#Hexo部署错误" class="headerlink" title="Hexo部署错误"></a>Hexo部署错误</h2><p>生成和本地测试都能通过</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
-
-<p>但是部署时出错</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
-
-<p>错误提示如下：</p>
-<blockquote>
-<p>…</p>
-<p>Connection reset by 13.250.177.223 port 22</p>
-<p>fatal: Could not read from remote repository. &emsp;</p>
-<p>Please make sure you have the correct access rights and the repository exists.</p>
-<p>FATAL Something’s wrong. Maybe you can find the solution here: <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">https://hexo.io/docs/troubleshooting.html</a></p>
-<p>Error: Spawn failed</p>
-<p>…</p>
-</blockquote>
-<p>搜索相关信息发现应该是GitHub中SSH没有连接上，测试ssh连接GitHub</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
-<p>连接不成功：</p>
-<blockquote>
-<p>Connection reset by 13.229.188.59 port 22</p>
-</blockquote>
-<h2 id="尝试过的方法"><a href="#尝试过的方法" class="headerlink" title="尝试过的方法"></a>尝试过的方法</h2><p><em>新建SSH KEY</em></p>
-<p><em>设置防火墙</em></p>
-<p>都还是不行。</p>
-<h2 id="最终解决方案"><a href="#最终解决方案" class="headerlink" title="最终解决方案"></a>最终解决方案</h2><p><strong>校园网网络通端口号切换到1号口</strong></p>
+        <p>这篇工作开始发表于<a href="https://link.springer.com/content/pdf/10.1007%2F978-3-319-55699-4_20.pdf" target="_blank" rel="noopener">DASFAA 2017</a>.</p>
+<ul>
+<li>Pengpeng Zhao, Yongkun Li*, Hong Xie, Zhiyong Wu, Yinlong Xu, John C. S. Lui. “Measuring and Maximizing Influence via Random Walk in Social Activity Networks.”The 22nd International Conference on Database Systems for Advanced Applications (DASFAA 2017), Suzhou, China, March 2017.</li>
+</ul>
+<h2 id="IMM-SAN-Journal扩展-—-TKDE"><a href="#IMM-SAN-Journal扩展-—-TKDE" class="headerlink" title="IMM(SAN) Journal扩展 — TKDE"></a>IMM(SAN) Journal扩展 — TKDE</h2><h3 id="会议版本论文大纲"><a href="#会议版本论文大纲" class="headerlink" title="会议版本论文大纲"></a>会议版本论文大纲</h3><p>1.<strong>用户活动网络图（SAN），</strong>考虑在线社交网络图（OSN）中用户社交活动的影响，比如对同一个产品的点赞、评论等，基于此提出用户活动网络图（SAN），并提出一种“超图”的概念来表示SAN， 其中一条t型的“超边”连接多个用户，代表这几个用户都参与某种t型活动，比如都对某产品点赞或评高分。</p>
+<p>2.<strong>基于RW的影响力中心性，</strong>考虑SAN场景下的影响力最大化问题（IMP(SAN)），采用基于Random Walk的方式来近似估算SAN中大小为k的种子节点集S的影响力，定义为影响力中心性（influence centrality），估算在超图中从每个节点出发进行大量random walks，其中能到达种子节点集S的击中概率（decayed hitting probability）。</p>
+<p>3.<strong>贪心算法计算IMP(SAN)，</strong>为计算SAN中的影响力最大化问题（IMP(SAN)），本文采用Monte Carlo框架来估算SAN中的影响力中心性，并提出一种贪心的迭代算法，每一轮选出一个能够带来最大影响力增量的节点，加入到种子节点集S中，具体实现：每一轮，计算每个节点u能够带来的影响力增量，在超图中每个节点出发进行R条L步的random walks，计算这些walks能够访问到<script type="math/tex">S\cup{u}</script>的hitting probability。时间复杂度为<script type="math/tex">\omicron(kn^2RL)</script>。</p>
+<p>4.<strong>算法优化1——并行计算，</strong>每一轮，计算图中每个节点的影响力增量都需要从全图每个节点出发R条L步的random walks，其实这些walk可以共用，即一次性从全图每个节点出发R条L步的random walks，同时计算图中每个节点带来的影响力增量，这样可以将时间复杂度优化到<script type="math/tex">\omicron(knRL)</script>。</p>
+<p>5.<strong>算法优化2——walk复用，</strong>每一轮都需要从全图每个节点出发R条L步的random walks，同时计算图中每个节点带来的影响力增量，其实第一轮轮的walk信息可以一直被复用到下一轮中，这样可以将时间复杂度优化到<script type="math/tex">\omicron(nRL)</script>，这其中会带来walk更新的问题，详细参加paper 5.2。</p>
+<p>6.<strong>实验对比，</strong>本文在三个真实世界的数据集上对比了加入用户活动后带来的在独立级联模型（independent cascade model，IC）的影响力传播模型下影响力的增长，以及对比最新的OSN上的影响力最大化问题的最新算法IMM在不同用户活动权重和不同种子节点集大小的配置下效率的改进和能带来的影响力传播。</p>
+<h3 id="Journal扩展点"><a href="#Journal扩展点" class="headerlink" title="Journal扩展点"></a>Journal扩展点</h3><p>1.<strong>从无权图扩展到加权图，</strong></p>
+<p>2.<strong>增加LT模型下的影响力传播,</strong></p>
+<p>3.<strong>实验增加到5个数据集,</strong></p>
+<p>4.<strong>增加一组多种用户和活动类型的实验,</strong></p>
 
         
             <div class="donate-container">
