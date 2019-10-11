@@ -146,10 +146,8 @@
     <div class="post-content ">
         <h2 id="Hexo部署错误"><a href="#Hexo部署错误" class="headerlink" title="Hexo部署错误"></a>Hexo部署错误</h2><p>生成和本地测试都能通过</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g</span><br><span class="line">$ hexo s</span><br></pre></td></tr></table></figure>
-
 <p>但是部署时出错</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
-
 <p>错误提示如下：</p>
 <blockquote>
 <p>…</p>
@@ -162,7 +160,6 @@
 </blockquote>
 <p>搜索相关信息发现应该是GitHub中SSH没有连接上，测试ssh连接GitHub</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
-
 <p>连接不成功：</p>
 <blockquote>
 <p>Connection reset by 13.229.188.59 port 22</p>
@@ -232,10 +229,13 @@
     <p>
         <span>/</span>
         
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
         <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
         <span>/</span>
         
-        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Page</a></span>
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
         <span>/</span>
         
         <span><a href="https://imsun.net/posts/gitment-introduction/">Gitment Comments</a></span>
@@ -256,6 +256,22 @@
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 
 <script>

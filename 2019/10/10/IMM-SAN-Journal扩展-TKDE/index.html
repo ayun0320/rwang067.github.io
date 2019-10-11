@@ -142,10 +142,9 @@
 <p>4.<strong>算法优化1——并行计算，</strong>每一轮，计算图中每个节点的影响力增量都需要从全图每个节点出发R条L步的random walks，其实这些walk可以共用，即一次性从全图每个节点出发R条L步的random walks，同时计算图中每个节点带来的影响力增量，这样可以将时间复杂度优化到<script type="math/tex">\omicron(knRL)</script>。</p>
 <p>5.<strong>算法优化2——walk复用，</strong>每一轮都需要从全图每个节点出发R条L步的random walks，同时计算图中每个节点带来的影响力增量，其实第一轮轮的walk信息可以一直被复用到下一轮中，这样可以将时间复杂度优化到<script type="math/tex">\omicron(nRL)</script>，这其中会带来walk更新的问题，详细参加paper 5.2。</p>
 <p>6.<strong>实验对比，</strong>本文在三个真实世界的数据集上对比了加入用户活动后带来的在独立级联模型（independent cascade model，IC）的影响力传播模型下影响力的增长，以及对比最新的OSN上的影响力最大化问题的最新算法IMM在不同用户活动权重和不同种子节点集大小的配置下效率的改进和能带来的影响力传播。</p>
-<h3 id="Journal扩展点"><a href="#Journal扩展点" class="headerlink" title="Journal扩展点"></a>Journal扩展点</h3><p>1.<strong>从无权图扩展到加权图，</strong></p>
-<p>2.<strong>增加LT模型下的影响力传播,</strong></p>
-<p>3.<strong>实验增加到5个数据集,</strong></p>
-<p>4.<strong>增加一组多种用户和活动类型的实验,</strong></p>
+<h3 id="Journal扩展点"><a href="#Journal扩展点" class="headerlink" title="Journal扩展点"></a>Journal扩展点</h3><p>1.<strong>从无权图扩展到加权图，</strong> (1)加权图的应用场景，（2）在加权图上的RW需求，（3）加权图上进行一步RW转发的执行过程，（4）时间复杂度分析，（5）利用二分查找优化加权图上的RW过程以及优化后的时间复杂度。实验章节添加从无权图生成加权图的过程。</p>
+<p>2.<strong>增加LT模型下的影响力传播,</strong> 6.4 添加对LT模型的介绍以及在LT模型下的实验。</p>
+<p>3.<strong>增加一组多种用户和活动类型的实验,</strong>（1）一种用户一种活动，（2）两种用户一种活动，（3）一种用户两种活动。6.4 添加上述三种场景下的实验结果。</p>
 
         
             <div class="donate-container">
@@ -207,10 +206,13 @@
     <p>
         <span>/</span>
         
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
         <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
         <span>/</span>
         
-        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Page</a></span>
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
         <span>/</span>
         
         <span><a href="https://imsun.net/posts/gitment-introduction/">Gitment Comments</a></span>
@@ -231,6 +233,22 @@
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 
 <script>

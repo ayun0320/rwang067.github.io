@@ -113,39 +113,18 @@
         <!-- Main Content -->
         <div id='tag_cloud' class="tags">
     
-    <a href="#testTag" title="testTag" rel="1">testTag</a>
-    
     <a href="#hexo" title="hexo" rel="2">hexo</a>
     
     <a href="#github" title="github" rel="1">github</a>
     
     <a href="#ssh" title="ssh" rel="1">ssh</a>
     
+    <a href="#testTag" title="testTag" rel="1">testTag</a>
+    
 </div>
 
 <!-- 标签列表 -->
 
-
-<div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="testTag">
-                    <span class="tag-text">testTag</span>
-                </span>
-    
-    <!-- <li class="listing-item">
-    <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-    <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-    </li> -->
-    <div class="post-preview">
-        <a href="/2019/10/08/test-blog/">
-            <h2 class="post-title">
-                Test Blog
-            </h2>
-            
-        </a>
-        <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-    </div>
-    
-</div>
 
 <div class="one-tag-list">
                 <span class="fa fa-tag listing-seperator" id="hexo">
@@ -157,9 +136,9 @@
     <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
     </li> -->
     <div class="post-preview">
-        <a href="/2019/10/09/Hexo部署错误/">
+        <a href="/2019/10/10/Hexo的配置和使用/">
             <h2 class="post-title">
-                Hexo部署错误
+                Hexo的配置和使用
             </h2>
             
         </a>
@@ -171,9 +150,9 @@
     <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
     </li> -->
     <div class="post-preview">
-        <a href="/2019/10/10/Hexo的配置和使用/">
+        <a href="/2019/10/09/Hexo部署错误/">
             <h2 class="post-title">
-                Hexo的配置和使用
+                Hexo部署错误
             </h2>
             
         </a>
@@ -224,6 +203,27 @@
     
 </div>
 
+<div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="testTag">
+                    <span class="tag-text">testTag</span>
+                </span>
+    
+    <!-- <li class="listing-item">
+    <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+    <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+    </li> -->
+    <div class="post-preview">
+        <a href="/2019/10/08/test-blog/">
+            <h2 class="post-title">
+                Test Blog
+            </h2>
+            
+        </a>
+        <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+    </div>
+    
+</div>
+
 
     </div>
 </div>
@@ -263,10 +263,13 @@
     <p>
         <span>/</span>
         
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
         <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
         <span>/</span>
         
-        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Page</a></span>
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
         <span>/</span>
         
         <span><a href="https://imsun.net/posts/gitment-introduction/">Gitment Comments</a></span>
@@ -287,6 +290,22 @@
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 
 <script>
