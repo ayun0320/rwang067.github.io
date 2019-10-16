@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rui Wang&#39;s blog">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        ASAP(OSDI 2018) 分布式图模式挖掘系统 - Rui&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 热爱学习，热爱生活 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar radius">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Rui Wang</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#图模式挖掘研究现状"><span class="toc-text">图模式挖掘研究现状</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#图处理算法："><span class="toc-text">图处理算法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#现有图模式挖掘算法"><span class="toc-text">现有图模式挖掘算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#精确计算"><span class="toc-text">精确计算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#采样近似计算"><span class="toc-text">采样近似计算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#邻居采样"><span class="toc-text">邻居采样</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#依然存在的挑战"><span class="toc-text">依然存在的挑战</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ASAP中的近似模式挖掘"><span class="toc-text">ASAP中的近似模式挖掘</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#扩展到通用模式"><span class="toc-text">扩展到通用模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#通用模式分析"><span class="toc-text">通用模式分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编程接口"><span class="toc-text">编程接口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#应用到分布式场景"><span class="toc-text">应用到分布式场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#属性图中的模式挖掘"><span class="toc-text">属性图中的模式挖掘</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Predicate-Matching"><span class="toc-text">Predicate Matching</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Motif-mining"><span class="toc-text">Motif mining</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#精炼准确度"><span class="toc-text">精炼准确度</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#误差延迟配置"><span class="toc-text">误差延迟配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验"><span class="toc-text">实验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实验设置"><span class="toc-text">实验设置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实现"><span class="toc-text">实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据集和对比系统"><span class="toc-text">数据集和对比系统</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对比实验"><span class="toc-text">对比实验</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关工作"><span class="toc-text">相关工作</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 热爱学习，热爱生活 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        ASAP(OSDI 2018) 分布式图模式挖掘系统
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2019-10-15 09:18:39</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#distribute graph processing system" title="distribute graph processing system">distribute graph processing system</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#graph pattern mining" title="graph pattern mining">graph pattern mining</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p>ASAP: Fast, Approximate Graph Pattern Mining at Scale. Anand Padmanabha Iyer, Zaoxing, Xin Jin, Shivaram Venkataraman, Vladimir Braverman and Ion Stoica, OSDI 2018. <a href="https://www.usenix.org/conference/osdi18/presentation/iyer" target="_blank" rel="noopener">presentation</a> <a href="https://www.cs.jhu.edu/~xinjin/files/OSDI18_ASAP.pdf" target="_blank" rel="noopener">paper</a><br><!-- [PPT](https://www.usenix.org/sites/default/files/conference/protected-files/osdi18_slides_iyer.pdf) --></p>
+<h2 id="图模式挖掘研究现状"><a href="#图模式挖掘研究现状" class="headerlink" title="图模式挖掘研究现状"></a>图模式挖掘研究现状</h2><h3 id="图处理算法："><a href="#图处理算法：" class="headerlink" title="图处理算法："></a>图处理算法：</h3><p>现有图处理算法可大致分为两类：<br>（1）<em>图分析算法</em>，e.g. PageRank，社区检测，标签传播。<br>（2）<em>图模式挖掘算法</em>，e.g. 图形计数（motif counting），频繁子图挖掘（frequent sub-graph mining, FSM），团挖掘（clique mining）。图模式挖掘算法常应用于社交网络中的图元（graphlet）相似性检测，信用卡诈骗侦测等。</p>
+<p>现有的图处理系统大多针对图分析算法优化计算，这些系统框架在计算<em>图分析算法</em>时，速度很快，并且可以扩展到处理非常大的图数据（e.g. GraM [59] can run one iteration of page rank on a trillionedge graph in 140 seconds in a cluster.）。但是这些系统在计算<em>图模式挖掘算法</em>时却很慢，在一个中等大小的图上挖掘简单的模式都需要几个小时。</p>
+<h3 id="现有图模式挖掘算法"><a href="#现有图模式挖掘算法" class="headerlink" title="现有图模式挖掘算法"></a>现有图模式挖掘算法</h3><h4 id="精确计算"><a href="#精确计算" class="headerlink" title="精确计算"></a>精确计算</h4><p>模式挖掘算法中最常用的方法是，从最简单的图模式开始，迭代遍历图中所有可能的<em>嵌入组合（embeddings）</em>，检查所有候选的<em>组合嵌入</em>，依次修剪掉不能形成最终图模式的<em>组合嵌入</em>。<br>这个<em>图模式挖掘算法</em>的复杂度很大，而且产生的<em>中间候选集</em>的大小随着图的规模呈指数增长（1M个节点的图可能就会包含<script type="math/tex">10^{17}</script>个三角形）。即使在分布式计算中，也需要很大开销来执行<strong>join</strong>来创建和管理这些<em>中间候选集</em>。<a href="http://delivery.acm.org/10.1145/2820000/2815410/p425-teixeira.pdf?ip=222.195.68.252&amp;id=2815410&amp;acc=OPENTOC&amp;key=BF85BBA5741FDC6E%2EA4F9C023AC60E700%2E4D4702B0C3E38B35%2E9F04A3A78F7D3B8D&amp;__acm__=1571129497_d7c2b24f90623254ad2b1c0e79d31eb2" target="_blank" rel="noopener">Arabesque(SOSP 2015)</a>针对这个问题，优化了分布式场景下这些<em>中间候选集</em>的存储。但是即使经过这些优化，Arabesque依然没有能力处理大规模的图，因为需要<em>具体化候选集</em>和<em>不断在机器间交互候选集数据</em>。Arabesque在一个由20个256GB内存的机器组成的分布式集群中，统计一个1B个节点的图中的<em>3节点图模式</em>，依然需要10个小时。</p>
+<h4 id="采样近似计算"><a href="#采样近似计算" class="headerlink" title="采样近似计算"></a>采样近似计算</h4><p>在很多模式挖掘应用中，经常并不需要精确的答案。比如FSM通常只需要输出频繁访问子图出现次数的顺序，图形计数（motif counting）也只需要输出一个指定图形出现的次数。在这些场景下，给出一个近似的答案就已足够。</p>
+<p>大数据分析场景下的近似分析已经引起一些关注，这些近似系统的基本思想是：在一小部分抽象的样本数据上执行精确的算法，并根据统计特性进行误差分析。这些系统的一个基础假设是：可以算法的准确性可以由样本的大小决定，并且计算的误差可以推导。</p>
+<p>但是，这种假设应用到<em>图模式挖掘算法</em>时并不成立。作者通过实验发现，通过减少样本的大小，计算误差和运行效率之间并没有明显的关系，而且即使样本数量设置很大，依然会有很大的计算误差，例如50%的边抽样就会带来大概80%计算误差（详细参见paper中的Figure 1）。</p>
+<h4 id="邻居采样"><a href="#邻居采样" class="headerlink" title="邻居采样"></a>邻居采样</h4><p>现有的图计算理论中，已经有一些针对特定图模式的近似技术。比如要统计图中三角形的个数，可以从图中随机抽样三条边，看这三条边是否能构成一个三角形，是的话估计值就是<script type="math/tex">m^3</script>，其中m是图的总边数，否则估计值就是0，通过大量抽样就可以计算平均估计值。这种采样计数理论上确实能达到无偏估计，但是由于m在实际中是很大的，所以随机抽样三条边能构成三角形的概率很小，所以这种采样技术计算的方差非常大，想要达到比较高的近似计算的准确度，需要非常多的抽样估计，从而带来很大的计算和内存开销。</p>
+<p><a href="http://www.doc88.com/p-3734516936384.html" target="_blank" rel="noopener">邻居采样（Neighborhood sampling, VLDB 2013）</a>是最近提出的一种针对<em>三角形计数（triangle counting）</em>的近似计算方案。它的基本思想是（边数据以流的形式输入）：</p>
+<p>（1）首先从全图随机采样一条边<script type="math/tex">l_0</script>，采样概率是<script type="math/tex">Pr(l_0)=1/m</script>；</p>
+<p>（2）均匀的从<script type="math/tex">l_0</script>的邻居边中采样第二条边<script type="math/tex">l_1</script>，边数据流中，<script type="math/tex">l_1</script>在<script type="math/tex">l_0</script>的后面，采样概率是<script type="math/tex">Pr(l_1|l_0)=1/c</script>，c为边数据流中出现在<script type="math/tex">l_0</script>后面的<script type="math/tex">l_0</script>的边邻居数；</p>
+<p>（3）在边数据流的<script type="math/tex">l_1</script>的后面所有边中，找到一条能与<script type="math/tex">l_0</script>和<script type="math/tex">l_1</script>构成一个三角形的边<script type="math/tex">l_2</script>，如果能找到，则这个三角形被采样到的概率是<script type="math/tex">Pr(l_0 \cap l_1 \cap l_2)=1/mc</script>。</p>
+<p>上述过程称为一次采样尝试，如果成功采样到一个三角形，则设这次采样计算的图中三角形的个数的估计值为<script type="math/tex">e_i=mc</script>，否则为0。多次采样，计算平均值（paper中的Figure 2展示了一个五节点完全图的例子）。</p>
+<h4 id="依然存在的挑战"><a href="#依然存在的挑战" class="headerlink" title="依然存在的挑战"></a>依然存在的挑战</h4><p>1.邻居采样算法只针对一种特定的图模式（三角形），需要扩展到通用的邻居采样方法，使之也能采样其他模式。</p>
+<p>2.邻居采样算法是假定图存放在单机的基础上，想要进行大规模的图模式挖掘，需要扩展到分布式图处理。</p>
+<p>3.邻居采样算法没有考虑到<em>属性图</em>，而现实生活的图模式挖掘通常是针对<em>属性图</em>，即节点和边都有类型和属性，因为通常需要<em>谓词匹配</em>。</p>
+<p>4.需要允许终端用户进行<em>准确性</em>和<em>延迟</em>之间的权衡。</p>
+<h2 id="ASAP中的近似模式挖掘"><a href="#ASAP中的近似模式挖掘" class="headerlink" title="ASAP中的近似模式挖掘"></a>ASAP中的近似模式挖掘</h2><p>ASAP(A Swift Approximate Pattern-miner)是一个快速、可扩展的分布式近似图模式挖掘系统（paper中的Figure 3展示了ASAP的系统架构）。</p>
+<h3 id="扩展到通用模式"><a href="#扩展到通用模式" class="headerlink" title="扩展到通用模式"></a>扩展到通用模式</h3><p>ASAP推广邻居采样算法到通用的图模式，由两个阶段组成：</p>
+<p>（1）采样阶段，在有序的边流中依次采样几条边，分别统计采样概率。</p>
+<p>（2）闭合阶段，等待剩下的一条或多条边来构成一个完整的图模式，如果能成功构成，则计算采样到完整图模型的概率，进而计算估计值，否则估计值为0.</p>
+<p>对于大于三节点的图模式，有多种采样构成完整图模式的方式，采样概率取决于开发者选择的采样阶段形成的初始模式（paper中的Figure 4展示了采样4-cliques的两种方式）。</p>
+<h4 id="通用模式分析"><a href="#通用模式分析" class="headerlink" title="通用模式分析"></a>通用模式分析</h4><p>设<script type="math/tex">p*</script>为一个<script type="math/tex">k</script>-节点的图模式，<script type="math/tex">p*</script>的抽样概率取决于<script type="math/tex">k</script>和用邻居采样技术采样图模式的不同方式。</p>
+<ul>
+<li><p>当<script type="math/tex">k=2</script>, <script type="math/tex">Pr(p=p*,k=2)=1/m</script>。</p>
+</li>
+<li><p>当<script type="math/tex">k=3</script>, <script type="math/tex">Pr(p=p*,k=3)=1/m \cdot c_1</script>。</p>
+</li>
+<li><p>当<script type="math/tex">k=4</script>, <script type="math/tex">Pr(p=p*,k=4)=1/m^2</script>(type 1)<br><script type="math/tex">\quad \quad \quad</script> or <script type="math/tex">\quad Pr(p=p*,k=4)=1/m \cdot c_1 \cdot c_2</script>(type 2)。</p>
+</li>
+<li><p>当<script type="math/tex">k=5</script>, <script type="math/tex">Pr(p=p*,k=5)=1/m^2 \cdot c_1</script>(type 1)<br><script type="math/tex">\quad \quad \quad</script> or <script type="math/tex">\quad Pr(p=p*,k=5)=1/m^2 \cdot c_2</script>(type 2)<br><script type="math/tex">\quad \quad \quad</script> or <script type="math/tex">\quad Pr(p=p*,k=5)=1/m \cdot c_1 \cdot c_2 \cdot c_3</script>(type 3)</p>
+</li>
+</ul>
+<h4 id="编程接口"><a href="#编程接口" class="headerlink" title="编程接口"></a>编程接口</h4><ul>
+<li><p>SampleVertex</p>
+</li>
+<li><p>SampleEdge</p>
+</li>
+<li><p>ConditionalSampleVertex</p>
+</li>
+<li><p>ConditionalSampleEdge(subgraph)</p>
+</li>
+<li><p>ConditionalClose(subgraph, subgraph)</p>
+</li>
+</ul>
+<h3 id="应用到分布式场景"><a href="#应用到分布式场景" class="headerlink" title="应用到分布式场景"></a>应用到分布式场景</h3><p>ASAP通过2步，将上述图模式挖掘过程扩展到分布式场景：</p>
+<p>（1）<strong>并行化采样过程</strong>，由于采样过程中的边数据流没有排序的要求，所以ASAP随机均匀划分节点，使得各个机器上的节点数和边数都尽量均匀。计算时，在多个机器上执行估算任务的多个副本，然后聚合计算结果。</p>
+<p>（2）<strong>结合各个机器上的输出结果，修正误差</strong>，由于在分布式集群上计算时，机器之间的边没有办法采样到，所以会导致计算误差。ASAP通过分析误差损失，加权求和纠正误差：<script type="math/tex">c=f(w)\sum^{w-1}_{i=0}{c_i}</script>，其中<script type="math/tex">w</script>为机器个数，<script type="math/tex">f(w)</script>为纠正权重。以<em>三角形计数</em>为例，在全图采样到的所有三角形的三个节点都在同一个机器上的概率是<script type="math/tex">1/w^2</script>，所以统计三角形个数时，<script type="math/tex">f(w)=w^2</script>。类似的，统计4-clique时，<script type="math/tex">f(w)=w^3</script>。</p>
+<h3 id="属性图中的模式挖掘"><a href="#属性图中的模式挖掘" class="headerlink" title="属性图中的模式挖掘"></a>属性图中的模式挖掘</h3><h4 id="Predicate-Matching"><a href="#Predicate-Matching" class="headerlink" title="Predicate Matching"></a>Predicate Matching</h4><p>现实生活的图模式挖掘通常是针对<em>属性图</em>，因为需要匹配的模式满足一些<em>谓词</em>。例如，一个<em>谓词查询</em>任务可能会要求统计图中的4-clique，其中clique中每个节点都属于某种特定的类型。ASAP支持两种谓词类型：</p>
+<p>（1）<strong>all</strong> ，匹配的模式中<em>每个</em>节点和边都满足某个属性。<br>（2）<strong>atleast-one</strong>，匹配的模式中<em>至少有一个</em>节点和边都满足某个属性。</p>
+<h4 id="Motif-mining"><a href="#Motif-mining" class="headerlink" title="Motif mining"></a>Motif mining</h4><p>另一种查询模式是，查找某个特定节点数量的所有模式，称为<em> motif queries</em>。</p>
+<ul>
+<li><p>3-motif query有2种模式，链式和三角形。</p>
+</li>
+<li><p>4-motif query有6种模式。</p>
+</li>
+</ul>
+<p>其中，有几个模式会有相同的<em>基础构建块（underlying building block）</em>。针对这种情况，ASAP节省采样阶段<em>基础构建块</em>的构建。</p>
+<h4 id="精炼准确度"><a href="#精炼准确度" class="headerlink" title="精炼准确度"></a>精炼准确度</h4><p>有些对图数据的探索性分析场景，需要迭代地完善查询任务。针对这种场景，ASAP保留上一轮的抽样估计结果，在新一轮只需要补充差额。</p>
+<h3 id="误差延迟配置"><a href="#误差延迟配置" class="headerlink" title="误差延迟配置"></a>误差延迟配置</h3><p>ASAP提供了两种用户接口，允许用户在准确性和误差之间做权衡，进行误差延迟配置（Error-Latency Profile, ELP）。</p>
+<ul>
+<li><p>Building Estimator vs. Time Profile。用户指定一个时间预算<script type="math/tex">T</script>，ASAP返回一个时间<script type="math/tex">T</script>以内能计算出的最准确的答案，给出误差率保证<script type="math/tex">\epsilon</script>和可配置的自信等级（默认95%）。</p>
+</li>
+<li><p>Building Estimator vs. Error Profile。用户指定一个误差预算<script type="math/tex">\epsilon</script>，ASAP计算出能在最短时间内达到误差范围的答案。</p>
+</li>
+<li><p>ASAP也可以实现在动态图场景下快速重建ELP。</p>
+</li>
+</ul>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h3 id="实验设置"><a href="#实验设置" class="headerlink" title="实验设置"></a>实验设置</h3><h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>ASAP部署在Apache Spark上，使用了GraphX中图数据流操作的实现（只使用了简单的map和reduce操作）。ASAP可以实现于任何数据流引擎。</p>
+<h4 id="数据集和对比系统"><a href="#数据集和对比系统" class="headerlink" title="数据集和对比系统"></a>数据集和对比系统</h4><ul>
+<li><p>数据集：共使用了7个数据集，最大的为UK（106M个节点，3.7B个边）。</p>
+</li>
+<li><p>实验环境：16个Amazon EC2 r4.2xlarge的集群，每个机器有8个虚拟cpu和61GB内存。尽管图能放下一个机器的内存，但是产生的中间状态大大增大了计算的复杂度。</p>
+</li>
+<li><p>使用的模式和指标：3-motifs（2种模式），4-motifs（6种模式），4-cliques。</p>
+</li>
+<li><p>对比系统：Arabesque。</p>
+</li>
+</ul>
+<h3 id="对比实验"><a href="#对比实验" class="headerlink" title="对比实验"></a>对比实验</h3><p>（1）Overall Performance</p>
+<ul>
+<li><p>Comparison with Arabesque.</p>
+</li>
+<li><p>Scalability on Larger Graphs.</p>
+</li>
+</ul>
+<p>（2）Advanced Pattern Mining</p>
+<ul>
+<li><p>Motif mining.</p>
+</li>
+<li><p>Predicate Matching. </p>
+</li>
+</ul>
+<p>（3）Effectiveness of ELP Techniques</p>
+<ul>
+<li><p>Time Profile. </p>
+</li>
+<li><p>Error Profile. </p>
+</li>
+<li><p>Error rate Confidence. </p>
+</li>
+<li><p>ELP Building Time. </p>
+</li>
+</ul>
+<p>（4）Scaling ASAP on a Cluster</p>
+<p>（5）More Complex Patterns</p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><p>图处理系统</p>
+<p>图挖掘系统</p>
+<p>近似分析系统</p>
+<p>近似图算法</p>
+<!-- ## 思考
+思考：分布式图处理系统对网络方面有什么需求?
+
+* 缓存，现有的分布式图计算系统大多数采用*迭代式的计算模型*，一轮计算结束后，机器之间交互信息，然后进行下一轮计算。这一轮传输的信息中可能与上一轮中传输的数据有重合，所以可以考虑缓存？ -->
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+
+        
+        <li>
+            <a target="_blank"  href="mailto:wangrui1994@126.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3125304081">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/rwang067">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
+        <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
+        <span>/</span>
+        
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: 'ASAP(OSDI 2018) 分布式图模式挖掘系统',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+
+
+
+</html>

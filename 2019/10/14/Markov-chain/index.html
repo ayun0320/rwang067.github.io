@@ -11,7 +11,7 @@
 
     <title>
         
-        Rui&#39;s Blog
+        Markov chain - Rui&#39;s Blog
         
     </title>
 
@@ -53,7 +53,7 @@
     </div>
     <div class="contents" id="nav-content">
         <ul>
-            <li  class=active >
+            <li >
                 <a href="/">
                     <i class="iconfont icon-shouye1"></i>
                     <span>主页</span>
@@ -88,6 +88,10 @@
         </ul>
     </div>
     
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#马尔科夫链"><span class="toc-text">马尔科夫链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#马尔科夫链能收敛得到稳态分布的必要条件"><span class="toc-text">马尔科夫链能收敛得到稳态分布的必要条件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#随机性"><span class="toc-text">随机性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#不可约性"><span class="toc-text">不可约性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#稳态分布"><span class="toc-text">稳态分布</span></a></li></ol>
+</div>
+    
 </div>
 
 
@@ -112,164 +116,52 @@
     <div class="index-middle">
         <!-- Main Content -->
         
-<div class="post-preview-container" style="min-height: 576px">
-    
-    <div class="post-preview">
-        <div class="post-time">2019-10-15</div>
-        <div class="post-info">
-            <a href="/2019/10/15/ASAP(OSDI-2018)-分布式图模式挖掘系统/">
-                <h3>
-                    ASAP(OSDI 2018) 分布式图模式挖掘系统
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#distribute graph processing system" title="distribute graph processing system">distribute graph processing system</a>
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#graph pattern mining" title="graph pattern mining">graph pattern mining</a>
-                <span>/</span>
-                
-                
-            </p>
-        </div>
+
+
+<div class="post-container">
+    <div class="post-title">
+        Markov chain
     </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2019-10-14</div>
-        <div class="post-info">
-            <a href="/2019/10/14/Markov-chain/">
-                <h3>
-                    Markov chain
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#random walks" title="random walks">random walks</a>
-                <span>/</span>
-                
-                
-            </p>
-        </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2019-10-14 15:32:57</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#random walks" title="random walks">random walks</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
     </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2019-10-14</div>
-        <div class="post-info">
-            <a href="/2019/10/14/CNARW-Journal扩展/">
-                <h3>
-                    CNARW Journal扩展
-                </h3>
-            </a>
-            <p>
-                
-            </p>
-        </div>
+    <div class="post-content ">
+        <p>本文针对非数学专业出生的，对理论分析不熟悉的同学，从通俗的角度及图的立场解释马尔科夫过程和它的稳态分布。</p>
+<h3 id="马尔科夫链"><a href="#马尔科夫链" class="headerlink" title="马尔科夫链"></a>马尔科夫链</h3><h3 id="马尔科夫链能收敛得到稳态分布的必要条件"><a href="#马尔科夫链能收敛得到稳态分布的必要条件" class="headerlink" title="马尔科夫链能收敛得到稳态分布的必要条件"></a>马尔科夫链能收敛得到稳态分布的必要条件</h3><h4 id="随机性"><a href="#随机性" class="headerlink" title="随机性"></a>随机性</h4><h4 id="不可约性"><a href="#不可约性" class="headerlink" title="不可约性"></a>不可约性</h4><p>其实我们从不可约的英文单词irreducible的本意就可以知道他的含义，irreducible=ir+reducible=不+可减少的=不可减少的，不可简化的。<br>而不可约的数学定义是“如果从C 中任一状态出发经有限步转移到另一状态的概率都大于0,则称C为不可约闭集”，即如果全部状态转移概率均大于0，表示任意一种状态都可能转化到任意另外一种状态，即不存在多余的状态（可减少的状态），是的其它状态不能转换到此状态。如果存在这样的状态，它的一步转移概率应当为0.</p>
+<h3 id="稳态分布"><a href="#稳态分布" class="headerlink" title="稳态分布"></a>稳态分布</h3>
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
     </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2019-10-10</div>
-        <div class="post-info">
-            <a href="/2019/10/10/Hexo的配置和使用/">
-                <h3>
-                    Hexo的配置和使用
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
-                <span>/</span>
-                
-                
-            </p>
-        </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
     </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2019-10-10</div>
-        <div class="post-info">
-            <a href="/2019/10/10/IMM-SAN-Journal扩展-TKDE/">
-                <h3>
-                    IMM(SAN) Journal扩展 -- TKDE
-                </h3>
-            </a>
-            <p>
-                
-            </p>
-        </div>
-    </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2019-10-09</div>
-        <div class="post-info">
-            <a href="/2019/10/09/Hexo部署错误/">
-                <h3>
-                    Hexo部署错误
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#github" title="github">github</a>
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#ssh" title="ssh">ssh</a>
-                <span>/</span>
-                
-                
-            </p>
-        </div>
-    </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2019-10-08</div>
-        <div class="post-info">
-            <a href="/2019/10/08/test-blog/">
-                <h3>
-                    Test Blog
-                </h3>
-            </a>
-            <p>
-                
-                <span>/</span>
-                
-                <a class="tag" href="/tags/#testTag" title="testTag">testTag</a>
-                <span>/</span>
-                
-                
-            </p>
-        </div>
-    </div>
-    
-    <div class="post-preview">
-        <div class="post-time">2019-10-08</div>
-        <div class="post-info">
-            <a href="/2019/10/08/hello-world/">
-                <h3>
-                    Hello World
-                </h3>
-            </a>
-            <p>
-                
-            </p>
-        </div>
-    </div>
-    
 </div>
-<ul class="pager">
-    
-    
-</ul>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
 
     </div>
 </div>
@@ -366,11 +258,25 @@
     // We expose some of the variables needed by the front end
     window.hexo_search_path = "search.json"
     window.hexo_root = "/"
-    window.isPost = false
+    window.isPost = true
 </script>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="/js/index.js"></script>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: 'Markov chain',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
 
 
 
