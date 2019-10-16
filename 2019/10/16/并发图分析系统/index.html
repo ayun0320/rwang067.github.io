@@ -11,7 +11,7 @@
 
     <title>
         
-        About - Rui&#39;s Blog
+        并发图分析系统 - Rui&#39;s Blog
         
     </title>
 
@@ -71,7 +71,7 @@
                     <span>存档</span>
                 </a>
             </li>
-            <li  class=active >
+            <li >
                 <a href="/about/">
                     <i class="iconfont icon-guanyu2"></i>
                     <span>关于</span>
@@ -87,6 +87,10 @@
             
         </ul>
     </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#研究工作"><span class="toc-text">研究工作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CGraph"><span class="toc-text">CGraph</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DiGraph"><span class="toc-text">DiGraph</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FBSGraph"><span class="toc-text">FBSGraph</span></a></li></ol></li></ol>
+</div>
     
 </div>
 
@@ -112,53 +116,62 @@
     <div class="index-middle">
         <!-- Main Content -->
         
-<div class="post-content ">
-    <p>关于这个博客，关于建立它之初衷以及它所涵盖的内容。</p>
-<h3 id="搭建博客之初衷"><a href="#搭建博客之初衷" class="headerlink" title="搭建博客之初衷"></a>搭建博客之初衷</h3><p>一直以来想找一个平台用于归纳整理自己平时的学习笔记，我平时是习惯在纸质的笔记本上做一些记录，这样确实是很方便，不需要考虑排版，画图也随手一气呵成。但是在笔记本上记录有个最大的问题就是不方便查阅，很久以前的笔记更是很难再找到。</p>
-<p>后来也有用过一段时间的<a href="https://www.yinxiang.com/" target="_blank" rel="noopener">印象笔记</a>，身边也有很多人在用，习惯以后，它确实可以很有效的、系统的满足你各个方面的笔记需求，包括技术笔记，工作计划，旅游攻略，心得体会等。但是对我来说，却很难习惯，主要包括如下几个方面：</p>
-<ul>
-<li><p>界面不够美观，排版不方便（逼走强逼症患者的首要原因）。</p>
-</li>
-<li><p><em>笔记本分类 + 标签</em> 过于繁重，需要一个系统的规划。</p>
-</li>
-<li><p>分享不便。虽然印象笔记中有共享功能，但是是通过邮件发送副本的方式，用起来也不方便。</p>
-</li>
-</ul>
-<p>最后辗转到了博客，很久之前也就了解过，但是感觉搭建环境好像很复杂的样子，所以一直没下定决心去做。也考虑过直接使用一些已有的写博客的平台，比如<a href="https://blog.csdn.net/" target="_blank" rel="noopener">CSDN</a>, <a href="https://www.jianshu.com/" target="_blank" rel="noopener">简书</a>等。但想到自己作为计算机专业的学生，还是应该不怕麻烦，搭建自己的博客可以更自由的选择自己喜欢的风格和功能，不受平台的限制。而且实际做下来发现也没有想象中那么麻烦，<a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Page</a>支持 + <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>框架提供模板，具体的一套流程和使用事项参见<a href="https://rwang067.github.io/2019/10/10/Hexo%E7%9A%84%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8/" target="_blank" rel="noopener">Hexo的配置和使用</a>。</p>
-<p>另外，写博客有另一个直接的好处是可以作为我日后求职的一张名片，引用他人一篇博客<a href="https://www.cnblogs.com/jhzhu/p/3893297.html" target="_blank" rel="noopener">&lt;&lt;我为什么写博客&gt;&gt;</a>中的一句话，<strong>“我通过写博客来让自己更擅长归纳和抽象, 也通过写博客来让别人知道我能胜任某份工作.”</strong> 养成记录博客的习惯能让我们更好的认识自己，提升自己，展示自己，所以我选择。</p>
-<h3 id="涵盖哪些内容"><a href="#涵盖哪些内容" class="headerlink" title="涵盖哪些内容"></a>涵盖哪些内容</h3><p>本博客侧重于技术博客，主要是我学习科研过程中的一些知识整理和经验积累，包括但不限于：</p>
-<ul>
-<li><p>Paper reading分享;</p>
-</li>
-<li><p>Linux系统知识的积累，比如多线程，Page Cache等；</p>
-</li>
-<li><p>一些平台工具的使用，包括MATLAB，screen，印象笔记等;</p>
-</li>
-<li><p>对领域当前研究成果的复现（近年来的几个图处理系统），代码运行过程中的注意事项。</p>
-</li>
-<li><p>对自己研究领域（图计算系统）的认识理解；</p>
-</li>
-<li><p>科研过程中学到的经验，包括做PPT报告，paper writing等；</p>
-</li>
-<li><p>自己coding方面的注意事项。</p>
-</li>
-<li><p>偶然也会有一些读书笔记和其他方面的心得体会。</p>
-</li>
-</ul>
-<p>上述几点中前面几项是比较适合分享的，方便自己日后查阅，也可以给有需要的人提供一些参考。而后面偏向于对自己工作的认识理解，及自己的一些心得体会，可以让我更好的认识和表达自己。</p>
-<h3 id="激励语"><a href="#激励语" class="headerlink" title="激励语"></a>激励语</h3><p>好习惯是慢慢培养起来的，不要怕麻烦。虽然归纳整理的工作确实很花费时间，尤其是刚开始习惯养成的时候，但是只要坚持下去，我相信一切都值得。做一个积极向上的人，人间很值得，请热爱学习，热爱生活。</p>
-<h3 id="TODO-List"><a href="#TODO-List" class="headerlink" title="TODO List"></a>TODO List</h3><p>paper writing对比</p>
-<p>学期总结</p>
-<p>每个对比图系统确认git push了</p>
-<p>图系统的发展现状</p>
-<p>GraphWalker工作总结</p>
-<p>coding细节，PageCache等</p>
-<p>华科博后的工作报告 — 并发图处理 — 关注应用场景的考虑</p>
-<p>Wukong系列4篇</p>
-<p>……</p>
 
-    
-        <div class="donate-container">
+
+<div class="post-container">
+    <div class="post-title">
+        并发图分析系统
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2019-10-16 09:22:33</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#graph processing system" title="graph processing system">graph processing system</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#concurrent graph processing" title="concurrent graph processing">concurrent graph processing</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#paper reading" title="paper reading">paper reading</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p>并发图分析任务：大量的图算法并发的运行在同一平台上对底层同一个图数据进行处理，以对该图数据进行多方位的分析处理，获得各种目的性的分析结果。</p>
+<h3 id="研究工作"><a href="#研究工作" class="headerlink" title="研究工作"></a>研究工作</h3><p><a href="https://www.researchgate.net/scientific-contributions/57497079_Yu_Zhang" target="_blank" rel="noopener">Yu Zhang’s Research</a></p>
+<h4 id="CGraph"><a href="#CGraph" class="headerlink" title="CGraph"></a>CGraph</h4><p>基于关联性感知的并发图处理</p>
+<ol>
+<li><a href="https://www.usenix.org/conference/atc18/presentation/zhang-yu" target="_blank" rel="noopener">CGraph: A Correlations-aware Approach for Efficient Concurrent Iterative Graph Processing(ATC’18)</a></li>
+<li><a href="https://dl.acm.org/citation.cfm?doid=3326597.3319406" target="_blank" rel="noopener">CGraph: A Distributed Storage and Processing System for Concurrent Iterative Graph Analysis Jobs(TOS’19)</a></li>
+</ol>
+<p>并发图分析任务之间存在关联性。</p>
+<p>（1）空间关联性：多个并发图分析任务需要访问和处理的图数据存在大量的交集。</p>
+<p>（2）时间关联性:多个并发图分析任务可能需要同时访问同一个图划分块。</p>
+<p>但在此前的图处理系统中进行并发图分析任务时，各个任务对共享图数据的访问相互独立，互不感知。使得各个并发的图分析任务在计算时遇到内存墙（内存性能严重限制CPU）和缓存相互干扰的问题。</p>
+<p>这篇工作通过感知各个并发图分析任务之间的关联性，使得各个并发图分析任务之间能有效的共享数据和数据访问。</p>
+<h4 id="DiGraph"><a href="#DiGraph" class="headerlink" title="DiGraph"></a>DiGraph</h4><p>基于关联依赖的单任务图处理</p>
+<ul>
+<li><p><a href="https://dl.acm.org/citation.cfm?doid=3297858.3304029" target="_blank" rel="noopener">DiGraph: An Efficient Path-based Iterative Directed Graph Processing System on Multiple GPUs(ASPLOS’19)</a></p>
+</li>
+<li><p><a href="https://ieeexplore.ieee.org/document/8118091" target="_blank" rel="noopener">Efficient Disk-Based Directed Graph Processing: A Strongly Connected Component Approach(TPDS 2018)</a></p>
+</li>
+</ul>
+<p>同一个图分析任务的子任务（处理各图划分块的任务）之间也存在依赖关联性。<br>核心图顶点状态收敛所需要的更新次数决定了整个图收敛所需迭代次数。</p>
+<p>这篇工作在单个图分析任务场景下，通过感知图中顶点之间的依赖关联性特征进行图划分，使得各个图划分块之前的依赖关联性尽量符合全序关系，尝试使得未收敛的图划分块对已经收敛的图划分块影响最小化。另外通过加速核心顶点之间的状态传递，进一步加速全局的收敛速度。</p>
+<h4 id="FBSGraph"><a href="#FBSGraph" class="headerlink" title="FBSGraph"></a>FBSGraph</h4><p>基于路径的异步图处理</p>
+<ul>
+<li><a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8170287" target="_blank" rel="noopener">FBSGraph: Accelerating Asynchronous Graph Processing via Forward and Backward Sweeping(TKDE’18)</a></li>
+</ul>
+
+        
+            <div class="donate-container">
     <div class="donate-button">
         <button id="donate-button">赞赏</button>
     </div>
@@ -167,10 +180,15 @@
         <p> 感谢鼓励 </p>
     </div>
 </div>
-    
-    <div id="comment-container">
-    </div>
-    <div id="lv-container">
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
     </div>
 </div>
 
@@ -269,7 +287,7 @@
     // We expose some of the variables needed by the front end
     window.hexo_search_path = "search.json"
     window.hexo_root = "/"
-    window.isPost = false
+    window.isPost = true
 </script>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="/js/index.js"></script>
@@ -278,7 +296,7 @@
 <script src="/js/gitment.js"></script>
 <script>
     var gitment = new Gitment({
-        id: 'About',
+        id: '并发图分析系统',
         owner: 'rwang067',
         repo: 'rwang067.github.io',
         oauth: {
