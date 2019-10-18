@@ -11,7 +11,7 @@
 
     <title>
         
-        About - Rui&#39;s Blog
+        Wukong 基于RDMA的快速并发RDF查询 - Rui&#39;s Blog
         
     </title>
 
@@ -71,7 +71,7 @@
                     <span>存档</span>
                 </a>
             </li>
-            <li  class=active >
+            <li >
                 <a href="/about/">
                     <i class="iconfont icon-guanyu2"></i>
                     <span>关于</span>
@@ -87,6 +87,10 @@
             
         </ul>
     </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#背景介绍"><span class="toc-text">背景介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#在线图查询"><span class="toc-text">在线图查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RDF-and-SPARQL"><span class="toc-text">RDF and SPARQL</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#现有查询方法"><span class="toc-text">现有查询方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基于图的RDF数据模型"><span class="toc-text">基于图的RDF数据模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#wukong查询过程"><span class="toc-text">wukong查询过程</span></a>
+</div>
     
 </div>
 
@@ -112,59 +116,80 @@
     <div class="index-middle">
         <!-- Main Content -->
         
-<div class="post-content ">
-    <p>关于这个博客，关于建立它之初衷以及它所涵盖的内容。</p>
-<h3 id="搭建博客之初衷"><a href="#搭建博客之初衷" class="headerlink" title="搭建博客之初衷"></a>搭建博客之初衷</h3><p>一直以来想找一个平台用于归纳整理自己平时的学习笔记，我平时是习惯在纸质的笔记本上做一些记录，这样确实是很方便，不需要考虑排版，画图也随手一气呵成。但是在笔记本上记录有个最大的问题就是不方便查阅，很久以前的笔记更是很难再找到。</p>
-<p>后来也有用过一段时间的<a href="https://www.yinxiang.com/" target="_blank" rel="noopener">印象笔记</a>，身边也有很多人在用，习惯以后，它确实可以很有效的、系统的满足你各个方面的笔记需求，包括技术笔记，工作计划，旅游攻略，心得体会等。但是对我来说，却很难习惯，主要包括如下几个方面：</p>
-<ul>
-<li><p>界面不够美观，排版不方便（逼走强逼症患者的首要原因）。</p>
-</li>
-<li><p><em>笔记本分类 + 标签</em> 过于繁重，需要一个系统的规划。</p>
-</li>
-<li><p>分享不便。虽然印象笔记中有共享功能，但是是通过邮件发送副本的方式，用起来也不方便。</p>
-</li>
-</ul>
-<p>想使用印象笔记的小伙伴可以参考：</p>
-<ul>
-<li><p><a href="https://www.jianshu.com/p/6314ada58cbc" target="_blank" rel="noopener">如何正确使用印象笔记(Evernote)的标签功能</a></p>
-</li>
-<li><p><a href="https://www.zhihu.com/question/20094873" target="_blank" rel="noopener">如何协调印象笔记（Evernote）的「标签」和「笔记本」整理笔记？</a></p>
-</li>
-</ul>
-<p>最后辗转到了博客，很久之前也就了解过，但是感觉搭建环境好像很复杂的样子，所以一直没下定决心去做。也考虑过直接使用一些已有的写博客的平台，比如<a href="https://blog.csdn.net/" target="_blank" rel="noopener">CSDN</a>, <a href="https://www.jianshu.com/" target="_blank" rel="noopener">简书</a>等。但想到自己作为计算机专业的学生，还是应该不怕麻烦，搭建自己的博客可以更自由的选择自己喜欢的风格和功能，不受平台的限制。而且实际做下来发现也没有想象中那么麻烦，<a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Page</a>支持 + <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>框架提供模板，具体的一套流程和使用事项参见<a href="https://rwang067.github.io/2019/10/10/Hexo%E7%9A%84%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8/" target="_blank" rel="noopener">Hexo的配置和使用</a>。</p>
-<p>另外，写博客有另一个直接的好处是可以作为我日后求职的一张名片，引用他人一篇博客<a href="https://www.cnblogs.com/jhzhu/p/3893297.html" target="_blank" rel="noopener">&lt;&lt;我为什么写博客&gt;&gt;</a>中的一句话，<strong>“我通过写博客来让自己更擅长归纳和抽象, 也通过写博客来让别人知道我能胜任某份工作.”</strong> 养成记录博客的习惯能让我们更好的认识自己，提升自己，展示自己，所以我选择。</p>
-<h3 id="涵盖哪些内容"><a href="#涵盖哪些内容" class="headerlink" title="涵盖哪些内容"></a>涵盖哪些内容</h3><p>本博客侧重于技术博客，主要是我学习科研过程中的一些知识整理和经验积累，包括但不限于：</p>
-<ul>
-<li><p>Paper reading分享;</p>
-</li>
-<li><p>Linux系统知识的积累，比如多线程，Page Cache等；</p>
-</li>
-<li><p>一些平台工具的使用，包括MATLAB，screen，印象笔记等;</p>
-</li>
-<li><p>对领域当前研究成果的复现（近年来的几个图处理系统），代码运行过程中的注意事项。</p>
-</li>
-<li><p>对自己研究领域（图计算系统）的认识理解；</p>
-</li>
-<li><p>科研过程中学到的经验，包括做PPT报告，paper writing等；</p>
-</li>
-<li><p>自己coding方面的注意事项。</p>
-</li>
-<li><p>偶然也会有一些读书笔记和其他方面的心得体会。</p>
-</li>
-</ul>
-<p>上述几点中前面几项是比较适合分享的，方便自己日后查阅，也可以给有需要的人提供一些参考。而后面偏向于对自己工作的认识理解，及自己的一些心得体会，可以让我更好的认识和表达自己。</p>
-<h3 id="激励语"><a href="#激励语" class="headerlink" title="激励语"></a>激励语</h3><p>好习惯是慢慢培养起来的，不要怕麻烦。虽然归纳整理的工作确实很花费时间，尤其是刚开始习惯养成的时候，但是只要坚持下去，我相信一切都值得。做一个积极向上的人，人间很值得，请热爱学习，热爱生活。</p>
-<h3 id="TODO-List"><a href="#TODO-List" class="headerlink" title="TODO List"></a>TODO List</h3><p>paper writing对比</p>
-<p>学期总结</p>
-<p>图系统的发展现状</p>
-<p>GraphWalker工作总结</p>
-<p>coding细节，PageCache, realloc等</p>
-<p>Wukong系列4篇</p>
-<p>并发图处理 — 关注应用场景的考虑</p>
-<p>……</p>
 
-    
-        <div class="donate-container">
+
+<div class="post-container">
+    <div class="post-title">
+        Wukong 基于RDMA的快速并发RDF查询
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2019-02-25 18:50:25</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#graph processing system" title="graph processing system">graph processing system</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#RDF query" title="RDF query">RDF query</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#KV graph storage" title="KV graph storage">KV graph storage</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p><a href="https://www.usenix.org/conference/osdi16/technical-sessions/presentation/shi" target="_blank" rel="noopener">Wukong:Fast and Concurrent RDF Queries with RDMA-based Distributed Graph Exploration, JIAXIN SHI, YOUYANG YAO, RONG CHEN, HAIBO CHEN, OSDI16</a></p>
+<p><a href="https://blog.csdn.net/qq_21125183/article/details/80670024" target="_blank" rel="noopener">可参考博客</a></p>
+<h3 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h3><h4 id="在线图查询"><a href="#在线图查询" class="headerlink" title="在线图查询"></a>在线图查询</h4><p>Online graph query plays a vital role for searching, mining and reasoning linked data.</p>
+<h4 id="RDF-and-SPARQL"><a href="#RDF-and-SPARQL" class="headerlink" title="RDF and SPARQL"></a>RDF and SPARQL</h4><p>RDF :  Resource Description Framework 资源描述框架。用于表示网络上链接的数据，例如知识图谱。</p>
+<p>RDF is a graph composed by a set of ⟨Subject, Predicate, Object⟩ triples 由&lt;主谓宾&gt;三元组组成的图。</p>
+<p>SPARQL ： 针对RDF的标准查询语言。</p>
+<h3 id="现有查询方法"><a href="#现有查询方法" class="headerlink" title="现有查询方法"></a>现有查询方法</h3><p>1、关系型数据库管理（RDBMS）</p>
+<p>三元组存储和三元组联接，联接三张表，查询得出结果。</p>
+<p>缺点 ：分布式联接开销大 &amp; 会产生大量的中间结果。</p>
+<p>2、图处理系统</p>
+<p>图存储和图检索，将RDF数据存储为一个图的形式，一步步检索出满足条件的节点关系，最后联接所有查询结果，得出最终结果。</p>
+<p>缺点 ：最后联接部分开销非常大 &amp; 查询节点关系需同步执行，比较慢。</p>
+<h2 id="基于图的RDF数据模型"><a href="#基于图的RDF数据模型" class="headerlink" title="基于图的RDF数据模型"></a>基于图的RDF数据模型</h2><ol>
+<li>Graph model and indexes</li>
+</ol>
+<p>新增协助索引节点（index vertices）：predicate index &amp; type index</p>
+<p>原来的节点（normal vertices）：subjects&amp; objects</p>
+<p>index vertices与normal vertices一起参与划分子图和存储</p>
+<ol>
+<li>Differentiated Graph Partitioning<br>受 PowerLyra[ EuroSys15] 启发</li>
+</ol>
+<p>1）高度节点 ： 拆分成多个节点，分别存放于不同机器；</p>
+<p>2）低度节点 ： 分部存储到不同机器</p>
+<p>wukong：</p>
+<p>1）index vertices : 拆分；</p>
+<p>2）normal vertices ： 分布；</p>
+<p>3）在RDF场景下，高度节点的不均匀，并不会很大的影响负载均衡。</p>
+<ol>
+<li>RDMA-friendly Predicate-based KV store</li>
+</ol>
+<p>key :  “vid, p/tid, d”</p>
+<p>value : the list of neighboring vertex IDs or predicate/type IDs</p>
+<p>减少大量计算和网络开销</p>
+<h2 id="wukong查询过程"><a href="#wukong查询过程" class="headerlink" title="wukong查询过程"></a>wukong查询过程</h2><ol>
+<li><p>Basic Query Processing</p>
+</li>
+<li><p>Full-history Pruning</p>
+</li>
+<li><p>Migrating Execution or Data</p>
+</li>
+<li><p>Concurrent Query Processing</p>
+</li>
+</ol>
+
+        
+            <div class="donate-container">
     <div class="donate-button">
         <button id="donate-button">赞赏</button>
     </div>
@@ -173,10 +198,15 @@
         <p> 感谢鼓励 </p>
     </div>
 </div>
-    
-    <div id="comment-container">
-    </div>
-    <div id="lv-container">
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
     </div>
 </div>
 
@@ -275,7 +305,7 @@
     // We expose some of the variables needed by the front end
     window.hexo_search_path = "search.json"
     window.hexo_root = "/"
-    window.isPost = false
+    window.isPost = true
 </script>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="/js/index.js"></script>
@@ -284,7 +314,7 @@
 <script src="/js/gitment.js"></script>
 <script>
     var gitment = new Gitment({
-        id: 'About',
+        id: 'Wukong 基于RDMA的快速并发RDF查询',
         owner: 'rwang067',
         repo: 'rwang067.github.io',
         oauth: {

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rui Wang&#39;s blog">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        DrunkardMob的编译运行 - Rui&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 热爱学习，热爱生活 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar radius">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Rui Wang</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#安装jdk和mvn"><span class="toc-text">安装jdk和mvn</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#scala版本冲突问题"><span class="toc-text">scala版本冲突问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#运行找不到类"><span class="toc-text">运行找不到类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#common-math版本冲突"><span class="toc-text">common-math版本冲突</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jdk版本配置"><span class="toc-text">jdk版本配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TEST时找不到surefire"><span class="toc-text">TEST时找不到surefire</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#在线依赖项"><span class="toc-text">在线依赖项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#版本冲突"><span class="toc-text">版本冲突</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 热爱学习，热爱生活 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        DrunkardMob的编译运行
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2019-06-19 18:26:20</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#Java" title="Java">Java</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p>DrunkardMob部署于Java版本的GraphChi，因为对Java的使用不是很熟练，简单的Java版本的GraphChi的编译和运行折腾了一个多周。这里记录一下编译运行的过程以及其他遇到的问题</p>
+<h4 id="安装jdk和mvn"><a href="#安装jdk和mvn" class="headerlink" title="安装jdk和mvn"></a>安装jdk和mvn</h4><p>其实简单的apt-get install就可以了<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openjdk-8-jdk</span><br><span class="line">sudo apt-get install maven</span><br></pre></td></tr></table></figure></p>
+<p>所谓后来编译出现的各种问题，就是这里没有装好，我一开始是按照网上一些配置Java运行环境的博客做的，然后配置JAVA_HOME之类的，编译就报各种错，尝试安装了各种版本，还是会有各种奇特的错误。其实这里通过apt-get安装默认是可以不用配置JAVA_HOME环境的。</p>
+<p>我是先安装的mvn，会自动安装一个jdk，用 java -version看也确实是安装了Java8，但是并没有安装javac，所以编译的时候会找不到编译的包。所以还是需要另外去安装一个jdk。</p>
+<h4 id="scala版本冲突问题"><a href="#scala版本冲突问题" class="headerlink" title="scala版本冲突问题"></a>scala版本冲突问题</h4><p>“class … is broken”</p>
+<p>这里其实是因为作者的pom.xml文件中指定的Scala版本是2.9.0-1， 而实际编译运行需要的Scala的版本是2.11.2.</p>
+<p>所以解决办法是：将相应依赖项中scala-lang的版本号改为 2.11.2</p>
+<hr>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.scala-lang&lt;/groupId&gt;
+    &lt;artifactId&gt;scala-library&lt;/artifactId&gt;
+    &lt;version&gt;2.11.2&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre><hr>
+<p>我上周在这个问题的时候走了很多弯路，看到网上有博客说这个报错是因为需要安装比较老的jdk版本，所以也尝试安装了jdk7和jdk6，mvn的版本也按照作者给的版本重新安装了，总之瞎折腾了很久。</p>
+<h4 id="运行找不到类"><a href="#运行找不到类" class="headerlink" title="运行找不到类"></a>运行找不到类</h4><p>这个实际上是个很坑的问题，因为后来版本有改进，应该将命令中graphchi-java-0.2-jar-with-dependencies换成graphchi-java-0.2.2-jar-with-dependencies</p>
+<p>到这里，不出意外的话，程序应该是可以正常编译，运行起来了，因为最后在403的ccc服务器上，到这里就运行成功了</p>
+<h4 id="common-math版本冲突"><a href="#common-math版本冲突" class="headerlink" title="common-math版本冲突"></a>common-math版本冲突</h4><p>pom.xml中关于common-math有重复定义，可以注释掉其中一个。</p>
+<h4 id="jdk版本配置"><a href="#jdk版本配置" class="headerlink" title="jdk版本配置"></a>jdk版本配置</h4><p>作者用的是jdk1.6，我这边安装的jdk1.8，这里pom.xml文件中maven-compiler-plugin下的configuration中的<em>source</em> 和 <em>target</em> 应该改为1.8.</p>
+<h4 id="TEST时找不到surefire"><a href="#TEST时找不到surefire" class="headerlink" title="TEST时找不到surefire"></a>TEST时找不到surefire</h4><p>解决办法是追加plugin（version要根据报错信息调整，这里应该是2.12.4）</p>
+<hr>
+<pre><code>&lt;plugin&gt;
+    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+    &lt;version&gt;2.12.4&lt;/version&gt;
+    &lt;configuration&gt;
+        &lt;useSystemClassLoader&gt;false&lt;/useSystemClassLoader&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;
+</code></pre><hr>
+<h4 id="在线依赖项"><a href="#在线依赖项" class="headerlink" title="在线依赖项"></a>在线依赖项</h4><p>之后遇到的问题是发现修改后的源码，编译后无效，即不能运行编译后的结果。<br>又是折腾了两天，发现是因为添加了在线依赖项的原因。。。</p>
+<p>即作者的说明文档中，说是要加入的依赖项：</p>
+<hr>
+<pre><code>For maven, include the following in &lt;dependencies&gt;:
+&lt;dependency&gt;
+    &lt;groupId&gt;org.graphchi&lt;/groupId&gt;
+    &lt;artifactId&gt;graphchi-java_2.11&lt;/artifactId&gt;
+    &lt;version&gt;0.2.2&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre><hr>
+<p>其实是编译好的graphchi-java的库包，被放在的maven的仓库中，添加依赖项就会直接引用在线的库包，从而覆盖了本地的编译的结果。删除掉这项依赖项，可以正常修改然后编译运行了。</p>
+<h4 id="版本冲突"><a href="#版本冲突" class="headerlink" title="版本冲突"></a>版本冲突</h4><p>系统不知道什么时候升级了openjdk，导致与pom.xml中声明的版本冲突！<br>查看版本：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br><span class="line">mvn -version</span><br></pre></td></tr></table></figure></p>
+<p>解决，卸载重装：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get autoremove openjdk*  //autoremove会卸载所有相关依赖项，慎重使用！！！！</span><br><span class="line">sudo apt-get autoremove java*</span><br><span class="line">sudo apt-get install openjdk-8-jdk</span><br></pre></td></tr></table></figure></p>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+
+        
+        <li>
+            <a target="_blank"  href="mailto:wangrui1994@126.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3125304081">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/rwang067">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
+        <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
+        <span>/</span>
+        
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: 'DrunkardMob的编译运行',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+
+
+
+</html>
