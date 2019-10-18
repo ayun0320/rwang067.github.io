@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rui Wang&#39;s blog">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        Deeper Inside PageRank - Rui&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 热爱学习，热爱生活 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar radius">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Rui Wang</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#PageRank的由来"><span class="toc-text">PageRank的由来</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基础的PageRank模型"><span class="toc-text">基础的PageRank模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#基本概念"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#状态转移矩阵"><span class="toc-text">状态转移矩阵</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算PageRank"><span class="toc-text">计算PageRank</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#幂法迭代计算"><span class="toc-text">幂法迭代计算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#收敛性"><span class="toc-text">收敛性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#收敛速度"><span class="toc-text">收敛速度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#收敛判断"><span class="toc-text">收敛判断</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#加速幂法计算"><span class="toc-text">加速幂法计算</span></a></li></ol></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 热爱学习，热爱生活 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        Deeper Inside PageRank
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2019-10-17 15:32:57</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#random walks" title="random walks">random walks</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#theoretical analysis" title="theoretical analysis">theoretical analysis</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p><a href="https://www.internetmathematicsjournal.com/article/1388" target="_blank" rel="noopener">Deeper Inside PageRank,     Langville A;Meyer C, Internet Mathematics 2004</a></p>
+<p>这是一个关于PageRank的综述性的调研报告，包含与PageRank相关所有问题，涵盖了<em>基础的PageRank模型</em>，<em>计算方法</em>，<em>稳态分布的存在性和唯一性分析</em>，<em>收敛速度</em>，<em>存储问题</em>，<em>基础模型上的改动</em>，<em>传统计算方法的改进</em>等等。</p>
+<h3 id="PageRank的由来"><a href="#PageRank的由来" class="headerlink" title="PageRank的由来"></a>PageRank的由来</h3><p>当前的搜索引擎一般通过一个两步的过程来检索与用户查询相关的页面，1）信息检索（Information Retrieval），检索找出所有相关的页面（通常能找出几千个相关的页面 ）；2）<strong>页面排序</strong>（Page Rank），对检索出的页面按照某种准则进行排序，按照顺序展示给用户。PageRank是一个大家熟知的页面排序算法，它基于网页之间的超链接结构，计算出一个页面的重要程度，用于Google搜索引擎。（实际上在Google会综合考虑IR（Information Retrieval） score和PR（PageRank） score决定最终的网页排序，这里我们只关注于PageRank。）</p>
+<p>Page, Lawrence和Brin, Sergey于1998年发表了论文，<a href="http://web.mit.edu/6.033/2004/wwwdocs/papers/page98pagerank.pdf" target="_blank" rel="noopener">Page, Lawrence &amp; Brin, Sergey &amp; Motwani, Rajeev &amp; Winograd, Terry. (WWW1998). The PageRank Citation Ranking: Bringing Order to the Web.</a>，第一次提出PageRank算法，并基于此创办了Google公司。</p>
+<h3 id="基础的PageRank模型"><a href="#基础的PageRank模型" class="headerlink" title="基础的PageRank模型"></a>基础的PageRank模型</h3><h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><p><strong>马尔可夫链（Markov chain）</strong>，考虑状态空间中，从一个状态到另一个状态的转换的随机过程。某一时刻状态转移的概率只依赖于它的前一个状态。这种特定类型的“无记忆性”称作<em>马尔可夫性质</em>。满足<em>马尔可夫性质</em>的随机过程称为<a href="https://blog.csdn.net/bitcarmanlee/article/details/82819860" target="_blank" rel="noopener"><em>马尔可夫链</em></a>。</p>
+<p><strong>随机性（stochastic）</strong>，矩阵的随机性表示矩阵中的所有元素都是非负的，且每一行的元素和为1。</p>
+<p><strong>不可约性（irreducible）</strong>，不可约的数学定义是“如果从C 中任一状态出发经有限步转移到另一状态的概率都大于0，则称C为不可约闭集”，即任意一种状态都可能转化到任意另外一种状态，即不存在多余的状态（可减少的状态）。</p>
+<p><strong>素矩阵（primitive matrix）</strong>，素矩阵是指自身的某个次幂为正矩阵的矩阵。设<script type="math/tex">A</script>为一个<script type="math/tex">n \times n</script>的方阵，如果存在正整数k使得矩阵<script type="math/tex">A^k>0</script>那么，称矩阵A为素矩阵。</p>
+<h4 id="状态转移矩阵"><a href="#状态转移矩阵" class="headerlink" title="状态转移矩阵"></a>状态转移矩阵</h4><p>考虑网页之间的链接关系，可以看成一个有向图，图中节点表示页面，边代表页面之间的超链接关系。一个用户随机浏览网页的过程可以看做是一个在图上节点之间跳转的<em>随机游走</em>过程，也是一个马尔可夫链。</p>
+<p>考虑各节点之间的转移概率，可以表示成一个矩阵<script type="math/tex">P</script>，其中<script type="math/tex">P_{ij}</script>表示通过一步从页面<script type="math/tex">i</script>跳转到页面<script type="math/tex">j</script>的概率。例如，假设从一个页面有相等的概率跳转到它所链接的任意页面，则<script type="math/tex">P_{ik}=1/d_i, \forall k \in N(i)</script>（其中<script type="math/tex">d_i</script>为节点i的出度，<script type="math/tex">N(i)</script>为节点i的出边邻居集）。也根据自定义的加权方式设置概率分布<script type="math/tex">v^T</script>，公式表示为<script type="math/tex">P'=P+av^T</script>，其中<script type="math/tex">a</script>为一个构造的向量，其中如果i为悬挂节点，则<script type="math/tex">a_i=1</script>，否则<script type="math/tex">a_i=0</script>。</p>
+<p>由于图中存在<em>悬挂节点（dangling node）</em>，即该节点没有出边邻居，此时<script type="math/tex">P_i=0^T</script>，使得该转移矩阵不满足<em>随机性</em>，当随机游走跳转到悬挂节点时，就会停止。为了修正这种情况，我们修改<script type="math/tex">P'_i=1/ne^T</script>（其中n为图中的总节点数），或者一个自定义的个性化的的随机向量<script type="math/tex">P'_i=v^T</script>（personalized vector）。</p>
+<p>为了保证该马尔可夫链能够收敛得到一个概率分布的稳态向量（stationary vector），也就是最终算得的PageRank值，该马尔可夫链需要满足<em>不可约性</em>。所以需要对该状态转移矩阵做进一步的修改，<script type="math/tex">P''= \alpha P'+(1-\alpha)ev^T/n, 0 \leq \alpha \leq 1</script>。</p>
+<p>这样通过修正的状态转移矩阵有:</p>
+<p>$P’’= \alpha P’+(1-\alpha)ev^T/n$，</p>
+<p>$ \quad = \alpha (P+av^T)+(1-\alpha)ev^T/n$，</p>
+<p>$ \quad = \alpha P+(\alpha a+(1-\alpha)e)v^T$, 其中$0 \leq \alpha \leq 1$，</p>
+<p>图中的每个节点都可以通过一步直接到达另一个节点，使得该马尔可夫链满足不可约的性质。该矩阵是一个素矩阵，即通过幂法(power method)迭代计算可以得到一个收敛的稳态向量<script type="math/tex">\pi^T</script>。</p>
+<h3 id="计算PageRank"><a href="#计算PageRank" class="headerlink" title="计算PageRank"></a>计算PageRank</h3><p>上述状态转移矩阵代表的马尔可夫链，最终能达到一个稳定状态，即存在一个稳态分布<script type="math/tex">\pi^T</script>，使得<script type="math/tex">\pi^TP''=\pi^T</script>，其中<script type="math/tex">\pi^T</script>是一个概率向量，<script type="math/tex">\pi^Te=1</script>。通过计算该稳态向量<script type="math/tex">\pi^T</script>，即得到各个页面的PageRank值，其中<script type="math/tex">\pi^T_i</script>即为页面i的PageRank值。</p>
+<h4 id="幂法迭代计算"><a href="#幂法迭代计算" class="headerlink" title="幂法迭代计算"></a>幂法迭代计算</h4><p>幂法迭代计算是一个传统的计算特征向量问题的方法。</p>
+<ul>
+<li>设置一个任意的初始向量<script type="math/tex">x^{(0)T}</script>，通常<script type="math/tex">x^{(0)T}=e^T/n</script>。</li>
+<li>迭代计算：<script type="math/tex">x^{(k)T}=x^{(k-1)T}P''</script>，即$x^{(k)T}=\alpha x^{(k-1)T}P+(\alpha x^{(k-1)T}a+(1-\alpha))v^T$。</li>
+</ul>
+<p>这样，通过一轮又一轮的<em>向量矩阵相乘</em>，迭代计算直至达到终止条件，则可计算出稳态向量<script type="math/tex">\pi^T</script>。每一轮计算中，需要的$nnz(P)$次浮点运算，$nnz(P)$为P中非零元素的个数。一般P为一个稀疏矩阵，P中每一行的非零元素的个数即为图中每个节点的度数，一般平均为3-10，所以$\omicron(nnz(P)) \approx \omicron(n)$。Brin和Page在论文中指出，一般幂法迭代运算很快就可以达到收敛，通常只需要50-100次迭代运算。</p>
+<h4 id="收敛性"><a href="#收敛性" class="headerlink" title="收敛性"></a>收敛性</h4><p>状态转移矩阵<script type="math/tex">P''</script>的不可约性（irrducibility）保证了该马尔可夫链的唯一一个稳态分布向量的存在性。</p>
+<p>而<script type="math/tex">P''</script>的素性（primitivity）保证了通过幂法迭代计算能够收敛，算出该稳态分布向量。</p>
+<h4 id="收敛速度"><a href="#收敛速度" class="headerlink" title="收敛速度"></a>收敛速度</h4><p><a href="https://blog.csdn.net/qq997843911/article/details/88189426" target="_blank" rel="noopener">矩阵的谱用于分解一个矩阵</a>，对于上述的稳态分布<script type="math/tex">\pi^TP''=\pi^T</script>，<script type="math/tex">\pi^T</script>就是<script type="math/tex">P''</script>的一个特征向量，对应的特征值就是1。对<script type="math/tex">P''</script>所有的特征向量<script type="math/tex">v_i^T</script>，有<script type="math/tex">v_i^TP''=v_i^T c_i</script>，其中<script type="math/tex">c_i</script>为对应的特征值，对<script type="math/tex">v_i^T</script>的每一轮更新，所有节点的值变为原来的<script type="math/tex">c_i</script>倍，当<script type="math/tex">0 < c_i < 1</script>，所有节点值呈指数衰减，直至趋近于0。</p>
+<p>我们可以用谱的方法，将上述马尔可夫链的任意初始状态<script type="math/tex">x^{(0)T}</script>分解成</p>
+<p>$x^{(0)T}=v_1^T+c_2 v_2^T+c_3 v_3^T+\cdots$</p>
+<p>对于状态转移矩阵<script type="math/tex">P''</script>，其最大特征值为1，对应于特征向量<script type="math/tex">v_1^T</script>，即稳态向量<script type="math/tex">\pi^T</script>。其他特征向量<script type="math/tex">v_2^T, v_3^T, \cdots</script>对应于特征值$1&gt;c_2&gt;c_3&gt;\cdots &gt;-1$。则经过t步迭代计算，到达状态<script type="math/tex">x^{(t)T}</script></p>
+<p>$x^{(t)T}=v_1^T+c_2^t v_2^T+c_3^t v_3^T+\cdots$</p>
+<p>其中<script type="math/tex">v_i^T</script>部分的分量保持不变，即为我们所求的稳态向量，其他分量随着t增长而指数衰减，最后整个状态<script type="math/tex">x^{(t)T}</script>收敛趋近于平衡状态。而这个过程的<strong>收敛速度（rate of convergence）</strong>取决于上述非平衡分量中衰减得最慢的那一个，即<strong>第二大特征值<script type="math/tex">c_2</script></strong>。<script type="math/tex">c_2</script>的大小越接近1，收敛越慢，越接近于0，收敛越快。</p>
+<p>而$P’’$的第二大特征值取决于$\alpha$。$\alpha$设置的越小，收敛速度越快，但是网页之间的链接结构对最终计算结果的贡献程度也越小。考虑权衡，Google创始人Brin和Page使用$\alpha=0.85$。</p>
+<h4 id="收敛判断"><a href="#收敛判断" class="headerlink" title="收敛判断"></a>收敛判断</h4><p>幂法迭代计算直至满足一个终止条件，一个传统的终止条件是：当k轮计算后的<strong>残差（residual）</strong><script type="math/tex">x^{(k)T}P''-x^{(k)T}=x^{(k+1)T}-x^{(k)T}</script>，小于一个预先定义的<strong>容忍度（tolerance ）</strong>$\tau$时，迭代终止。此时，可以大致估算收敛所需要迭代计算的轮数为$\frac{log_{10}\tau}{log_{10}\alpha}$。当$\tau=10^{-6}, \alpha=0.85$时，大致需要 $\frac{-6}{log_{10}0.85} \approx 85$ 次迭代计算。上面说到Brin和Page指出，通常只需要50-100次迭代运算，是指$\tau$取值为$10^{-3}$ 到 $10^{-6}$。</p>
+<p>在实际应用中，我们通常只需要计算出页面之间的正确顺序，并不需要知道他们具体的PageRank值。所以我们只需要通过幂法迭代到PageRank向量的排序收敛就可停止。某篇论文在实验展示，在某些数据集上只需10次迭代就能产生良好的近似排序。</p>
+<h4 id="加速幂法计算"><a href="#加速幂法计算" class="headerlink" title="加速幂法计算"></a>加速幂法计算</h4><p>（1）减少每一轮的计算时间</p>
+<ul>
+<li><p>自适应的PageRank，考虑到图中某些节点收敛快，而有些节点收敛慢。所以我们关注于迭代向量中元素，当某些节点已经收敛后，我们就锁定这些节点，不再对他们进行更新计算。</p>
+</li>
+<li><p>图中存在大量悬挂节点，可以划分悬挂节点和非悬挂节点。因为所有悬挂节点对应的行的转移概率是一样的，可以通过一种汇集的聚合方法高效的处理。</p>
+</li>
+</ul>
+<p>（2）减少迭代的次数</p>
+<ul>
+<li><p>扩展的Aitken外推法；</p>
+</li>
+<li><p>BlockRank；</p>
+</li>
+<li><p>取消对幂法的限制，高斯-赛德尔法，雅可比法。</p>
+</li>
+</ul>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+
+        
+        <li>
+            <a target="_blank"  href="mailto:wangrui1994@126.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3125304081">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/rwang067">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
+        <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
+        <span>/</span>
+        
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: 'Deeper Inside PageRank',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+
+
+
+</html>

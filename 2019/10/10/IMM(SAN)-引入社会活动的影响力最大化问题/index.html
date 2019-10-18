@@ -11,7 +11,7 @@
 
     <title>
         
-        Rui&#39;s Blog
+        IMM(SAN) 引入社会活动的影响力最大化问题 - Rui&#39;s Blog
         
     </title>
 
@@ -65,7 +65,7 @@
                     <span>标签</span>
                 </a>
             </li>
-            <li  class=active >
+            <li >
                 <a href="/archives">
                     <i class="iconfont icon-guidang2"></i>
                     <span>存档</span>
@@ -87,6 +87,10 @@
             
         </ul>
     </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#论文大纲"><span class="toc-text">论文大纲</span></a></li></ol>
+</div>
     
 </div>
 
@@ -114,140 +118,65 @@
         
 
 
-<!-- 归档列表 -->
+<div class="post-container">
+    <div class="post-title">
+        IMM(SAN) 引入社会活动的影响力最大化问题
+    </div>
 
-<div class="archives-container">
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2019-10-10 18:53:09</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#random walks" title="random walks">random walks</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#theoretical analysis" title="theoretical analysis">theoretical analysis</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p><a href="https://link.springer.com/content/pdf/10.1007%2F978-3-319-55699-4_20.pdf" target="_blank" rel="noopener">Pengpeng Zhao, Yongkun Li*, Hong Xie, Zhiyong Wu, Yinlong Xu, John C. S. Lui. “Measuring and Maximizing Influence via Random Walk in Social Activity Networks.”The 22nd International Conference on Database Systems for Advanced Applications (DASFAA 2017), Suzhou, China, March 2017.</a>.</p>
+<!-- ## IMM(SAN) Journal扩展 -- TKDE -->
+<h3 id="论文大纲"><a href="#论文大纲" class="headerlink" title="论文大纲"></a>论文大纲</h3><p>1.<strong>用户活动网络图（SAN），</strong>考虑在线社交网络图（OSN）中用户社交活动的影响，比如对同一个产品的点赞、评论等，基于此提出用户活动网络图（SAN），并提出一种“超图”的概念来表示SAN， 其中一条t型的“超边”连接多个用户，代表这几个用户都参与某种t型活动，比如都对某产品点赞或评高分。</p>
+<p>2.<strong>基于RW的影响力中心性，</strong>考虑SAN场景下的影响力最大化问题（IMP(SAN)），采用基于Random Walk的方式来近似估算SAN中大小为k的种子节点集S的影响力，定义为影响力中心性（influence centrality），估算在超图中从每个节点出发进行大量random walks，其中能到达种子节点集S的击中概率（decayed hitting probability）。</p>
+<p>3.<strong>贪心算法计算IMP(SAN)，</strong>为计算SAN中的影响力最大化问题（IMP(SAN)），本文采用Monte Carlo框架来估算SAN中的影响力中心性，并提出一种贪心的迭代算法，每一轮选出一个能够带来最大影响力增量的节点，加入到种子节点集S中，具体实现：每一轮，计算每个节点u能够带来的影响力增量，在超图中每个节点出发进行R条L步的random walks，计算这些walks能够访问到<script type="math/tex">S\cup{u}</script>的hitting probability。时间复杂度为<script type="math/tex">\omicron(kn^2RL)</script>。</p>
+<p>4.<strong>算法优化1——并行计算，</strong>每一轮，计算图中每个节点的影响力增量都需要从全图每个节点出发R条L步的random walks，其实这些walk可以共用，即一次性从全图每个节点出发R条L步的random walks，同时计算图中每个节点带来的影响力增量，这样可以将时间复杂度优化到<script type="math/tex">\omicron(knRL)</script>。</p>
+<p>5.<strong>算法优化2——walk复用，</strong>每一轮都需要从全图每个节点出发R条L步的random walks，同时计算图中每个节点带来的影响力增量，其实第一轮轮的walk信息可以一直被复用到下一轮中，这样可以将时间复杂度优化到<script type="math/tex">\omicron(nRL)</script>，这其中会带来walk更新的问题，详细参加paper 5.2。</p>
+<p>6.<strong>实验对比，</strong>本文在三个真实世界的数据集上对比了加入用户活动后带来的在独立级联模型（independent cascade model，IC）的影响力传播模型下影响力的增长，以及对比最新的OSN上的影响力最大化问题的最新算法IMM在不同用户活动权重和不同种子节点集大小的配置下效率的改进和能带来的影响力传播。</p>
+<!-- ### Journal扩展点
 
-<div class="one-tag-list">
-                <span class="fa fa-calendar-times-o listing-seperator" id="2019">
-                    <span class="tag-text">2019</span>
-                </span>
-    <ul>
-        
-        <!-- <li class="listing-item">
-        <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-        <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-        </li> -->
-        <li >
-            <span>10-18</span>
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2019/10/18/CNARW-基于公共邻居感知的快速随机游走/">
-                        <span>
-                            CNARW 基于公共邻居感知的快速随机游走
-                        </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-        </li>
-        
-        <!-- <li class="listing-item">
-        <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-        <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-        </li> -->
-        <li >
-            <span>10-17</span>
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2019/10/17/Deeper-Inside-PageRank/">
-                        <span>
-                            Deeper Inside PageRank
-                        </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-        </li>
-        
-        <!-- <li class="listing-item">
-        <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-        <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-        </li> -->
-        <li >
-            <span>10-16</span>
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2019/10/16/并发图分析系统/">
-                        <span>
-                            并发图分析系统
-                        </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-        </li>
-        
-        <!-- <li class="listing-item">
-        <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-        <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-        </li> -->
-        <li >
-            <span>10-15</span>
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2019/10/15/ASAP(OSDI-2018)-分布式图模式挖掘系统/">
-                        <span>
-                            ASAP(OSDI 2018) 分布式图模式挖掘系统
-                        </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-        </li>
-        
-        <!-- <li class="listing-item">
-        <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-        <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-        </li> -->
-        <li >
-            <span>10-10</span>
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2019/10/10/IMM(SAN)-引入社会活动的影响力最大化问题/">
-                        <span>
-                            IMM(SAN) 引入社会活动的影响力最大化问题
-                        </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-        </li>
-        
-        <!-- <li class="listing-item">
-        <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-        <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-        </li> -->
-        <li >
-            <span>10-10</span>
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2019/10/10/Hexo的配置和使用/">
-                        <span>
-                            Hexo的配置和使用
-                        </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-        </li>
-        
-        <!-- <li class="listing-item">
-        <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-        <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-        </li> -->
-        <li >
-            <span>10-09</span>
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2019/10/09/Hexo部署错误/">
-                        <span>
-                            Hexo部署错误
-                        </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-        </li>
-        
-        <!-- <li class="listing-item">
-        <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-        <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-        </li> -->
-        <li >
-            <span>10-08</span>
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/2019/10/08/hello-world/">
-                        <span>
-                            Hello World
-                        </span>
-            </a>
-            <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-        </li>
-        
+1.**从无权图扩展到加权图，** (1)加权图的应用场景，（2）在加权图上的RW需求，（3）加权图上进行一步RW转发的执行过程，（4）时间复杂度分析，（5）利用二分查找优化加权图上的RW过程以及优化后的时间复杂度。实验章节添加从无权图生成加权图的过程。
 
-    </ul>
+2.**增加LT模型下的影响力传播,** 6.4 添加对LT模型的介绍以及在LT模型下的实验。
+
+3.**增加一组多种用户和活动类型的实验,**（1）一种用户一种活动，（2）两种用户一种活动，（3）一种用户两种活动。6.4 添加上述三种场景下的实验结果。 -->
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
 </div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
 
+        <div id="lv-container">
+        </div>
+
+    </div>
 </div>
 
     </div>
@@ -345,11 +274,25 @@
     // We expose some of the variables needed by the front end
     window.hexo_search_path = "search.json"
     window.hexo_root = "/"
-    window.isPost = false
+    window.isPost = true
 </script>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="/js/index.js"></script>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: 'IMM(SAN) 引入社会活动的影响力最大化问题',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
 
 
 
