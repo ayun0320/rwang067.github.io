@@ -11,7 +11,7 @@
 
     <title>
         
-        CNARW 基于公共邻居感知的快速随机游走 - Rui&#39;s Blog
+        远程桌面连接 - Rui&#39;s Blog
         
     </title>
 
@@ -89,7 +89,7 @@
     </div>
     
         <div id="toc" class="toc-article">
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#应用场景"><span class="toc-text">应用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#网络平台投资"><span class="toc-text">网络平台投资</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#病毒式营销中的捆绑策略"><span class="toc-text">病毒式营销中的捆绑策略</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算挑战"><span class="toc-text">计算挑战</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#随机游走采样"><span class="toc-text">随机游走采样</span></a></li></ol>
+    
 </div>
     
 </div>
@@ -120,20 +120,11 @@
 
 <div class="post-container">
     <div class="post-title">
-        CNARW 基于公共邻居感知的快速随机游走
+        远程桌面连接
     </div>
 
     <div class="post-meta">
-        <span class="attr">发布于：<span>2019-10-18 17:55:26</span></span>
-        
-        <span class="attr">标签：/
-        
-        <a class="tag" href="/tags/#random walks" title="random walks">random walks</a>
-        <span>/</span>
-        
-        <a class="tag" href="/tags/#theoretical analysis" title="theoretical analysis">theoretical analysis</a>
-        <span>/</span>
-        
+        <span class="attr">发布于：<span>2019-09-09 09:03:22</span></span>
         
         </span>
         <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
@@ -141,18 +132,13 @@
 </span>
     </div>
     <div class="post-content ">
-        <p><a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8731555" target="_blank" rel="noopener">Yongkun Li, Zhiyong Wu, Shuai Lin, Hong Xie, Min Lv, Yinlong Xu, John C.S. Lui. “Walking with Perception: Efficient Random Walk Sampling via Common Neighbor Awareness”. 35th IEEE International Conference on Data Engineering (ICDE), Macau, SAR, China, April 2019.</a></p>
-<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p>近年来，对社交网络分析能更准确的进行一些商业活动，比如病毒式营销和产品推荐等。通过分析图上的各种图中心性可以获取社交网络中用户的属性，进而用来促进商品营销。可以通过下面具体的两个例子来直观的说明。</p>
-<h4 id="网络平台投资"><a href="#网络平台投资" class="headerlink" title="网络平台投资"></a>网络平台投资</h4><p>根据病毒式营销中的“口碑效应（word-of-mouth）”，一个用户购买商品时可能会受到其朋友的影响而去买同一件商品。所以利用在线社交网络（OSN）可以很好的进行商品营销。不同的OSN会呈现不同的潜力，比如不同的OSN中用户的活跃性和影响力会有所不同。所以一个商家来说，<strong>选择哪个网络平台进行投资能吸引到最多的用户购买商品？</strong>这个问题可以通过<em>估算OSN中所有</em>用户对<em>之间的平均相似性</em>来衡量。</p>
-<h4 id="病毒式营销中的捆绑策略"><a href="#病毒式营销中的捆绑策略" class="headerlink" title="病毒式营销中的捆绑策略"></a>病毒式营销中的捆绑策略</h4><p>将多个商品在一起打折捆绑销售也是一种常见的营销策略。但是<strong>具体选择哪些商品放在一起捆绑销售能带来最大的销售额</strong>。这个问题可以通过<em>估算每个商品在用户之间的兴趣分布，捆绑有相似分布的商品</em>来解决。</p>
-<h3 id="计算挑战"><a href="#计算挑战" class="headerlink" title="计算挑战"></a>计算挑战</h3><p>想要准确的计算图上的这些中心性不是件简单的事情，主要有如下挑战。</p>
-<p>（1）OSN的图规模通常很大，例如Facebook的用户数已经超过20亿。</p>
-<p>（2）为了保护用户的隐私，很多OSN只允许第三方代理通过固定的速度受限的API接口访问网络数据。</p>
-<p>为了分析这些大规模图数据，<strong>图采样</strong>是个常用的技术，通过分析采样的一些有代表性的样本，而避免遍历整个网络数据，这样大大减少了对网络的访问开销。</p>
-<h3 id="随机游走采样"><a href="#随机游走采样" class="headerlink" title="随机游走采样"></a>随机游走采样</h3><p>随机游走采样是这类应用场景的一个主流采样算法，因为它扩展性强且实施简单。随机游走的采样过程如下。</p>
-<ul>
-<li>首先从图中随机选取一个节点，然后重复从当前节点中随机挑选一个它的邻居节点进行跳转。很多步以后达到收敛状态，一个节点被访问的概率会呈现一个稳态分布，我们就可以从收敛以后开始采样样本节点。</li>
-</ul>
+        <p>目标：在本地电脑A通过远程桌面连接控制远程电脑B。</p>
+<p>（1）<a href="https://jingyan.baidu.com/article/6f2f55a171c4fdb5b93e6c38.html" target="_blank" rel="noopener">开启远程电脑B的远程连接</a>，这个经验里的第四步的添加用户可不加。</p>
+<p>（2）查看远程电脑B的内部IP地址：打开远程电脑B的windows cmd，<strong>ipconfig</strong>命令查看自己的ip地址，一般是192.168.x.x。</p>
+<p>（3）在远程电脑B设置外部端口：打开路由器admin，在里面找“虚拟服务器”或者“端口转发”，添加映射关系，内部端口3389，外部端口设置自己喜欢的，内部ip地址就是第二步查出来的。</p>
+<p>（4）查看远程电脑B的外部IP地址：打开网络通，找到找到WAN网ip地址，就是主页上显示的那个，一般是222或104等开头。</p>
+<p>（5）<a href="https://jingyan.baidu.com/article/7f766dafeabc204101e1d0b8.html" target="_blank" rel="noopener">在远程电脑B设置静态IP</a>，是指第二步查看到的IP，否则下次重启有可能IP地址就变了。</p>
+<p>（6）在本地电脑A进行远程连接：打开远程桌面连接，输入<strong>WAN IP:外部端口</strong>，然后输入用户名密码即可登录。</p>
 
         
             <div class="donate-container">
@@ -280,7 +266,7 @@
 <script src="/js/gitment.js"></script>
 <script>
     var gitment = new Gitment({
-        id: 'CNARW 基于公共邻居感知的快速随机游走',
+        id: '远程桌面连接',
         owner: 'rwang067',
         repo: 'rwang067.github.io',
         oauth: {
