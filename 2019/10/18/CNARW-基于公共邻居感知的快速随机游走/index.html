@@ -89,7 +89,7 @@
     </div>
     
         <div id="toc" class="toc-article">
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#应用场景"><span class="toc-text">应用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#网络平台投资"><span class="toc-text">网络平台投资</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#病毒式营销中的捆绑策略"><span class="toc-text">病毒式营销中的捆绑策略</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算挑战"><span class="toc-text">计算挑战</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#随机游走采样"><span class="toc-text">随机游走采样</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#图中心性分析"><span class="toc-text">图中心性分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#应用场景"><span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#计算挑战"><span class="toc-text">计算挑战</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#随机游走采样"><span class="toc-text">随机游走采样</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#简单随机游走"><span class="toc-text">简单随机游走</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#随机游走采样-1"><span class="toc-text">随机游走采样</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#收集样本"><span class="toc-text">收集样本</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#无偏估计"><span class="toc-text">无偏估计</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#加速随机游走收敛"><span class="toc-text">加速随机游走收敛</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CNARW"><span class="toc-text">CNARW</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#主旨思想"><span class="toc-text">主旨思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#算法设计"><span class="toc-text">算法设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#稳态分布"><span class="toc-text">稳态分布</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#扩展利用更多历史节点信息"><span class="toc-text">扩展利用更多历史节点信息</span></a></li></ol></li></ol>
 </div>
     
 </div>
@@ -142,17 +142,28 @@
     </div>
     <div class="post-content ">
         <p><a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8731555" target="_blank" rel="noopener">Yongkun Li, Zhiyong Wu, Shuai Lin, Hong Xie, Min Lv, Yinlong Xu, John C.S. Lui. “Walking with Perception: Efficient Random Walk Sampling via Common Neighbor Awareness”. 35th IEEE International Conference on Data Engineering (ICDE), Macau, SAR, China, April 2019.</a></p>
-<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p>近年来，对社交网络分析能更准确的进行一些商业活动，比如病毒式营销和产品推荐等。通过分析图上的各种图中心性可以获取社交网络中用户的属性，进而用来促进商品营销。可以通过下面具体的两个例子来直观的说明。</p>
-<h4 id="网络平台投资"><a href="#网络平台投资" class="headerlink" title="网络平台投资"></a>网络平台投资</h4><p>根据病毒式营销中的“口碑效应（word-of-mouth）”，一个用户购买商品时可能会受到其朋友的影响而去买同一件商品。所以利用在线社交网络（OSN）可以很好的进行商品营销。不同的OSN会呈现不同的潜力，比如不同的OSN中用户的活跃性和影响力会有所不同。所以一个商家来说，<strong>选择哪个网络平台进行投资能吸引到最多的用户购买商品？</strong>这个问题可以通过<em>估算OSN中所有</em>用户对<em>之间的平均相似性</em>来衡量。</p>
-<h4 id="病毒式营销中的捆绑策略"><a href="#病毒式营销中的捆绑策略" class="headerlink" title="病毒式营销中的捆绑策略"></a>病毒式营销中的捆绑策略</h4><p>将多个商品在一起打折捆绑销售也是一种常见的营销策略。但是<strong>具体选择哪些商品放在一起捆绑销售能带来最大的销售额</strong>。这个问题可以通过<em>估算每个商品在用户之间的兴趣分布，捆绑有相似分布的商品</em>来解决。</p>
-<h3 id="计算挑战"><a href="#计算挑战" class="headerlink" title="计算挑战"></a>计算挑战</h3><p>想要准确的计算图上的这些中心性不是件简单的事情，主要有如下挑战。</p>
+<h3 id="图中心性分析"><a href="#图中心性分析" class="headerlink" title="图中心性分析"></a>图中心性分析</h3><h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><p>近年来，对社交网络分析能更准确的进行一些商业活动，比如病毒式营销和产品推荐等。通过分析图上的各种图中心性可以获取社交网络中用户的属性，进而用来促进商品营销。可以通过下面具体的两个例子来直观的说明。</p>
+<p>（1）<strong>网络平台投资</strong>，根据病毒式营销中的“口碑效应（word-of-mouth）”，一个用户购买商品时可能会受到其朋友的影响而去买同一件商品。所以利用在线社交网络（OSN）可以很好的进行商品营销。不同的OSN会呈现不同的潜力，比如不同的OSN中用户的活跃性和影响力会有所不同。所以一个商家来说，<strong>选择哪个网络平台进行投资能吸引到最多的用户购买商品？</strong>这个问题可以通过<em>估算OSN中所有</em>用户对<em>之间的平均相似性</em>来衡量。</p>
+<p>（2）<strong>病毒式营销中的捆绑策略</strong>，将多个商品在一起打折捆绑销售也是一种常见的营销策略。但是<strong>具体选择哪些商品放在一起捆绑销售能带来最大的销售额</strong>。这个问题可以通过<em>估算每个商品在用户之间的兴趣分布，捆绑有相似分布的商品</em>来解决。</p>
+<h4 id="计算挑战"><a href="#计算挑战" class="headerlink" title="计算挑战"></a>计算挑战</h4><p>想要准确的计算图上的这些中心性不是件简单的事情，主要有如下挑战。</p>
 <p>（1）OSN的图规模通常很大，例如Facebook的用户数已经超过20亿。</p>
 <p>（2）为了保护用户的隐私，很多OSN只允许第三方代理通过固定的速度受限的API接口访问网络数据。</p>
 <p>为了分析这些大规模图数据，<strong>图采样</strong>是个常用的技术，通过分析采样的一些有代表性的样本，而避免遍历整个网络数据，这样大大减少了对网络的访问开销。</p>
-<h3 id="随机游走采样"><a href="#随机游走采样" class="headerlink" title="随机游走采样"></a>随机游走采样</h3><p>随机游走采样是这类应用场景的一个主流采样算法，因为它扩展性强且实施简单。随机游走的采样过程如下。</p>
-<ul>
-<li>首先从图中随机选取一个节点，然后重复从当前节点中随机挑选一个它的邻居节点进行跳转。很多步以后达到收敛状态，一个节点被访问的概率会呈现一个稳态分布，我们就可以从收敛以后开始采样样本节点。</li>
-</ul>
+<h3 id="随机游走采样"><a href="#随机游走采样" class="headerlink" title="随机游走采样"></a>随机游走采样</h3><p>随机游走采样是这类应用场景的一个主流采样算法，因为它扩展性强且实施简单。</p>
+<h4 id="简单随机游走"><a href="#简单随机游走" class="headerlink" title="简单随机游走"></a>简单随机游走</h4><p>考虑一个无向连通图$G(V,E)$，$N(v)$表示图中节点v的邻居集合，$deg(v)=|N(v)|$表示节点v的度。</p>
+<p>图上简单随机游走过程是：首先从图中随机选取一个节点，然后重复从当前节点中随机挑选一个它的邻居节点进行跳转。</p>
+<p>这个过程可以看成是一个有限的马尔科夫链，每一步访问的节点id就马尔科夫链的状态。每一步的状态转移概率可以表示成一个$|V|\times |V|$的概率转移矩阵$P$，$P_{uv}$从节点u通过一步random walk走到节点v的概率。简单随机游走（Simple Random Walk, SRW）的状态转移矩阵可以表示为$P_{uv}=1/deg(u), \quad if \quad v \in N(u)$，否则$P_{uv}=0$。<br><!-- $P_{uv}= \begin{cases} 1/deg(u) & \text{if v \in N(u)}\\0 & \text{otherwise} \end{cases}$ --></p>
+<p>很多步以后达到收敛状态，即随机游走访问图中每个节点的概率呈现稳态分布。SRW收敛后的稳态分布可以表示成：$\pi (u)=deg(u)/(2|E|)$。</p>
+<h4 id="随机游走采样-1"><a href="#随机游走采样-1" class="headerlink" title="随机游走采样"></a>随机游走采样</h4><p>随机游走的采样是在随机游走收敛以后开始采样收集样本。根据收集到的样本和收敛后的稳态分布，我们就可以对感兴趣的一些图测量指标进行无偏估计。</p>
+<h5 id="收集样本"><a href="#收集样本" class="headerlink" title="收集样本"></a>收集样本</h5><p>收集样本节点时，一般有两种方法：（1）<em>连续采样</em>，在图中只开启一条random walk，收敛以后持续采集样本直到收集到足够的样本节点。（2）<em>独立采样</em>，在图中同时开启多条random walk，每条walk收敛以后只采集一个样本节点。这两种方法都需要在random walk收敛以后才能开始收集样本，然后根据稳态分布进行无偏估计。</p>
+<h5 id="无偏估计"><a href="#无偏估计" class="headerlink" title="无偏估计"></a>无偏估计</h5><p>假定图上的一个测量指标可以表示成一个函数$f:V \to R$，在一个达到稳态分布$\pi$的随机游走上收集到的足够的样本上应用函数$f$，即可得到一个估计值$E_\pi[f] \stackrel{\mathrm{\Delta}}{=} \sum_{u \in V}{f(u)\pi(u)}$。该估计值的准确性可由<strong>强大数定律（the Strong Law of Large Numbers, SLLN）</strong>保证。</p>
+<h4 id="加速随机游走收敛"><a href="#加速随机游走收敛" class="headerlink" title="加速随机游走收敛"></a>加速随机游走收敛</h4><p>从开始到达稳态分布的持续时间称为“the burn-in period”，在真实的OSN中，这个阶段通常需要一个很大的计算开销，因为通常需要很多步以后才能达到收敛。在给定一个采样预算（总共访问的节点数）的情况下，除去收敛开销，我们只能采样少量的有代表性的样本，因此分析的准确性就会收到影响。所以随机游走采样一个重要的问题就是：<strong>如何加速随机游走在大规模图上的收敛？</strong></p>
+<p>现在有两类加速随机游走收敛的方法：</p>
+<p>（1）增加图的导通性（conductance），这类方法通常需要全局的图信息，所以在现实场景中通常不可行。</p>
+<p>（2）修改每一步walk的转移概率，这类方法通常是利用walk的历史信息，并且只需要访问少量的局部图信息。</p>
+<h3 id="CNARW"><a href="#CNARW" class="headerlink" title="CNARW"></a>CNARW</h3><p>这篇论文跟随第二类加速随机游走收敛的方法，提出公共邻居感知的随机游走（Common Neighbor Aware Random Walk）CNARW,通过利用walk前一步访问过的节点信息来优化下一步跳转的邻居选择。具体的，CNARW考虑当前节点和下一跳候选节点的公共邻居数量来进行下一跳的邻居选择。</p>
+<h4 id="主旨思想"><a href="#主旨思想" class="headerlink" title="主旨思想"></a>主旨思想</h4><h4 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a>算法设计</h4><h4 id="稳态分布"><a href="#稳态分布" class="headerlink" title="稳态分布"></a>稳态分布</h4><h4 id="扩展利用更多历史节点信息"><a href="#扩展利用更多历史节点信息" class="headerlink" title="扩展利用更多历史节点信息"></a>扩展利用更多历史节点信息</h4><p>基于CNARW，这篇论文提出了一种采样算法，并且提供了高效的无偏估计方法并且提供理论证明来保证无偏估计的准确度。</p>
+<p>实验结果表明，（1）CNARW最多能将当前的随机游走算法SRW，NBRW，CNRW的收敛所需的步数减少71.9%。（2）在实现相同的准确度的情况下，CNARW最多能减少35.7%的查询开销。</p>
 
         
             <div class="donate-container">
