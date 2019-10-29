@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rui Wang&#39;s blog">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        可逆的马尔可夫链 - Rui&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 热爱学习，热爱生活 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar radius">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Rui Wang</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#马尔可夫链"><span class="toc-text">马尔可夫链</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转移理论"><span class="toc-text">转移理论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#性质"><span class="toc-text">性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#稳态分析"><span class="toc-text">稳态分析</span></a></li></ol></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 热爱学习，热爱生活 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        可逆的马尔可夫链
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2019-10-29 14:17:30</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#theoretical analysis" title="theoretical analysis">theoretical analysis</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#random walk" title="random walk">random walk</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p>参考：</p>
+<p><a href="http://www.columbia.edu/~ks20/stochastic-I/stochastic-I-Time-Reversibility.pdf" target="_blank" rel="noopener">stochastic-I-Time-Reversibility</a></p>
+<p><a href="https://blog.csdn.net/u011898542/article/details/88018164" target="_blank" rel="noopener">马尔可夫链</a></p>
+<h2 id="马尔可夫链"><a href="#马尔可夫链" class="headerlink" title="马尔可夫链"></a>马尔可夫链</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>（1） <strong>马尔可夫链（Markov chain）</strong></p>
+<p>马尔可夫链是一组具有马尔可夫性质的离散随机变量的集合，可以表示为$X=\{X_n:n&gt;0\}$，其中一维指数集为可数集，随机变量的取值都在可数集$S$内，即$X=s_i,s_i \in S$，且下一步的随机变量$X_{t+1}$在给定其当前步随机变量$X_t$后与其余的随机变量条件独立，即随机变量的条件概率满足</p>
+<script type="math/tex; mode=display">P(X_{t+1}|X_t, \dots, X_1)=P(X_{t+1}|X_t)</script><p>该性质即为<strong>马尔可夫性质</strong>，也称为“无记忆性”。</p>
+<p>可数集$S \in Z$称为<em>状态空间（state space）</em>，马尔可夫链在状态空间内的取值称为<em>状态（state）</em>，马尔可夫链的指数集被称为<em>步（step）</em>。</p>
+<p>（2） <strong>k-阶马尔可夫链（n-order Markov chain）</strong></p>
+<p>k-阶马尔可夫链拥有k阶的记忆性，可视为马尔可夫链的推广。类比马尔可夫链的定义，k-阶马尔可夫链满足如下条件</p>
+<script type="math/tex; mode=display">P(X_{t+1}|X_t, \dots, X_1)=P(X_{t+1}|X_t, \dots, X_{t-k+1})</script><p>（3） <strong>马尔可夫过程（Markov process）</strong></p>
+<p>马尔可夫过程也被称为连续时间马尔可夫链，是马尔可夫链的推广，其状态空间是可数集，但一维指数集不再有可数集的限制，可以表示连续时间，其马尔可夫性质可表示为</p>
+<script type="math/tex; mode=display">P(X(t+u)=s_j | X(t)=s_i) = P(X(u)| =s_j | X(0)=s_i))</script><h3 id="转移理论"><a href="#转移理论" class="headerlink" title="转移理论"></a>转移理论</h3><p>马尔可夫链中随机变量的状态随<em>步</em>的变化被称为演变（evolution）或转移（transition）。</p>
+<p>（1） <strong>转移概率（transition probability</strong></p>
+<p>马尔可夫链中的状态间的单步转移概率可定义为随机变量间的条件概率$P_{ij}=P(X_{n+1}=s_j | X_n=s_i)$。</p>
+<p>（2） <strong>转移矩阵（transition matrix）</strong></p>
+<p>若一个马尔可夫链的状态空间是有限的，则将所有状态间的的单步转移概率按矩阵排列，得到转移矩阵</p>
+<script type="math/tex; mode=display">P=
+    \begin{matrix}
+    P_{00} & P_{01} & \dots & P_{0n} \\
+    P_{10} & P_{11} & \dots & P_{1n} \\
+    \dots & \dots & \dots & \dots \\
+    P_{n0} & P_{n1} & \dots & P_{nn} \\
+    \end{matrix}</script><p>马尔可夫链的转移矩阵是右随机矩阵（right stochastic matrix），每行元素之和等于1。在给定初始状态概率和状态转移矩阵，我们即可以确定该马尔可夫链的有限维分布（finite-dimensional distribution）。</p>
+<p>（3）<strong>转移图（transition graph）</strong></p>
+<p>我们也可以通过转移图来刻画一个马尔可夫链的转移过程，一个状态表示为 一个节点，两个状态间的转移概率表示为一条加权边。</p>
+<p>对马尔可夫链中的两个状态$s_i$和$s_j$，若在转移图中存在一条路径$ik_0k_1\dots j$，有$P_{i}P_{k_0}P_{k_1}\dots P_{j}&gt;0$，则称$s_i$到$s_j$<strong>可达</strong>，若$s_i$和$s_j$互相可达，则称$s_i$和$s_j$之间<strong>连通</strong>。连通是一组等价关系，因此多个相互连通的状态可以构建一个等价类，包含尽可能多状态的等价类称为<strong>连通类</strong>。</p>
+<p>给定状态空间的一个子集，若马尔可夫链进入该子集后无法离开，则称该子集为<strong>闭合集</strong>。若一个闭合集中只有一个状态，则该状态是<strong>吸收态</strong>。若一个马尔可夫链从任意状态出发最终都会进入吸收态，则称该马尔可夫链为<strong>吸收马尔可夫链（absorbing Markov chain）</strong>。</p>
+<h3 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h3><p>不同的马尔可夫链可能会具备不同的性质。</p>
+<p>（1）<strong>不可约性（irreducibility）</strong></p>
+<p>如果一个马尔可夫链的状态空间仅有一个连通类，即状态空间的全体成员，则该马尔可夫链具有不可约性。马尔可夫链的不可约性意味着在其演变过程中，随机变量可以在任意状态间转移。</p>
+<p>（2）<strong>重现性（recurrence）</strong></p>
+<p>若马尔可夫链在到达一个状态后，在演变中能反复回到该状态，则该状态具有<strong>重现性</strong>，否则该状态具有<strong>瞬变性（transience）</strong>。若状态$s_i$具有重现性，则可计算其平均重现时间（mean recurrence time）$E(T_i)$，若$E(T_i)&lt;\infty$，则该状态是<strong>正重现的（positive recurrent）</strong>，若$E(T_i)=\infty$，则该状态是<strong>零重现的（null recurrent）</strong>，意味着马尔可夫链两次访问该状态的时间间隔的期望是正无穷。</p>
+<p>推论：若有限个状态的马尔可夫链是不可约的，则其所有状态是正重现的。</p>
+<p>（3）<strong>周期性（periodicity）</strong></p>
+<p>一个正重现的马尔可夫链可能具有周期性，即在其演变中，马尔可夫链能够按大于1的周期重现其状态。</p>
+<p>推论：若不可约的马尔可夫链有周期性状态A，则该马尔可夫链的所有状态为周期性状态。</p>
+<p>推论：若状态A与状态B连通，则A与B周期相同。</p>
+<p>（4）<strong>遍历性（ergodicity）</strong></p>
+<p>若马尔可夫链的一个状态是正重现的和非周期的，则该状态具有遍历性。若一个马尔可夫链是不可约的，且有某个状态是遍历的，则该马尔可夫链的所有状态都是遍历的，被称为遍历链。</p>
+<p>推论：若多个状态的马尔可夫链包含吸收态，则该马尔可夫链不是遍历链。</p>
+<h3 id="稳态分析"><a href="#稳态分析" class="headerlink" title="稳态分析"></a>稳态分析</h3><p>（1）<strong>平稳分布（stationary distribution）</strong></p>
+<p>若一个马尔可夫链的状态空间存在概率分布</p>
+<script type="math/tex; mode=display">\pi=\pi P</script><p>则称$\pi$是该马尔可夫链的平稳分布。</p>
+<p>对于一个不可约的马尔可夫链，当且仅当其存在唯一平稳分布，该马尔可夫链是正重现的，且平稳分布有如下表示</p>
+<script type="math/tex; mode=display">\pi(s_i)= \frac{1}{E(T_i)}</script><p>$E(T_i)$是状态$s_i$的平均重现时间。</p>
+<p>马尔可夫链存在平稳分布的充要条件是其存在正重现状态。若一个马尔可夫链包含多个由正重现状态组成的连通类，则每个连通类都拥有一个平稳分布，且演变得到的稳态取决于初始分布。</p>
+<p>（2）<strong>极限分布（limiting distribution）</strong></p>
+<p>若一个马尔可夫链的状态空间存在概率分布</p>
+<script type="math/tex; mode=display">\lim_{n \to \infty}{p(X_n=s_i)}=\pi(s_i)</script><p>则称$\pi$是该马尔可夫链的极限分布,极限分布与初始分布无关。</p>
+<p><em>极限分布一定是平稳分布，但反之不成立，例如周期性的马尔可夫链可能具有平稳分布，但周期性马尔可夫链不收敛于任何分布，其平稳分布不是极限分布。</em></p>
+<p>（3）<strong>极限定理（limiting theorem）</strong></p>
+<p>两个独立的遍历链各自给定任意初始分布，如果他们有相同的转移矩阵，那么当时间步趋于无穷时，两者极限分布间的差异趋于0。该定理表明若马尔可夫链是遍历的，则其极限分布是平稳分布。</p>
+<p>（4）<strong>遍历定理（ergodic theorem）</strong></p>
+<p>若一个马尔可夫链为遍历链，其对某一状态的访问次数与时间步的比值，在时间步趋于无穷时趋近于平均重现时间的倒数，即该状态的极限平稳分布。</p>
+<p>遍历定理的证明依赖于强大数定律（Strong Law of Large Numbers, SLLN），表明遍历链无论初始分布如何，在经过足够长的演变后，对其中一个随机变量进行多次观测和对多个随机变量进行一次观测都可以得到极限分布的近似。由于遍历链满足极限定理和遍历定理，因此MCMC通过构建遍历链以确保其在迭代中收敛于平稳分布。</p>
+<p>（5）<strong>平稳马尔可夫链（stationary Markov chain）</strong></p>
+<p>若一个马尔可夫链拥有唯一的平稳分布且极限分布收敛于平稳分布，则该马尔可夫链是<strong>平稳马尔可夫链</strong>，也被称为<strong>齐次马尔可夫链（time-homogeneous Markov chain）</strong>。</p>
+<p>（6）<strong>可逆马尔可夫链（reversible Markov chain）</strong></p>
+<p>一个平稳马尔可夫链也是可逆马尔可夫链，其平稳分布对任意两个状态满足</p>
+<script type="math/tex; mode=display">\pi(s_i) P(X_{n+1}=s_j|X_n=s_i) = \pi(s_j) P(X_{n+1}=s_i|X_n=s_j)</script><p>或者简单写成 $\pi_i P_{ij}=\pi_j P_{ji}$。</p>
+<p><em>平稳马尔可夫链与可逆马尔可夫链互为充要条件。</em></p>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+
+        
+        <li>
+            <a target="_blank"  href="mailto:wangrui1994@126.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3125304081">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/rwang067">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
+        <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
+        <span>/</span>
+        
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: '可逆的马尔可夫链',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+
+
+
+</html>
