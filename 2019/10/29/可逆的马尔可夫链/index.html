@@ -89,7 +89,7 @@
     </div>
     
         <div id="toc" class="toc-article">
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#马尔可夫链"><span class="toc-text">马尔可夫链</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转移理论"><span class="toc-text">转移理论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#性质"><span class="toc-text">性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#稳态分析"><span class="toc-text">稳态分析</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#马尔可夫链"><span class="toc-text">马尔可夫链</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定义"><span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转移理论"><span class="toc-text">转移理论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#性质"><span class="toc-text">性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#稳态分析"><span class="toc-text">稳态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求解稳态分布"><span class="toc-text">求解稳态分布</span></a></li></ol></li></ol>
 </div>
     
 </div>
@@ -201,8 +201,16 @@
 <p>（6）<strong>可逆马尔可夫链（reversible Markov chain）</strong></p>
 <p>一个平稳马尔可夫链也是可逆马尔可夫链，其平稳分布对任意两个状态满足</p>
 <script type="math/tex; mode=display">\pi(s_i) P(X_{n+1}=s_j|X_n=s_i) = \pi(s_j) P(X_{n+1}=s_i|X_n=s_j)</script><p>或者简单写成 $\pi_i P_{ij}=\pi_j P_{ji}$。</p>
-<p><em>平稳马尔可夫链与可逆马尔可夫链互为充要条件。</em></p>
-
+<p><em>平稳马尔可夫链与可逆马尔可夫链互为充要条件。？？？</em></p>
+<h3 id="求解稳态分布"><a href="#求解稳态分布" class="headerlink" title="求解稳态分布"></a>求解稳态分布</h3><p>（1）<strong>通过马尔可夫链的可逆性求解其平稳分布</strong></p>
+<p>可逆的马尔可夫链一定存在平稳状态，且可以通过其可逆性，求解其平稳分布。</p>
+<p><strong>例（无向加权连通图上的随机游走）</strong>考虑一个n个节点的无向连通图，任意两个节点$i$和$j$之间若存在一条边，其权重$w_{ij}=w_{ji}&gt;0$，否则$w_{ij}=w_{ji}=0$。在该图上进行随机游走，节点$i$到$j$的状态转移概率为</p>
+<script type="math/tex; mode=display">P_{ij}=\frac{w_{ij}}{\sum_{k}{w_{ik}}}</script><p>该随机游走所刻画的马尔可夫链为可逆的马尔可夫链。所以任意两个节点$i$和$j$有</p>
+<script type="math/tex; mode=display">\pi_i P_{ij}=\pi_j P_{ji} \to \frac{\pi_i}{\sum_{k}{w_{ik}}} = \frac{\pi_j}{\sum_{k}{w_{jk}}}</script><p>所以，对所有的节点$i$有</p>
+<script type="math/tex; mode=display">\frac{\pi_i}{\sum_{k}{w_{ik}}} = C \to \pi_i=C\sum_k{w_{ik}}</script><p>因为$\pi$是一个在所以状态上的概率分布，有$\sum_i{\pi_i}=1$，所以</p>
+<script type="math/tex; mode=display">\sum_i{(C\sum_k{w_{ik}})}=1 \to C=\frac{1}{\sum_i{\sum_k{w_{ik}}}}</script><p>最终求得该马尔可夫链的平稳分布为</p>
+<script type="math/tex; mode=display">\pi_i=\frac{\sum_k{w_{ik}}}{\sum_i{\sum_k{w_{ik}}}}</script><p>若是考虑无权图是场景，即任意两个节点$i$和$j$之间若存在一条边，其权重$w_{ij}=w_{ji}=1$，则其平稳分布为</p>
+<script type="math/tex; mode=display">\pi_i=\frac{\sum_k{w_{ik}}}{\sum_i{\sum_k{w_{ik}}}} = \frac{d_i}{\sum_k{d_k}} = \frac{d_i}{2|E|}</script>
         
             <div class="donate-container">
     <div class="donate-button">
