@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rui Wang&#39;s blog">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        KnightKing(SOSP 2019) 分布式随机游走系统 - Rui&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 热爱学习，热爱生活 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar radius">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Rui Wang</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#随机游走"><span class="toc-text">随机游走</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#应用场景"><span class="toc-text">应用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#执行过程"><span class="toc-text">执行过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关键步骤"><span class="toc-text">关键步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#复杂的随机游走"><span class="toc-text">复杂的随机游走</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#计算开销来源"><span class="toc-text">计算开销来源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#发展需求"><span class="toc-text">发展需求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#KnightKing概述"><span class="toc-text">KnightKing概述</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#统一的随机游走算法定义"><span class="toc-text">统一的随机游走算法定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#随机游走分类"><span class="toc-text">随机游走分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#转移概率统一定义"><span class="toc-text">转移概率统一定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#典型随机游走算法"><span class="toc-text">典型随机游走算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发展现状"><span class="toc-text">发展现状</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#静态随机游走"><span class="toc-text">静态随机游走</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态随机游走"><span class="toc-text">动态随机游走</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#系统优化工作"><span class="toc-text">系统优化工作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KningKing的采样策略"><span class="toc-text">KningKing的采样策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#拒绝采样"><span class="toc-text">拒绝采样</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优化技术"><span class="toc-text">优化技术</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计算流程和编程模型"><span class="toc-text">计算流程和编程模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#随机游走的生命周期"><span class="toc-text">随机游走的生命周期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#KnightKing-API"><span class="toc-text">KnightKing API</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#系统优化"><span class="toc-text">系统优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#图的存储与划分"><span class="toc-text">图的存储与划分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#walker的执行与协调"><span class="toc-text">walker的执行与协调</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验"><span class="toc-text">实验</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 热爱学习，热爱生活 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        KnightKing(SOSP 2019) 分布式随机游走系统
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2019-11-04 10:59:47</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#random walks" title="random walks">random walks</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#graph processing system" title="graph processing system">graph processing system</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#paper reading" title="paper reading">paper reading</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p>KnightKing: A Fast Distributed Graph Random Walk Engine. Ke Yang, MingXing Zhang, Kang Chen, Xiaosong Ma, Yang Bai, Yong Jiang, SOSP 2019. | <a href="https://sosp19.rcs.uwaterloo.ca/videos/D3-S2-P2.mp4" target="_blank" rel="noopener">Presentation</a> | <a href="http://delivery.acm.org/10.1145/3360000/3359634/p524-yang.pdf?ip=222.195.68.252&amp;id=3359634&amp;acc=OPENTOC&amp;key=BF85BBA5741FDC6E%2EA4F9C023AC60E700%2E4D4702B0C3E38B35%2EC42B82B87617960C&amp;__acm__=1572836886_72f8bbbe82d7289fac30d1fcc02962f6" target="_blank" rel="noopener">Paper</a> |</p>
+<h3 id="随机游走"><a href="#随机游走" class="headerlink" title="随机游走"></a>随机游走</h3><h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><p>随机游走是图数据分析和机器学习中一个重要的分析工具，可以利用图中节点之间的集成路径提取信息，经常被应用于一些重要的图分析、排序和嵌入式算法中，比如<em>PPR（personalized PageRank）</em>，<em>SimRank</em>，<em>DeepWalk</em>，<em>node2vec</em>等。</p>
+<p>这些算法既可以独立运行，也可以作为机器学习任务的预处理步骤。他们服务于各种应用场景，比如<em>点|边分类</em>，<em>社区检测</em>，<em>链接预测</em>，<em>图像处理</em>，<em>语言建模</em>，<em>知识发现</em>，<em>相似性测量</em>和<em>推荐系统</em>等。</p>
+<h4 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h4><p>图上的随机游走的执行过程为：</p>
+<ol>
+<li><p>从图上出发$w$条walker，每条walker从一个特定的节点出发，walker之间独立的游走。</p>
+</li>
+<li><p>每一步，每条walker选取其所停留的当前节点的出边中随机采样选择一条出边，并沿着该出边跳转到下一跳。</p>
+</li>
+<li><p>每条walker在达到预设的终止条件时终止行走，一般为达到预设的长度或者预设的终止概率。</p>
+</li>
+</ol>
+<p>一般来说，基于随机游走的算法的<strong>输入</strong>为一个图$G$。<strong>输出</strong>为随机游走过程中嵌入的计算结果，或者随机游走的路径信息。</p>
+<h4 id="关键步骤"><a href="#关键步骤" class="headerlink" title="关键步骤"></a>关键步骤</h4><p>随机游走过程中的主要计算开销在于<strong>边采样过程</strong>，这也是不同的随机游走算法的不同之处，每个不同的随机游走算法定义其特有的<strong>边转移概率</strong>。随着随机游走的普及，边采样的逻辑也变得越来越复杂，近期的算法中更是提出了<strong>动态采样</strong>，即随机游走在每个节点处的采样概率不仅跟该节点的邻居信息有关，还与随机游走的状态有关。</p>
+<h4 id="复杂的随机游走"><a href="#复杂的随机游走" class="headerlink" title="复杂的随机游走"></a>复杂的随机游走</h4><p>复杂的随机游走算法能实现更高的灵活性，带来更好的性能，但随之带来的也有更大的采样的复杂度和计算开销。例如，一个很受欢迎的网络特征学习技术<strong>node2vec</strong>，包含<em>动态随机游走</em>和<em>跳跃语言模型构建</em>两个部分，而其在Spark上的实现据说98.8%的时间开销花在第一部分。而本文作者的实验表明，即使在Gemini的实现版本中，node2vec的执行会停滞在<strong>边采样</strong>的步骤，导致其在Twitter数据集中<em>每秒访问的节点个数</em>比BFS要低1434倍。</p>
+<h4 id="计算开销来源"><a href="#计算开销来源" class="headerlink" title="计算开销来源"></a>计算开销来源</h4><p>边采样过程中的巨大计算开销来源于它的<em>动态</em>特性，即在每一步进行随机边选择时，需要重新计算当前节点的所有出边的转移概率，这个计算开销随着当前节点度的增长而增长。而真实时间的图的度分布一般呈现幂律分布，所以造成各个节点的计算开销非常不均衡。而随机游走一般趋向于走到度数高的节点，这进一步加剧了采样开销。</p>
+<p>本文的作者对比考虑了两个真实时间的图Friendster和Twitter，他们有相似的平均度，分别为51和70，但是Twitter的度分布更加倾斜。在这两个图上执行node2vec，采用“Full-scan”的边采样方式，Twitter上的平均采样开销是Friendster的255倍，Twitter上进行一步walker转发平均需要将近访问$10^6$条边。</p>
+<h4 id="发展需求"><a href="#发展需求" class="headerlink" title="发展需求"></a>发展需求</h4><p>其他的随机游走也有如上所述的挑战，然而目前没有一个统一的随机游走计算框架，所有这些算法都需要用户自己在通用的图计算框架上实现，不仅工作量大而且性能也难以优化。</p>
+<p>这些随机游走算法都是以walk为中心的算法，但目前的图计算系统中大多采用以点或边为中心的计算模型，更关注于更新点和边的状态信息，随机游走中的“walker”通常作为消息信息被传递，此时walk信息很难记录，而那些依赖于walk状态来进行边采样的算法也很难实现。</p>
+<p>另外，现有的通用图计算系统中采用的有一些优化方案，对随机游走算法来说并不适用甚至反而降低随机游走算法的性能，比如<em>2-D图划分</em>和<em>GAS计算模型</em>。</p>
+<h4 id="KnightKing概述"><a href="#KnightKing概述" class="headerlink" title="KnightKing概述"></a>KnightKing概述</h4><p>KnightKing是一个<em>分布式随机游走计算引擎</em>，可以开成是传统分布式图计算引擎的随机游走副本。KnightKing采用以walk为中心的视角，用户自定义walk的边转移概率。与通用的图计算引擎类似，KnightKing隐藏了图划分，节点分配，通信和负载均衡等系统层面实现细节，只是给用户提供了一个“think-like-a-walker”的视角，用户可以灵活的添加可选的优化。</p>
+<p>KnightKing带来性能提升的核心在于<strong>快速地选择下一跳</strong>。</p>
+<p>（1）KnightKing首先引入了一个统一的<strong>转移概率的定义</strong>，引入<em>静态概率</em>和<em>动态概率</em>，有效的刻画各类随机游走算法。</p>
+<p>（2）然后采用<strong>拒绝采样</strong>的方式，避免了在进行边采样时遍历walker所在的当前节点的所有出边，大大减少了边采样的开销。对于相同的node2vec，换成KnightKing中的拒绝采样，采样一条边进行一步walk转发平均只需要0.79条边。另外，不同于现有的一些近似优化算法，KnightKing采用精确采样，提高性能的同时并没有损失准确度。</p>
+<p>（3）KnightKing也做了一些系统方面的优化工作，来支持以walk为中心的编程模型，并进一步提升随机游走的性能。</p>
+<h3 id="统一的随机游走算法定义"><a href="#统一的随机游走算法定义" class="headerlink" title="统一的随机游走算法定义"></a>统一的随机游走算法定义</h3><h4 id="随机游走分类"><a href="#随机游走分类" class="headerlink" title="随机游走分类"></a>随机游走分类</h4><p>一般随机游走的过程为：在给定图上出发一定数量的随机游走，每个出发于一个特定的节点，每条walker重复在当前节点的邻居节点中随机选择一个节点，并转发到该节点。不同的随机游走算法的不同就在于<strong>邻居节点的选择</strong>。</p>
+<p>根据当前节点的邻居节点们被选择的机会是不是相同的，可以分为<strong>无偏</strong>随机游走，即当前节点的各个邻居节点被选择的概率是相等的，和<strong>有偏</strong>随机游走，即当前节点的各个邻居节点被选择的概率取决于其权重或其他特征，各不相同。</p>
+<p>根据各个walker转发过程中在一条边上的转移概率是不是恒定的，又可以分为<strong>静态</strong>随机游走，即walker在一条边上的转移概率只与图结构有关，在walker的转发过程中保持恒定，和<strong>动态</strong>随机游走，即walker在一条边上的转移概率不仅与图结构有关，还与walker当前的状态有关，会随着walker的转发不断变化。所以对于动态随机游走来说，我们不再能够预计算出每条边的转移概率，而在每一步walker转发时都需要重新计算转移概率。</p>
+<p>我们可以进一步根据随机游走算法的转移概率考虑当walker最近路径的步长数来定义随机游走算法的<strong>阶数</strong>，<strong>一阶随机游走</strong>算法中，walker只知道当前节点，不知道之前访问的节点信息。<strong>一阶随机游走</strong>算法中，walker在选择下一跳的时候考虑上一步所在的节点。高于二阶（包含二阶）的<em>高阶随机游走为<strong>动态</strong>随机游走</em>。</p>
+<p>除了转移概率的不同，不同的随机游走算法也有不同的<strong>终止策略</strong>，常见的终止策略有（1）在walker走到一定步长后终止，（2）每个walker在每一步有一定的概率终止。</p>
+<h4 id="转移概率统一定义"><a href="#转移概率统一定义" class="headerlink" title="转移概率统一定义"></a>转移概率统一定义</h4><p>本文给出各类随机游走算法一个统一的非标准化（未归一）的转移概率的定义：</p>
+<p><em>对于一个walker $w$，当前停留在节点$v$，该walker通过$v$的一条出边$e$转发到下一跳的概率为</em></p>
+<script type="math/tex; mode=display">P(e)=P_s(e) \cdot P_d(e,v,w) \cdot P_e(v,w).</script><p><em>其中，$P_s(e)$为静态分量，$P_d(e,v,w)$为动态分量，$P_e(v,w)$为扩展分量。</em></p>
+<p>在这个统一定义的框架下，简单的随机游走算法就是有偏高阶算法的一个特例。比如简单的无偏静态算法，$P_s(e)=P_d(e,v,w)=1$。$P_e(v,w)$的设置独立于$P_s(e)$和$P_d(e,v,w)$，当一个walker满足终止条件时，设置$P_e(v,w)=0$。</p>
+<h4 id="典型随机游走算法"><a href="#典型随机游走算法" class="headerlink" title="典型随机游走算法"></a>典型随机游走算法</h4><p>下面介绍四个有代表性的随机游走算法，并给出他们在上述的统一的转移概率的定义下，各个分量的值。</p>
+<p><strong>（1）PPR</strong></p>
+<p>PPR，即个性化的PageRank（personalized PageRank），是经典的PageRank算法的一个更复杂的扩展版本。通用的PageRank算法通常是使用<em>幂法迭代计算</em>，但是PPR，尤其是<em>fully PPR</em>(为所有节点计算PPR)用幂法迭代计算需要非常高的时间和空间开销，对非常大的图来说通常难以承受。</p>
+<p>一个通常的做法是用基于随机游走的方案来计算得到近似值，考虑一个节点$v$的PPR可以从$v$出发进行一条很长的RWR，统计各个节点的访问概率，当walk的长度足够长，这里的访问概率就趋近于PPR值。这里我们考虑基于随机游走的fully PPR。</p>
+<p>考虑一个有向加权图，当前节点的一条出边被采样的概率正比于它的权重，即$P_s(e)=f(v,x)$，其中e是一条从$v$到$x$的边，$P_d(e,v,w)=1$。为了提升性能，我们通常将一条长walk拆成很多条短walk并行处理，每个短walk以一定的概率$P_t$终止，即在$P_t$的概率下，$P_e(v,w)=0$。（本文设置$P_t=0.0125 or 0.149$）</p>
+<p>这里，PPR是一个有偏静态随机游走算法。</p>
+<p><strong>（2）DeepWalk</strong></p>
+<p>DeepWalk是一个广泛应用于机器学习的一个图嵌入技术，利用语言建模技术来进行图分析。DeepWalk使用随机游走来产生很多的walk序列，每个节点作为一个节点，每个walk序列就构成一个句子，然后利用SkipGram语言模型来学习这些节点的潜在表征，这有很多应用场景，比如<em>多标签分类</em>，<em>链接预测</em>和<em>异常检测</em>。</p>
+<p>原始的DeepWalk是无偏的随机游走，这里我们扩展成加权图下有偏的随机游走，转移概率的设置与PPR相同，walk终止条件为走一定的walk长度。</p>
+<p><strong>（3）Meta-path</strong></p>
+<p>Meta-path用于捕捉节点和边之间的异构性背后蕴含的语义。Meta-path中，每条walker关联着一个<strong>meta-path模式</strong>，指定一个walker路径中边类型的模式。比如在一个论文发表网络图中，为了探索论文之间的引用关系，我们可以设置walker的初始节点为一个<em>作者</em>，设置meta-path模式为“isAuther -&gt; citeBy -&gt; autheredBy”。</p>
+<p>对于关联着meta-path模式$S$的一个walker，其在第$k$步的动态转移概率为$P_d(e,v,w)=1$, if $type(e)=S_{k mod |S|}$, otherwise $P_d(e,v,w)=0$。</p>
+<p>这里，Meta-path是一个动态的一阶随机游走算法。</p>
+<p><strong>（4）node2vec</strong></p>
+<p>node2vec是一个高阶的随机游走算法，walker根据最近访问的历史信息来选择下一跳。node2vec与DeepWalk有相似的应用场景，但更加灵活。</p>
+<p>在一个无向图中，一个walker $w$，刚刚从节点$t$跳转到节点$v$，$x$是v的邻居节点，则node2vec中转移概率的动态分量可以表达为：</p>
+<script type="math/tex; mode=display">P_d(e,v,w)=\frac{1}{p}, if d_{tx}=0</script><script type="math/tex; mode=display">P_d(e,v,w)=1, if d_{tx}=1</script><script type="math/tex; mode=display">P_d(e,v,w)=\frac{1}{q}, if d_{tx}=2</script><p>这里，$p$和$q$是用户配置的参数，分别称为<em>回归参数</em>和<em>出入参数</em>，$d_{tx}$表示节点$t$到节点$x$的距离。考虑加权图的场景，$P_s(e)=f(v,x)$。</p>
+<p>这里，node2vec是一个有偏的动态二阶随机游走算法。</p>
+<h3 id="发展现状"><a href="#发展现状" class="headerlink" title="发展现状"></a>发展现状</h3><p>目前已有一些研究工作用于加速边采样的过程，提升随机游走的性能，可以分为针对静态随机游走的优化和针对动态随机游走的优化。</p>
+<h4 id="静态随机游走"><a href="#静态随机游走" class="headerlink" title="静态随机游走"></a>静态随机游走</h4><p><strong>（1）逆转变换采样（ITS, Inverse Transform Sampling）</strong></p>
+<p>在已知所有边的采样概率的情况下，增加一个预处理过程，为每个节点构建一个数组$C$，用于存放其所有出边的转移概率的CFD（Cumulative Distribution Function），i.e.，$C[i]=\sum_{j=0}^{i-1}{P_s(e_j)}$。设一个节点的出边数为$n$，则在随机游走进行边采样的时候，首先生成一个随机数$r \in [0,C[n-1])$，并通过二分查找寻找最大的$i$使得$C[i]&gt;r$，然后就选取$e_i$作为随机游走在该步采样的边。</p>
+<p>ITS方法在预处理时需要$O(n)$的时间和空间用于构建CDF数据，在随机游走的每一步需要$O(log_2 n)$去采样一条边。</p>
+<p><strong>（2）别名法（alias method）</strong></p>
+<p>别名法也是在预处理阶段将每条边根据其转移概率拆分成一个或多个<em>片段（piece）</em>，每个图产生的总片段数不超过2n。然后将这些片段放入不同的<em>桶（bucket）</em>，使得每个桶的概率和是相等的。这些桶和他们的内容构成了一张<em>别名表（alias table）</em>。在随机游走进行边采样的时候，首先随机选择一个桶，然后在桶中根据每个片段的权重随机选择一个片段，将该片段所属的边作为随机游走在该步采样的边。</p>
+<p>别名法在预处理时需要$O(n)$的时间和空间用于构建别名表，在随机游走的每一步只需要$O(1)$去采样一条边。</p>
+<h4 id="动态随机游走"><a href="#动态随机游走" class="headerlink" title="动态随机游走"></a>动态随机游走</h4><p>上述两个方法针对静态随机游走时能提升较高的性能，但在动态随机游走的场景下，构建CDF数据或别名表都需要巨大的开销，比如针对Twitter数据集（11G）上的node2vec算法，就分别需要970TB或1.89PB的内存开销。所以动态随机游走不能用上述预处理的方法来加速边采样过程。目前也有一些加速动态随机游走算法的优化工作。</p>
+<p><strong>（1）针对专门算法的优化</strong><br>有一些专门针对某一个特定算法的优化工作，比如针对meta-path算法，在预处理时，对每一种边的类型构建ITS数组或别名表。这样所有的边根据类型被划分成多个不相交集合，没有增加预处理额外的时间和空间开销。但这种方法并不能扩展到通用的动态随机游走算法。Fast-Node2Vec是针对node2vec的一个优化工作，通过缓存受欢迎节点的边列表来减少数据传输。这种方法牺牲了walker间的并发处理性能来节省内存开销。</p>
+<p><strong>（2）近似采样方法</strong></p>
+<p>也有一些近似采样算法来提升高阶动态随机游走的类型，比如node2vec-on-spark通过修剪掉高度节点，预处理时针对高度节点只选取其中的30条边。但即使牺牲了一定的准确度，这种方法依旧需要存储高达900|V|的转移概率。Fast-Node2Vec则是针对高度节点忽略去动态概率分布，只考虑其静态概率部分，以此来减少存储和采样开销。</p>
+<h4 id="系统优化工作"><a href="#系统优化工作" class="headerlink" title="系统优化工作"></a>系统优化工作</h4><p>目前针对随机游走算法的系统方面的工作只有DrunkardMob，但是它只考虑静态随机游走算法而且是设计在单机外核场景下，可扩展性受限。而其他通用的图计算系统是针对一些传统的图算法进行优化，并没有解决随机游走算法的问题。</p>
+<h3 id="KningKing的采样策略"><a href="#KningKing的采样策略" class="headerlink" title="KningKing的采样策略"></a>KningKing的采样策略</h3><p>KningKing关键的创新点在于其边采样机制：动态概率分部采用拒绝采样，静态概率分部采用别名法。</p>
+<h4 id="拒绝采样"><a href="#拒绝采样" class="headerlink" title="拒绝采样"></a>拒绝采样</h4><p><strong>（1）无偏拒绝采样</strong><br><em>拒绝采样</em>开始用于通用的任意概率的采样，将一个一维的采样过程转换成一个二维的采样过程。具体对应到随机游走的边采样过程为：随机地产生一个位置$(x,y)$，其中$x$是从当前节点的出边中均匀随机选取的一条边e，$y \in [0,Q(v)]$，其中$Q(v)$是当前节点的出边的动态转移概率的最大值。当$y \leq P_d(e)$，则e被接收，当前walker通过e跳转。否则，e被拒绝，需要重新采样$(x,y)$并重复上面过程，直至walker成功跳转。</p>
+<p>通过拒绝采样的方式，消除了对当前节点所有出边的访问去获取他们的转移概率。一般只需要几次尝试就可以成功采样一条边（复杂度为$O(1)$）。大大减少了对高度节点的采样开销。</p>
+<p><strong>（2）有偏拒绝采样</strong></p>
+<p>有偏拒绝采样是指每条边的静态采样分部$P_s$是有偏的。一般是在加权图场景下采样概率正比于该条边的权重。无偏拒绝采样扩展到有偏拒绝采样，即在随机生成$(x,y)$时，通过$x$来进行边e的选取是有偏的。这里KnightKing使用ITS或别名法。</p>
+<p><strong>（3）采样复杂度</strong></p>
+<p>静态分部：预处理开销$O(n)$，计算开销$O(1)$（别名法）或$O(n)$（ITS）。<br>动态分部：一次尝试开销$O(1)$。具体的开销取决于平均尝试的次数$E$，一般可以计算如下。</p>
+<script type="math/tex; mode=display">E=\frac{Q(v) \cdot \sum_{e \in E_v}{P_s(e)}} {\sum_{e \in E_v}{P_s(e) \cdot P_d(e)}}</script><p>$E$并不直接关联节点的度，而是取决于$Q(v)$，所以我们可以通过减小$Q(v)$的值进一步优化拒绝采样的平均尝试次数，进而提升效率。</p>
+<h4 id="优化技术"><a href="#优化技术" class="headerlink" title="优化技术"></a>优化技术</h4><p><strong>（1）解决$P_d$中的异常值（outliers）</strong></p>
+<p>$P_d$中可能会存在几个异常大的值，从而增大了$Q(v)$的值（该节点所有出边的最大值），而大部分概率值都比较低。此时可以通过阶段异常值，拆成多个小的概率值的方式添加到所有出边的后面。这样减小$Q(v)$的值，而不改变每条边被采样到的概率（可以参考论文中的Figure 3）。</p>
+<p><strong>（2）预接收</strong></p>
+<p>可能该节点所有出边的概率值存在一个最小值$L(v)$，则当随机生成的$y \leq L(v)$，我们直接接收当前节点，而不用去访问当前边获取它的$P_d$。</p>
+<h3 id="计算流程和编程模型"><a href="#计算流程和编程模型" class="headerlink" title="计算流程和编程模型"></a>计算流程和编程模型</h3><h4 id="随机游走的生命周期"><a href="#随机游走的生命周期" class="headerlink" title="随机游走的生命周期"></a>随机游走的生命周期</h4><p>KnightKing是一个分布式随机游走系统，同时并发的处理很多条walker。walker根据其当前所在的节点被划分到不同的机器上，并行计算。为了同步协调很多节点上更新任务，KnightKing采用<strong>基于迭代的计算模型</strong>。不同于传统图计算系统上运行的确定性算法，KnightKing每一步的概率选择导致其每一轮计算流程与传统的图计算系统都有细微的差别。</p>
+<p>在处理高阶的随机游走时，每一轮迭代计算需要包含两轮消息传递：1）发送查询概率请求；2）收集查询结果。</p>
+<h4 id="KnightKing-API"><a href="#KnightKing-API" class="headerlink" title="KnightKing API"></a>KnightKing API</h4><ul>
+<li><p>指定转移概率</p>
+</li>
+<li><p>初始化和终止条件</p>
+</li>
+<li><p>walker状态</p>
+</li>
+</ul>
+<h3 id="系统优化"><a href="#系统优化" class="headerlink" title="系统优化"></a>系统优化</h3><p>KnightKing是一个分布式图计算系统，本文实现于2500行的C++源码，使用OpenMPI进行结点间通信。它的底层与分布式图引擎有很多共同之处，所以直接使用成熟的系统（Pregel和Gemini）中的基础设施和技术。</p>
+<h4 id="图的存储与划分"><a href="#图的存储与划分" class="headerlink" title="图的存储与划分"></a>图的存储与划分</h4><p>存储：CSR格式。</p>
+<p>划分：KnightKing采样节点划分策略，每个节点连同它的出边被划分到集群中的一个机器结点（无向图中每条边存两次）。划分时使得每个机器上的节点数和边数的和尽量均匀。</p>
+<h4 id="walker的执行与协调"><a href="#walker的执行与协调" class="headerlink" title="walker的执行与协调"></a>walker的执行与协调</h4><p><strong>（1）计算模型</strong></p>
+<p>walker之间独立执行，会导致严重的不同步，而且带来巨大的网络通信开销。KnightKing采用BSP模型，协调同步各个walker的执行。</p>
+<p>walker开始之前需要先进行一些初始化，包括<em>构建静态概率的别名表</em>，<em>设置动态概率的上下界</em>，<em>实例化walker</em>。</p>
+<p>每一轮采样<strong>以walker为中心的计算模型</strong>，包括<em>per-walker的消息生成</em>，<em>目标结点查找</em>，<em>消息批处理</em>，<em>all-to-all的消息传递</em>。还有一些额外的优化技术包括<em>缓冲池管理</em>和<em>流水线</em>，以使计算与通信重叠，实现更高的并行度。</p>
+<p><strong>（2）任务调度</strong></p>
+<p>每个结点上有两个线程专门用于消息传递，剩余线程用于walker转发。计算与消息传递并发执行，消息（walkers）被存放于一个共享队列供所有线程抓取，队列的长度一般设置为128。</p>
+<p><strong>（3）walker同步</strong></p>
+<p>即使采样BSP计算模型，大多数walker之间能够同步执行过程，但是仍然会存在一部分stragglers，拖慢整体的运行时间。stragglers的来源有以下两个部分：</p>
+<p>1）有些应用中，walker的执行长度本就各不相同，比如PPR，每条walker以一定的概率终止，不同walker终止在不同的步长。</p>
+<p>2）在基于动态转移概率的随机游走算法中，采用拒绝采样策略，被拒绝的walker只能待在原节点等到下一轮再尝试转发。</p>
+<p>本文统计了在LiveJournal上运行node2vec算法（每条walker运行80步后终止），发现有少部分stragglers落后很多，最慢的walker需要200多轮迭代计算才能完成计算，可以称之为“长尾”。</p>
+<p>KnightKing不能减少这些stragglers的迭代次数。但是长尾期间，总walker数量很少时（少于4000），可以通过降低的并发度（总共只使用3个线程，1个用于计算，2个用于通信）的方式来加速stragglers在每一轮的计算。实验表明该优化可以减少总运行时间的57.5%。</p>
+<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><p><strong>（1）实验设置</strong></p>
+<p>实验环境：8个结点的集群，每个结点装备Ubuntu 14.04系统，有2个8核处理器，20MB的L3级缓存，94GB的DRAM。</p>
+<p>数据集：LiveJournal，Friendster，Twitter，UK-Union。处理成无向加权图（每条边随机给定权重$[1,5)$）。</p>
+<p>RW应用：DeepWalk，PPR，Meta-path，node2vec。</p>
+<p>对比系统：Gemini。</p>
+<p>评估方法：执行时间。在非常慢的场景下，使用线性回归来推断运行时间。</p>
+<p><strong>（2）整体性能</strong></p>
+<p><strong>（3）图拓扑的敏感性</strong></p>
+<p><strong>（4）概率分布的敏感性</strong></p>
+<p><strong>（5）系统优化</strong></p>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+
+        
+        <li>
+            <a target="_blank"  href="mailto:wangrui1994@126.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3125304081">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/rwang067">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
+        <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
+        <span>/</span>
+        
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: 'KnightKing(SOSP 2019) 分布式随机游走系统',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+
+
+
+</html>

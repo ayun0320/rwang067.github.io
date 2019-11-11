@@ -209,8 +209,8 @@
 <script type="math/tex; mode=display">\pi_i P_{ij}=\pi_j P_{ji} \to \frac{\pi_i}{\sum_{k}{w_{ik}}} = \frac{\pi_j}{\sum_{k}{w_{jk}}}</script><p>所以，对所有的节点$i$有</p>
 <script type="math/tex; mode=display">\frac{\pi_i}{\sum_{k}{w_{ik}}} = C \to \pi_i=C\sum_k{w_{ik}}</script><p>因为$\pi$是一个在所以状态上的概率分布，有$\sum_i{\pi_i}=1$，所以</p>
 <script type="math/tex; mode=display">\sum_i{(C\sum_k{w_{ik}})}=1 \to C=\frac{1}{\sum_i{\sum_k{w_{ik}}}}</script><p>最终求得该马尔可夫链的平稳分布为</p>
-<script type="math/tex; mode=display">\pi_i=\frac{\sum_k{w_{ik}}}{\sum_i{\sum_k{w_{ik}}}}</script><p>若是考虑无权图是场景，即任意两个节点$i$和$j$之间若存在一条边，其权重$w_{ij}=w_{ji}=1$，则其平稳分布为</p>
-<script type="math/tex; mode=display">\pi_i=\frac{\sum_k{w_{ik}}}{\sum_i{\sum_k{w_{ik}}}} = \frac{d_i}{\sum_k{d_k}} = \frac{d_i}{2|E|}</script>
+<script type="math/tex; mode=display">\pi_i=\frac{\sum_k{w_{ik}}}{\sum_i{\sum_k{w_{ik}}}}</script><p>若是考虑无权图是场景，即任意两个节点$i$和$j$之间若存在一条边，其权重$w_{ij}=w_{ji}=1$，记$d_i$为节点$i$的度，则其平稳分布为</p>
+<script type="math/tex; mode=display">\pi_i=\frac{\sum_k{w_{ik}}}{\sum_i{\sum_k{w_{ik}}}} = \frac{d_i}{\sum_i{d_i}} = \frac{d_i}{2|E|}</script>
         
             <div class="donate-container">
     <div class="donate-button">
