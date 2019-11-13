@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rui Wang&#39;s blog">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        CGraph(ATC 2018) 并发图处理系统 - Rui&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 热爱学习，热爱生活 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar radius">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Rui Wang</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#并发图处理场景"><span class="toc-text">并发图处理场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#相关工作"><span class="toc-text">相关工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#以数据为中心的LTP模型"><span class="toc-text">以数据为中心的LTP模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#加载图分块（Load）"><span class="toc-text">加载图分块（Load）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#触发（Trigger）各图处理任务的并发执行"><span class="toc-text">触发（Trigger）各图处理任务的并发执行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据推送（Pushing）实现master和mirror的状态同步"><span class="toc-text">数据推送（Pushing）实现master和mirror的状态同步</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验对比"><span class="toc-text">实验对比</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 热爱学习，热爱生活 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        CGraph(ATC 2018) 并发图处理系统
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2019-11-12 20:19:08</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#graph processing system" title="graph processing system">graph processing system</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#concurrent graph processing" title="concurrent graph processing">concurrent graph processing</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#paper reading" title="paper reading">paper reading</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p>CGraph: A Correlations-aware Approach for Efficient Concurrent Iterative Graph Processing. Yu Zhang, Xiaofei Liao, Hai Jin, Liu Gu, Haikun Liu, Bingsheng He, Ligang He. ATC 2018 <a href="https://https://www.usenix.org/conference/atc18/presentation/zhang-yu" target="_blank" rel="noopener">presentation</a> | <a href="https://www.usenix.org/system/files/conference/atc18/atc18-zhang-yu.pdf" target="_blank" rel="noopener">paper</a> |</p>
+<h3 id="并发图处理场景"><a href="#并发图处理场景" class="headerlink" title="并发图处理场景"></a>并发图处理场景</h3><p>并发图处理（CGP）是指，大量的图算法并发的运行在同一平台上对底层同一个图数据进行处理，以对该图数据进行多方位的分析处理，获得各种目的性的分析结果。通过追踪一个大型社交网络上的信息发现，对同一个图数据在峰值的时候有超过20个计算任务在并发执行。</p>
+<p>这些任务之间独立运行，相互之间造成缓存干扰和内存墙的问题，限制了这些并发图计算任务的运行性能。实验发现，随着并发图处理任务的数量的增加，每个任务的平均执行时间明显增加，而增加的时间开销主要来源于更高的数据访问开销。因为并发图处理任务之间会竞争数据访问通道、内存和缓存。</p>
+<p>这些并发图处理任务对图数据的访问也存在关联性，包含空间关联性和时间关联性。</p>
+<p>（1）空间关联性：多个并发图分析任务需要访问和处理的图数据存在大量的交集。数据显示，平均每一轮并发图处理任务之间对图数据的访问的交集高达70%。</p>
+<p>（2）时间关联性：多个并发图分析任务可能在很短的时间内需要同时访问同一个图划分块。</p>
+<p>所以本文旨在考虑通过充分利用这些并发图处理任务对图数据的访问的空间/时间相关性，开发高效使用缓存/内存和数据访问通道的解决方案，以实现更高的吞吐量。</p>
+<h3 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h3><p>现有的单机图处理系统，包括GraphChi，X-Stream，GridGraph，NXgraph和CLIP等，通常旨在优化使得有更高的顺序内存带宽，更好的数据局部性，减少冗余数据访问，更少的内存消耗等。他们主要针对单个图处理任务的场景能实现很好的性能，但对并发图处理场景运行效率并不高。</p>
+<h3 id="以数据为中心的LTP模型"><a href="#以数据为中心的LTP模型" class="headerlink" title="以数据为中心的LTP模型"></a>以数据为中心的LTP模型</h3><p>以数据为中心的LTP包含三个阶段：Load-Trigger-Pushing。</p>
+<h4 id="加载图分块（Load）"><a href="#加载图分块（Load）" class="headerlink" title="加载图分块（Load）"></a>加载图分块（Load）</h4><p><strong>数据分离</strong>，一个图处理任务的数据通常包含四个部分，$D_J=(V_J,S_J,E_J,W_J)$，分别表示节点集，节点状态集，边集和边权重集。LTP模型中首先实现图结构数据和图处理任务状态数据的分离。即$D=(V,E,W)$为所有并发图计算任务的共享数据，被划分为多个块存储，$G=\cup_iG^i$。各图处理任务分别有一个状态数据$S_J$。共享的图数据和各计算任务的状态数据通过多张KV表来存储。</p>
+<p><strong>图划分</strong>，CGraph采用切割节点的方式，所有的边被均匀划分到不同的分块，跨越不同分块的节点建立master和mirror。这样能很好的达到各个图数据分块间的负载均衡，且避免各个图数据分块之间的通信，只有master和mirror之间需要通信。每个图分块的大小取决于CPU的核数N以及缓存容量的大小C，具体的值取满足下列公式的最大值，$P_g + \frac{P_g}{s_g} \times s_p \times N + b \leq C$。</p>
+<p><strong>动态图支持</strong>，在动态图场景下，图数据结构会随着时间更新，比如增加或删除一些节点和边。这些更新只对在他们之后提交的图并发任务有效，CGraph通过一些快照（snapshots）来保存这些更新的增量信息，这样不同的并发图处理任务可以分别处理不同的快照信息。</p>
+<p><strong>图分块加载</strong>，在每一轮计算中，各个并发图处理任务共享同一个图分块数据。所以每一轮，CGraph顺序加载有需求的图分区进入内存，这样在该图分区上有计算任务的图处理任务进行并发计算。</p>
+<p>但这种加载图分块的调度方式往往会造成加载的图数据未能被充分使用，原因有：</p>
+<p>1）有些度比较大的节点可能会比其他节点收敛更慢，而后面的几轮计算也需要加载进来那些已经收敛了的图数据；</p>
+<p>2）不同图分块的使用频率也是倾斜的并且会随时间变化；</p>
+<p>3）被加载的图分块可能只被很少（甚至一个）的计算任务需要，利用率很低。</p>
+<p><strong>基于核心子图的调度算法</strong>，为了提高每个加载的图分块的利用率，CGraph提出一种基于核心子图的调度算法，其主要思想是：首先筛选出所有的核心节点（度数大于某阈值的节点）以及他们之间的连接边，构成一个核心子图；然后将这个子图的边放到几个大小相同的图分块中，其余的边被划分到其他大小相同的图分块中。这样，对核心节点的频繁加载和处理，带来的对相同分区中早期收敛顶点的加载开销更小。</p>
+<p>然后，CGraph给每个图分块一个优先级，优先调度优先级更高的图分块进入内存进行处理。</p>
+<p>1）当大多数任务需要对一个块进行处理时，给它更高的优先级；</p>
+<p>2）当一个块有更高的平均度或者更多的节点状态更新时，给它更高的优先级。</p>
+<p>具体的优先级的值计算如下：$Pri(P)=N(P) + \theta \cdot D(P) \cdot C(P)$<br>。其中，$\theta$是一个使得第二部分小于1的数。</p>
+<p>通过这种方法，加载到缓存中的图分块可以服务尽可能多的图处理任务，而其他图分块在一段时间间隔后有更多的机会被更多的任务需要，通过降低平均数据访问成本进一步提高了吞吐量。</p>
+<p>实验表明，采用基于核心子图的调度算法最高能将执行时间减少到原来的60%。</p>
+<h4 id="触发（Trigger）各图处理任务的并发执行"><a href="#触发（Trigger）各图处理任务的并发执行" class="headerlink" title="触发（Trigger）各图处理任务的并发执行"></a>触发（Trigger）各图处理任务的并发执行</h4><p>加载一个子图分区进入到内存以后，在该图分区上有计算任务的图处理任务进行并发计算。注意，任何新提交的作业只需要注明它在第一次迭代时要处理的分区，然后等待被触发来处理它们。当要并发处理的任务数量大于CPU的核数时，这些CGP作业被分配为不同的批处理。</p>
+<p>对于每个图分块的处理，不同CGP任务的计算负载往往是倾斜的，导致硬件的利用率较低。我们将当前图分块的私有表中未处理顶点数量最多的任务称为straggler。然后在逻辑上将straggler的未处理的顶点划分成多个片，并将他们分配到空闲的CPU核中。</p>
+<h4 id="数据推送（Pushing）实现master和mirror的状态同步"><a href="#数据推送（Pushing）实现master和mirror的状态同步" class="headerlink" title="数据推送（Pushing）实现master和mirror的状态同步"></a>数据推送（Pushing）实现master和mirror的状态同步</h4><p>CGraph在计算处理一个图分块时，是没有cache miss的，因为不同的图分块的节点之间是没有通信的。但是在不同图分块上，具有副本的顶点需要同步它们的状态。mirror节点需要推送（push）它的新状态到它的master节点，master节点获取到来自所有mirror节点的状态更新之后计算出当前轮最终的状态值，并推送到各个mirror节点。在这样的节点状态同步的过程中，私有状态表的许多图分区经常被加载到缓存中，导致较高的cache miss率。</p>
+<p>为了解决上述问题，CGraph将每个mirror节点的更新状态保存到一个缓冲区$S_j^{new}$中。在数据同步阶段再隐式发送到master节点以进行批量顶点状态同步。</p>
+<p>当有多个CGP作业要同步顶点状态时，对这些作业逐一进行，以减少资源争用，因为作业之间的状态数据没有数据共享。每个作业的各个节点的状态同步分批完成，首先将缓冲区$S_j^{new}$中的<em>状态更新项</em>按照其master节点所在的图分块的ID进行排序，这样很多状态更新变成了对同一分区的连续访问，我们只需要加载很少的的私有表分区。当一个master节点的连续更新完成时，就会得到当前迭代中这个顶点的最终状态。然后，这样的新值也可以直接批处理同步到他们对应的mirror节点。</p>
+<h3 id="实验对比"><a href="#实验对比" class="headerlink" title="实验对比"></a>实验对比</h3><p><strong>（1）实验设置</strong></p>
+<p>实验环境：4-way 8-core Intel Xeon CPU E5-2670; each CPU has 20 MB LLC，64GB DRAM。</p>
+<p>数据集：Friendster，Twitter，uk2007，UK-Union，hyperlink14。</p>
+<p>运行算法：PageRank，SSSP，SCC，BFS。</p>
+<p>对比系统：CLIP，Nxgraph，Seraph。</p>
+<p><strong>（2）整体性能</strong></p>
+<p><strong>（3）可扩展性</strong></p>
+<p><strong>（4）动态图上的性能</strong></p>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+
+        
+        <li>
+            <a target="_blank"  href="mailto:wangrui1994@126.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3125304081">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/rwang067">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
+        <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
+        <span>/</span>
+        
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: 'CGraph(ATC 2018) 并发图处理系统',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+
+
+
+</html>
