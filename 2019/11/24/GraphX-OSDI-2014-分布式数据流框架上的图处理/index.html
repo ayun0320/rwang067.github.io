@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rui Wang&#39;s blog">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        GraphX(OSDI 2014) 分布式数据流框架上的图处理 - Rui&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 热爱学习，热爱生活 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar radius">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Rui Wang</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#图处理场景"><span class="toc-text">图处理场景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分布式流处理框架"><span class="toc-text">分布式流处理框架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#专用图处理系统"><span class="toc-text">专用图处理系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#局限性与希冀"><span class="toc-text">局限性与希冀</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#目标与实现"><span class="toc-text">目标与实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GraphX的编程抽象"><span class="toc-text">GraphX的编程抽象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#集合表示属性图"><span class="toc-text">集合表示属性图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据流操作实现图计算"><span class="toc-text">数据流操作实现图计算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GraphX操作"><span class="toc-text">GraphX操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GraphX的系统实现"><span class="toc-text">GraphX的系统实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#分布式图表示"><span class="toc-text">分布式图表示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实现三元组视图"><span class="toc-text">实现三元组视图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优化mrTriplets"><span class="toc-text">优化mrTriplets</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#其他优化"><span class="toc-text">其他优化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验对比"><span class="toc-text">实验对比</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 热爱学习，热爱生活 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        GraphX(OSDI 2014) 分布式数据流框架上的图处理
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2019-11-24 10:33:58</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#graph processing system" title="graph processing system">graph processing system</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#distribute dataflow framework" title="distribute dataflow framework">distribute dataflow framework</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#paper reading" title="paper reading">paper reading</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h3 id="图处理场景"><a href="#图处理场景" class="headerlink" title="图处理场景"></a>图处理场景</h3><h4 id="分布式流处理框架"><a href="#分布式流处理框架" class="headerlink" title="分布式流处理框架"></a>分布式流处理框架</h4><p>通用分布式数据流框架，比如MapReduce和Spark，能支持丰富的数据流操作，但是却更适用于分析处理非结构化或表格类的数据，在处理迭代的图算法时多个阶段的复杂连接，而且没有利用到迭代图算法中的常见模式和结构，因此利用他们进行迭代图算法分析往往性能很差。</p>
+<h4 id="专用图处理系统"><a href="#专用图处理系统" class="headerlink" title="专用图处理系统"></a>专用图处理系统</h4><p>专用的图处理系统能很好的表达迭代图算法，进行图处理时通常比通用的分布式数据流框架能好几个数量级。</p>
+<p>图系统中一般将图结构数据表示为一个属性图，每个节点和边有其相应的属性，其中属性包括元数据（例如用户配置文件和时间戳）和程序状态（例如PageRank值）。</p>
+<p>专用图系统的不足：</p>
+<ul>
+<li>（1）现实应用中，图分析任务往往伴随着其他类型数据的分析处理，比如非结构化的数据或表格数据。此时就需要组合多种系统进行管道处理流程，此过程中不免提升了计算的复杂度，带来了不必要的数据迁移和移动。</li>
+<li>（2）现在图处理系统一般为了性能优化而放弃了考虑容错。<br>所以专用的图处理系统通常没有被分布式数据流框架的广泛支持。</li>
+</ul>
+<h4 id="局限性与希冀"><a href="#局限性与希冀" class="headerlink" title="局限性与希冀"></a>局限性与希冀</h4><p>过去，图处理系统和分布式数据流框架是分开发展的，主要原因有：</p>
+<ul>
+<li>（1）早期的分布式数据流框架（比如MapReduce）强调单阶段计算和在磁盘上处理，而迭代图算法需要重复且随机地访问图的子集，所以很难应用于这些计算框架。</li>
+<li>（2）早期的分布式数据流框架没有公开对数据分区的细粒度控制，从而阻碍了图数据分区技术的应用。</li>
+</ul>
+<p>但是，新提出的内存分布式数据流框架（比如Spark和Naiad）公开了对数据的划分和数据的内存表示，已经解决了一部分上述的局限性。</p>
+<p>考虑<em>分布式流处理框架</em>相对<em>专用图处理系统</em>的优点：</p>
+<ul>
+<li>数据流系统中操作往往可以跨越多个集合，但图系统中操作只定义在单个的属性图上。</li>
+</ul>
+<p><strong>希冀</strong>：结合图处理系统和分布式流数据框架的优点，使得一个系统能处理整个分析管道。</p>
+<h4 id="目标与实现"><a href="#目标与实现" class="headerlink" title="目标与实现"></a>目标与实现</h4><p>所以本文的想法是开发一个<strong>通用的分布式数据流框架之上的图处理系统</strong>，需求：</p>
+<ul>
+<li>（1）识别图计算的基本数据流模式；</li>
+<li>（2）将图处理系统中的优化转换为数据流优化。</li>
+</ul>
+<p>本文在Spark的基础上构建了GraphX库，GraphX提供了图API,并在上层实现了Pregel抽象以及一些图操作。GraphX将图计算嵌入到分布式流处理框架中，将图计算的过程提取成一个特定的“join–map–group-by”的数据流模式。不同于现有的图处理系统，GraphX的API支持图数据和非结构化、表格数据的组合。并且允许将同一个物理数据同时视为图数据和集合数据，避免数据移动和复制。</p>
+<p>但是，直接将图编码为集合，然后直接使用通用的数据流操作执行迭代图计算非常低效。为了能实现与专有图系统相当的性能，GraphX进行了如下方面的优化：</p>
+<ul>
+<li>（1）如何将图编码为集合；</li>
+<li>（2）如何执行通用的数据流操作。</li>
+</ul>
+<p>具体的，将专用图处理系统中的有几个优化点重现应用到spark数据流操作中：</p>
+<ul>
+<li>（1）切割点划分 — 水平划分的集合</li>
+<li>（2）活跃节点记录 — 增量视图</li>
+<li>（3）节点镜像 — 基于路由表的多播连接</li>
+</ul>
+<p>真实数据集上的实验表明，GraphX能实现和专用图系统相当的性能，同时保留通用数据流框架的优点。</p>
+<h3 id="GraphX的编程抽象"><a href="#GraphX的编程抽象" class="headerlink" title="GraphX的编程抽象"></a>GraphX的编程抽象</h3><h4 id="集合表示属性图"><a href="#集合表示属性图" class="headerlink" title="集合表示属性图"></a>集合表示属性图</h4><p>GraphX中使用一对<em>节点集</em>和<em>边集</em>来表示一个<em>属性图</em>。<strong>节点集</strong>包含节点属性，由<em>节点ID</em>唯一标志，。<strong>边集</strong>包含边属性，由<em>源节点和目的节点ID</em>唯一标志。</p>
+<p>通过将一个属性图表示成一对节点集和边集的形式，使得GraphX能轻易将分布式数据流框架中的其他集合与图组合。比如增加一个节点属性只需要与相应的节点属性集合连接。分析图计算的结果以及比较不同图的属性也只需要进行连接相应的结果集合（这在专用的图计算系统中不能支持）。</p>
+<p>图上不同的算法拥有各自的<em>节点集</em>，但可以共享同一个<em>边集</em>。可以实现数据的复用。此外，特定于图的索引数据结构可以在具有公共顶点和边集的图之间共享，从而减少存储开销并提高性能。</p>
+<h4 id="数据流操作实现图计算"><a href="#数据流操作实现图计算" class="headerlink" title="数据流操作实现图计算"></a>数据流操作实现图计算</h4><p>GraphX将分布式数据流框架中的图并行计算表示为一个由<em>连接（join）</em>阶段和<em>分组（group-by）</em>阶段组成的序列，这些阶段由<em>map（映射）</em>操作间隔。</p>
+<ul>
+<li><p>在<strong>连接（join）</strong>阶段， 节点和边连接形成一个<em>三元组视图（triplets view）</em>，包含边以及其源节点和目的节点的属性。</p>
+</li>
+<li><p>在<strong>分组（group-by）</strong>阶段，三元组根据源顶点或目的顶点来构造每个节点的邻居节点，并进行聚合计算。</p>
+</li>
+</ul>
+<p><em>分组（group-by）</em>阶段<em>收集（gather）</em>发送到同一节点的消息，然后<em>映射（map）</em>操作<em>应用（apply）</em>聚合的消息来更新节点的属性，最后<em>连接（join）</em>阶段将新的节点属性<em>分散（scatters）</em>到所有相邻的节点。上面的过程构成了专用图计算系统的GAS模型。</p>
+<p><strong>迭代</strong>的组合<em>连接（join）</em>和组（group-by）阶段以及数据并行映射（map）阶段，可以实现<strong>Pregel抽象</strong>。</p>
+<h4 id="GraphX操作"><a href="#GraphX操作" class="headerlink" title="GraphX操作"></a>GraphX操作</h4><h3 id="GraphX的系统实现"><a href="#GraphX的系统实现" class="headerlink" title="GraphX的系统实现"></a>GraphX的系统实现</h3><h4 id="分布式图表示"><a href="#分布式图表示" class="headerlink" title="分布式图表示"></a>分布式图表示</h4><h4 id="实现三元组视图"><a href="#实现三元组视图" class="headerlink" title="实现三元组视图"></a>实现三元组视图</h4><h4 id="优化mrTriplets"><a href="#优化mrTriplets" class="headerlink" title="优化mrTriplets"></a>优化mrTriplets</h4><h4 id="其他优化"><a href="#其他优化" class="headerlink" title="其他优化"></a>其他优化</h4><ul>
+<li><p>（1）基于内存的Shuffle；</p>
+</li>
+<li><p>（2）块状和柱状结构；</p>
+</li>
+<li><p>（3）可变的整数编码（一个字节中只使用7位来记录数据，最高的第8位用来记录是否需要另一个字节来记录该数字）。</p>
+</li>
+</ul>
+<h3 id="实验对比"><a href="#实验对比" class="headerlink" title="实验对比"></a>实验对比</h3><p><strong>（1）实验设置</strong></p>
+<ul>
+<li><p>实验环境：Amazon EC2，<strong>16</strong>个m2.4xlarge工作结点;每个结点有6个虚拟核，<strong>64GB</strong>内存。</p>
+</li>
+<li><p>数据集：Twitter-2010，uk-2007-05。</p>
+</li>
+<li><p>运行算法：PageRank，connected components。</p>
+</li>
+<li><p>对比系统：Apache Spark 0.9.1，Apache Giraph 1.1，GraphLab 2.2 (PowerGraph)。</p>
+</li>
+</ul>
+<p><strong>（2）对比其他系统</strong></p>
+<ul>
+<li><p>对比baseline的分布式数据流框架，性能高出最多一个数量级。</p>
+</li>
+<li><p>与专门的图处理系统性能相当。</p>
+</li>
+</ul>
+<p><strong>（3）GraphX性能</strong></p>
+<ul>
+<li><p>扩展性</p>
+</li>
+<li><p>容错</p>
+</li>
+</ul>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+
+        
+        <li>
+            <a target="_blank"  href="mailto:wangrui1994@126.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3125304081">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/rwang067">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
+        <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
+        <span>/</span>
+        
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: 'GraphX(OSDI 2014) 分布式数据流框架上的图处理',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+
+
+
+</html>

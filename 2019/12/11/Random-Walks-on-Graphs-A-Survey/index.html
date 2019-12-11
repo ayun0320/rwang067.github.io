@@ -11,7 +11,7 @@
 
     <title>
         
-        并发图分析系统 - Rui&#39;s Blog
+        Random Walks on Graphs -- A Survey - Rui&#39;s Blog
         
     </title>
 
@@ -89,7 +89,7 @@
     </div>
     
         <div id="toc" class="toc-article">
-    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#研究工作"><span class="toc-text">研究工作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CGraph"><span class="toc-text">CGraph</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DiGraph"><span class="toc-text">DiGraph</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FBSGraph"><span class="toc-text">FBSGraph</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#随机游走简介"><span class="toc-text">随机游走简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基础知识"><span class="toc-text">基础知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#主要参数"><span class="toc-text">主要参数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#主要参数的定义"><span class="toc-text">主要参数的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#相关性质"><span class="toc-text">相关性质</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#特征值连接"><span class="toc-text">特征值连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#电气连接"><span class="toc-text">电气连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#混合速率"><span class="toc-text">混合速率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#随机游走采样"><span class="toc-text">随机游走采样</span></a></li></ol>
 </div>
     
 </div>
@@ -120,21 +120,18 @@
 
 <div class="post-container">
     <div class="post-title">
-        并发图分析系统
+        Random Walks on Graphs -- A Survey
     </div>
 
     <div class="post-meta">
-        <span class="attr">发布于：<span>2019-10-16 09:22:33</span></span>
+        <span class="attr">发布于：<span>2019-12-11 20:22:43</span></span>
         
         <span class="attr">标签：/
         
-        <a class="tag" href="/tags/#graph processing system" title="graph processing system">graph processing system</a>
+        <a class="tag" href="/tags/#random walks" title="random walks">random walks</a>
         <span>/</span>
         
-        <a class="tag" href="/tags/#paper reading" title="paper reading">paper reading</a>
-        <span>/</span>
-        
-        <a class="tag" href="/tags/#concurrent graph processing" title="concurrent graph processing">concurrent graph processing</a>
+        <a class="tag" href="/tags/#theoretical analysis" title="theoretical analysis">theoretical analysis</a>
         <span>/</span>
         
         
@@ -144,33 +141,50 @@
 </span>
     </div>
     <div class="post-content ">
-        <p>并发图分析任务：大量的图算法并发的运行在同一平台上对底层同一个图数据进行处理，以对该图数据进行多方位的分析处理，获得各种目的性的分析结果。</p>
-<h3 id="研究工作"><a href="#研究工作" class="headerlink" title="研究工作"></a>研究工作</h3><p><a href="https://www.researchgate.net/scientific-contributions/57497079_Yu_Zhang" target="_blank" rel="noopener">Yu Zhang’s Research</a></p>
-<h4 id="CGraph"><a href="#CGraph" class="headerlink" title="CGraph"></a>CGraph</h4><p>基于关联性感知的并发图处理</p>
-<ol>
-<li><a href="https://www.usenix.org/conference/atc18/presentation/zhang-yu" target="_blank" rel="noopener">CGraph: A Correlations-aware Approach for Efficient Concurrent Iterative Graph Processing(ATC’18)</a></li>
-<li><a href="https://dl.acm.org/citation.cfm?doid=3326597.3319406" target="_blank" rel="noopener">CGraph: A Distributed Storage and Processing System for Concurrent Iterative Graph Analysis Jobs(TOS’19)</a></li>
-</ol>
-<p>并发图分析任务之间存在关联性。</p>
-<p>（1）空间关联性：多个并发图分析任务需要访问和处理的图数据存在大量的交集。</p>
-<p>（2）时间关联性：多个并发图分析任务可能需要同时访问同一个图划分块。</p>
-<p>但在此前的图处理系统中进行并发图分析任务时，各个任务对共享图数据的访问相互独立，互不感知。使得各个并发的图分析任务在计算时遇到内存墙（内存性能严重限制CPU）和缓存相互干扰的问题。</p>
-<p>这篇工作通过感知各个并发图分析任务之间的关联性，使得各个并发图分析任务之间能有效的共享数据和数据访问。</p>
-<h4 id="DiGraph"><a href="#DiGraph" class="headerlink" title="DiGraph"></a>DiGraph</h4><p>基于关联依赖的单任务图处理</p>
-<ul>
-<li><p><a href="https://dl.acm.org/citation.cfm?doid=3297858.3304029" target="_blank" rel="noopener">DiGraph: An Efficient Path-based Iterative Directed Graph Processing System on Multiple GPUs(ASPLOS’19)</a></p>
+        <p><a href="http://www.cs.yale.edu/publications/techreports/tr1029.pdf" target="_blank" rel="noopener">Lovász L. Random walks on graphs: A survey[J]. Combinatorics, Paul erdos is eighty, 1993, 2(1): 1-46.</a></p>
+<p>这是一个关于<strong>随机游走</strong>的综述性的调研报告，包含与随机游走相关的很多问题，涵盖了<em>基础的随机游走模型</em>，<em>访问时间</em>，<em>覆盖时间</em>，<em>收敛速度</em>，<em>特征值分析</em>，<em>电气网络</em>以及<em>应用算法</em>等等。</p>
+<h3 id="随机游走简介"><a href="#随机游走简介" class="headerlink" title="随机游走简介"></a>随机游走简介</h3><p>给定一个图和一个起始节点，随机选择当前节点的一个邻居节点并跳转，持续上述过程，产生一串随机的节点的过程称为<strong>图上的随机游走</strong>。</p>
+<p>图上的随机游走的过程可以看成是一个有限的马尔可夫链，无向图上的随机游走可以看成是时间可逆的马尔可夫链。</p>
+<p>实际上，现实生活中很多场景都可以看成是随机游走，比如<em>洗一副扑克牌</em>的过程，所有纸牌的排列置换可以构成一个图的节点，若通过一次洗牌可以实现两个状态的转换，则将相应的两节点相连，则持续洗牌的过程即可看成是一个图上随机游走的过程。</p>
+<p>最早的随机游走通常简单、无限的图上的随机游走来定性的分析某些特征，比如随机游走是否能回到初始节点？；之后，随机游走开始更多的面向通用的、有限的图的场景，并且更多的进行定量的分析研究，比如随机游走需要多少步能够回到起始节点？随机游走多快能到达极限分布？</p>
+<p>研究发现，随机游走与很多图理论相关，比如图的<strong>谱理论</strong>，<strong>电气网络</strong>中的电阻等等。本篇调研报告将关注<strong>特征值</strong>和<strong>电气网络</strong>。最后，本文调研了一些相关的应用场景。</p>
+<h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><p>随机游走 — 马尔可夫链 — 状态转移矩阵</p>
+<p>当随机游走进入一个状态的分布后，状态的分布不再改变，则称其为<strong>稳态分布</strong>，对每个连通图，都有唯一的稳态分布：$\pi(v)=\frac{d(v)}{2m}$。</p>
+<p>当图为正则图（各定点度数均相同），则称该图上的随机游走对应的马尔可夫链是<strong>对称的</strong>。当图不是正则图，该性质由<strong>时间可逆性</strong>代替。对于时间可逆的马尔可夫链的任意一对节点$i,j$，都有$\pi_i P_{ij}=\pi_j P_{ji}$。</p>
+<h3 id="主要参数"><a href="#主要参数" class="headerlink" title="主要参数"></a>主要参数</h3><h4 id="主要参数的定义"><a href="#主要参数的定义" class="headerlink" title="主要参数的定义"></a>主要参数的定义</h4><p><strong>（1）访问时间（access time / hitting time）</strong>，$H(i,j)$，表示从节点$i$出发访问到节点$j$的期望步数。</p>
+<p><strong>（2）通讯时间（commute time）</strong>，$\kappa(i,j)=H(i,j)+H(j,i)$，表示从节点$i$出发访问到节点$j$，之后又回到节点$i$的期望步数。</p>
+<p><strong>（3）覆盖时间（cover time）</strong>，表示从一个初始节点出发，访问到图中每个节点的期望步数。若未指定初始节点，则是指最差情况下的期望步数。</p>
+<p><strong>（4）混合速率（mixing rate）</strong>，表示随机游走收敛到其极限分布的速率，定义为：$\mu=lim_{t\to \infty} \sup max_{i,j}|p_{ij}^{(t)}-\frac{d_j}{2m}|^{1/t}$</p>
+<h4 id="相关性质"><a href="#相关性质" class="headerlink" title="相关性质"></a>相关性质</h4><ul>
+<li><p>主要参数的界</p>
 </li>
-<li><p><a href="https://ieeexplore.ieee.org/document/8118091" target="_blank" rel="noopener">Efficient Disk-Based Directed Graph Processing: A Strongly Connected Component Approach(TPDS 2018)</a></p>
+<li><p>对称性和访问时间</p>
+</li>
+<li><p>访问时间和覆盖时间</p>
+</li>
+<li><p>单调性</p>
+</li>
+<li><p>覆盖时间和通讯时间的界的应用场景</p>
 </li>
 </ul>
-<p>同一个图分析任务的子任务（处理各图划分块的任务）之间也存在依赖关联性。</p>
-<p>核心图顶点状态收敛所需要的更新次数决定了整个图收敛所需迭代次数。</p>
-<p>这篇工作在单个图分析任务场景下，通过感知图中顶点之间的依赖关联性特征进行图划分，使得各个图划分块之前的依赖关联性尽量符合全序关系，尝试使得未收敛的图划分块对已经收敛的图划分块影响最小化。另外通过加速核心顶点之间的状态传递，进一步加速全局的收敛速度。</p>
-<h4 id="FBSGraph"><a href="#FBSGraph" class="headerlink" title="FBSGraph"></a>FBSGraph</h4><p>基于路径的异步图处理</p>
+<h3 id="特征值连接"><a href="#特征值连接" class="headerlink" title="特征值连接"></a>特征值连接</h3><p>谱（spectral）理论</p>
 <ul>
-<li><a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8170287" target="_blank" rel="noopener">FBSGraph: Accelerating Asynchronous Graph Processing via Forward and Backward Sweeping(TKDE’18)</a></li>
+<li><p>谱和访问时间</p>
+</li>
+<li><p>谱和生成函数</p>
+</li>
 </ul>
-
+<h3 id="电气连接"><a href="#电气连接" class="headerlink" title="电气连接"></a>电气连接</h3><h3 id="混合速率"><a href="#混合速率" class="headerlink" title="混合速率"></a>混合速率</h3><ul>
+<li><p>混合速率和耦合</p>
+</li>
+<li><p>混合速率和特征值间隔（eigenvalue gap）</p>
+</li>
+<li><p>特征值间隔和导通性</p>
+</li>
+<li><p>导通性和多商品流</p>
+</li>
+</ul>
+<h3 id="随机游走采样"><a href="#随机游走采样" class="headerlink" title="随机游走采样"></a>随机游走采样</h3>
         
             <div class="donate-container">
     <div class="donate-button">
@@ -297,7 +311,7 @@
 <script src="/js/gitment.js"></script>
 <script>
     var gitment = new Gitment({
-        id: '并发图分析系统',
+        id: 'Random Walks on Graphs -- A Survey',
         owner: 'rwang067',
         repo: 'rwang067.github.io',
         oauth: {

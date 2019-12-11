@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rui Wang&#39;s blog">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        Managing Large Dynamic Graphs Efficiently(SIGMOD 2012) - Rui&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 热爱学习，热爱生活 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar radius">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Rui Wang</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#网络图研究现状"><span class="toc-text">网络图研究现状</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#网络图场景"><span class="toc-text">网络图场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#图划分"><span class="toc-text">图划分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#图复制"><span class="toc-text">图复制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#本文系统设计"><span class="toc-text">本文系统设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#数据模型与查询模式"><span class="toc-text">数据模型与查询模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#路由与存储"><span class="toc-text">路由与存储</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#复制管理器"><span class="toc-text">复制管理器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#复制决策"><span class="toc-text">复制决策</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实验对比"><span class="toc-text">实验对比</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 热爱学习，热爱生活 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        Managing Large Dynamic Graphs Efficiently(SIGMOD 2012)
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2019-11-20 10:51:12</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#graph processing system" title="graph processing system">graph processing system</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#paper reading" title="paper reading">paper reading</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#graph partition" title="graph partition">graph partition</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#graph vertices replication" title="graph vertices replication">graph vertices replication</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#dynamic graphs" title="dynamic graphs">dynamic graphs</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p>Mondal, Jayanta, and Amol Deshpande. “Managing large dynamic graphs efficiently.”2012 ACM SIGMOD. | <a href="https://dl.acm.org/citation.cfm?id=2213854" target="_blank" rel="noopener">paper</a> |</p>
+<h3 id="网络图研究现状"><a href="#网络图研究现状" class="headerlink" title="网络图研究现状"></a>网络图研究现状</h3><h4 id="网络图场景"><a href="#网络图场景" class="headerlink" title="网络图场景"></a>网络图场景</h4><p>如今网络图越来越无处不在，如社交网络、通讯网络、金融交易网络、引文网络、基因调控网络、疾病传播网络、生态食品网络、传感器网络等等。网络数据甚至出现在普通的应用程序中，如电话呼叫数据、IP流量数据或包裹装运数据等。</p>
+<p>这些网络数据通常表示成一个<em>图（graph）</em>，然而目前缺乏一个良好的针对这种图结构的数据的数据管理系统，用以支持图上的查询与分析。</p>
+<p>并且，随着图规模的不断增长，这就需要使用并行和分布式的解决方案。然而，图操作不容易并行化，即使是对分布式图的简单查询也可能导致大量的网络遍历。</p>
+<p>MapReduce框架已经成为并行处理许多大型分析任务的框架。然而，MapReduce框架的目标是批量处理大量静态数据，既不支持实时数据摄取，也不支持实时查询。</p>
+<p>目前为止，有很多工作研究<em>单站点的图数据库系统</em>，他们通过对底层图的策略遍历，可以有效的执行特定类型的查询，比如<em>可达性（reachability）</em>，<em>关键字查询（keyword search queries）</em>，<em>子图模型匹配（subgraph pattern matching）</em>等。</p>
+<p>然而，<em>动态图数据的分布式管理</em>还没有得到很好的研究。在执行特定类型的查询或执行特定类型的分析方面也有一些工作，例如子图模式匹配、数据挖掘等，但这些工作要么关注点有限，要么就像Pegasus一样，是为了进行批处理。</p>
+<p><strong>本文的目标：：构建一个能够支持大规模动态变化的网络图的分布式图数据管理系统。</strong></p>
+<h4 id="图划分"><a href="#图划分" class="headerlink" title="图划分"></a>图划分</h4><p>分布式图管理系统中一个关键的挑战是<em>图划分</em>，但是由于图结构的复杂连接，想要实现有效的图划分及其困难，尤其是在动态图的场景下。</p>
+<p>标准的<strong>基于哈希的图划分方案</strong>虽然能实现分布式集群的结点之间良好的负载均衡，但是通常会带来太多的<em>切割边（edge cut）</em>，因为大多数图查询或分析任务都需要遍历边来获取邻居信息。这不仅增加了查询延迟，还增加了整个网络通信，从而限制了系统的可扩展性。</p>
+<p>有很多工作研究更<strong>复杂的图划分策略</strong>。将一个图划分为大小相等的分区，同时最小化边切割是一个NP难的问题，目前也有一些实际的技术方案能够实现较好的图划分结果。但是，这些技术不能处理高度动态的图，因为节点访问模式和图结构本身可能会很快发生变化。</p>
+<p>更重要的是，在大多数实际应用中，图数据高度互联的特性意味着，通常不存在将边切割最小化的干净的不相交分区。特别是社交网络，由于社区结构重叠，存在高度连接的稠密分部，因此很难分割。</p>
+<h4 id="图复制"><a href="#图复制" class="headerlink" title="图复制"></a>图复制</h4><p>一种替代的方案是<strong>基于节点复制的方法</strong>，其主要思想是复制图中的一些节点，以最小化分布式遍历的数量。</p>
+<p><strong>本地语义</strong>，Pujol等人提出一种该方法的极端版本，即充分地复制图，以便对图中的每个节点，它的所有邻居都在本地出现(称为本地语义)。他们还使用主动复制策略（<em>push-on-change model</em>），即所有复制的数据都要即时保持最新。然而，这种方法需要非常高的、不必要的通信来保持副本的更新，Facebook使用一种替代的<em>pull-on-demand model</em>来减少更新的开销。</p>
+<p>为了能保证<em>本地语义</em>，其复制开销（即图中每个节点的平均副本数）通常特别大。对于一个Facebook数据集，只划分成8个分区，平均每个节点就需要大约2个副本。</p>
+<p>本文提出一种<strong>混合自适应的复制策略</strong>，减少复制开销，同时支持大规模图数据上的高效查询。</p>
+<h3 id="本文系统设计"><a href="#本文系统设计" class="headerlink" title="本文系统设计"></a>本文系统设计</h3><h4 id="数据模型与查询模式"><a href="#数据模型与查询模式" class="headerlink" title="数据模型与查询模式"></a>数据模型与查询模式</h4><h4 id="路由与存储"><a href="#路由与存储" class="headerlink" title="路由与存储"></a>路由与存储</h4><p>本文在一个开源的KV存储系统Apache CouchDB的基础上实现了分布式图数据管理系统。</p>
+<h4 id="复制管理器"><a href="#复制管理器" class="headerlink" title="复制管理器"></a>复制管理器</h4><p>本文使用一种新奇的<strong>公平需求</strong>的策略来指导复制的策略，公平需求策略可以使用一个阈值$\tau \leq 1$来刻画,可以简单表述为:<strong>对于图上的每个节点，要求其所有邻居节点中不少于$\tau$的部分存于本地</strong>。当$\tau = 1$时，就相当于<em>本地语义</em>。</p>
+<h4 id="复制决策"><a href="#复制决策" class="headerlink" title="复制决策"></a>复制决策</h4><p>根据<em>公平需求策略</em>的指导，需要对节点进行细粒度的选择性复制，并决定何时进行push或pull来更新副本信息，维护这些决策的开销通常也非常大。</p>
+<p>本文设计了一种<strong>基于cluster的方案</strong>，将具有相似访问模式的节点分组在一起，在不影响质量的情况下减少开销。该方案分析了决定复制什么，以及选择何时push或pull的问题，并提供了理论分析和有效的实用算法。该算法能够在每个节点上进行局部决策，能够在低负载期间更改决策，并/或错开决策的时间以避免性能的显著下降。</p>
+<h3 id="实验对比"><a href="#实验对比" class="headerlink" title="实验对比"></a>实验对比</h3><p><strong>（1）实验设置</strong></p>
+<p>实验环境：Amazon EC2 infrastructure using 7 EC2 instances; 1 instance 1 core, and 1.7G of memory。<br>（1个实例用于向系统发送更新和查询，其余6个用于存放图数据）</p>
+<p>数据集：使用<em>偏好连接模型</em>来构建图数据（已经被证明能够很好地模拟社交网络）。具体的生成过程为：每次添加一个节点，新增的节点<em>优先连接</em>到具有更高度（degree）的现有节点，即连接到现有节点的概率取决于该节点的度数。本文中大多数实验使用的图规模为<strong>1.8M</strong>个节点，<strong>18M</strong>条边。另外，本文选择了100个tweet数量足够的Twitter用户，并下载了他们的tweet以获得他们的访问跟踪，用于模拟用户的活动模式。</p>
+<p>运行算法：图查询。</p>
+<p>对比三种方法：((1) all-pull, where we do not do any replication, (2) all-push, where the nodes are replicated sufficient to guarantee no pulls would be needed (i.e., local semantics), and (3) hybrid, our hybrid approach.</p>
+<p>对比指标：所有服务器上交换消息计算的网络通信量，可以表示为推送和接收的消息的总量。</p>
+<p><strong>（2）直方图粒度的影响</strong></p>
+<p><strong>（3）带宽消耗和网络负载</strong></p>
+<p><strong>（4）改变Clusters的数量</strong></p>
+<p><strong>（5）改变Write-Read比率</strong></p>
+<p><strong>（6）改变公平阈值</strong></p>
+<p><strong>（7）改变图密度</strong></p>
+<p><strong>（8）Pull超时的影响</strong></p>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+
+        
+        <li>
+            <a target="_blank"  href="mailto:wangrui1994@126.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3125304081">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/rwang067">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
+        <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
+        <span>/</span>
+        
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: 'Managing Large Dynamic Graphs Efficiently(SIGMOD 2012)',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+
+
+
+</html>
