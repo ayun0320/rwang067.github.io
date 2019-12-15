@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rui Wang&#39;s blog">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        NBRW(SIGMETRICS 2012) 不回溯的无偏图采样 - Rui&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 热爱学习，热爱生活 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar radius">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Rui Wang</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#无偏图采样"><span class="toc-text">无偏图采样</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#无偏图采样技术"><span class="toc-text">无偏图采样技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基于随机游走的无偏图采样"><span class="toc-text">基于随机游走的无偏图采样</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#不同随机游走采样的评判指标"><span class="toc-text">不同随机游走采样的评判指标</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#渐进方差"><span class="toc-text">渐进方差</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于随机游走的采样算法"><span class="toc-text">基于随机游走的采样算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SRW-rw"><span class="toc-text">SRW-rw</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MHRW"><span class="toc-text">MHRW</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#存在问题-amp-Idea"><span class="toc-text">存在问题 &amp; Idea</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免回溯的随机游走图采样"><span class="toc-text">避免回溯的随机游走图采样</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#从可逆到不可逆"><span class="toc-text">从可逆到不可逆</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#NBRW-rw"><span class="toc-text">NBRW-rw</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MHDA"><span class="toc-text">MHDA</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模拟实验"><span class="toc-text">模拟实验</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 热爱学习，热爱生活 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        NBRW(SIGMETRICS 2012) 不回溯的无偏图采样
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2019-12-15 19:06:26</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#paper reading" title="paper reading">paper reading</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#random walks" title="random walks">random walks</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#theoretical analysis" title="theoretical analysis">theoretical analysis</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#graph sampling" title="graph sampling">graph sampling</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p><a href="http://delivery.acm.org/10.1145/2260000/2254795/p319-lee.pdf?ip=222.195.68.252&amp;id=2254795&amp;acc=ACTIVE%20SERVICE&amp;key=BF85BBA5741FDC6E%2EA4F9C023AC60E700%2E4D4702B0C3E38B35%2E4D4702B0C3E38B35&amp;__acm__=1576408507_9dea440cf445046ba6683f1b18b61c97" target="_blank" rel="noopener">Lee, Chul-Ho, Xin Xu, and Do Young Eun. “Beyond random walk and metropolis-hastings samplers: why you should not backtrack for unbiased graph sampling.” ACM SIGMETRICS Performance evaluation review. Vol. 40. No. 1. ACM, 2012.</a></p>
+<h3 id="无偏图采样"><a href="#无偏图采样" class="headerlink" title="无偏图采样"></a>无偏图采样</h3><h4 id="无偏图采样技术"><a href="#无偏图采样技术" class="headerlink" title="无偏图采样技术"></a>无偏图采样技术</h4><p>通过爬行的无偏图采样技术，是指通过一个或多个在图上爬行的随机游走，进行的均匀节点采样，最终分析估计目标图的节点或者拓扑特性。具体来说，无偏均匀图采样即对于任意给定的一个满足均匀分布的期望函数$f$，即$E_u(f) \stackrel{\Delta}{=} \sum_{i\in N}{f(i)/n}$，开发一个基于随机游走的无偏估计器。（一个图上的随机游走，若其状态转移矩阵P满足不可约的特性，则该随机游走所表示的马尔可夫链存在唯一的一个稳态分布$\pi$。）</p>
+<h4 id="基于随机游走的无偏图采样"><a href="#基于随机游走的无偏图采样" class="headerlink" title="基于随机游走的无偏图采样"></a>基于随机游走的无偏图采样</h4><p>对任意一个函数$f$，可以定义一个基于随机游走的估计器：$\hat{\mu}_t(f) \stackrel{\Delta}{=} \frac{1}{t} \sum_{s=1}^t{f(X_s)}$,</p>
+<p>函数$f$关于$\pi$的期望为$E_{\pi}(f) \stackrel{\Delta}{=} \sum_{i\in N}{f(i)\pi(i)}, E_{\pi}(|f|)&lt; \infty$。</p>
+<p><strong>强大数定理（SLLN, Strong Law of Large Numbers）</strong>保证了，当$t \rightarrow \infty$，$\hat{\mu}_t(f) \rightarrow E_{\pi}(f) a.s.$。</p>
+<h4 id="不同随机游走采样的评判指标"><a href="#不同随机游走采样的评判指标" class="headerlink" title="不同随机游走采样的评判指标"></a>不同随机游走采样的评判指标</h4><p>一个图上的很多种随机游走可能都能达到同一个稳态分布$\pi$，可以用来进行相同的无偏估计，如何去评判哪一种基于随机游走的采样算法更好呢？</p>
+<p><strong>混合时间（mixing time）</strong>是刻画图上随机游走收敛速度的一个重要指标，适合用来比较不同的随机游走。</p>
+<p>但是混合时间（mixing time）却不适合用来比较不同的随机游走采样，因为基于随机游走的采样虽然通常是需要经历一个时期进行收敛（burn-in period），以消除初始节点的影响，但是在随机游走收敛之后，仍然需要获取很多样本从而进行无偏估计。所以，对于基于随机游走的无偏图采样来说，估计器的效率，即在保证一定精度的情况下，所需要的最少的<strong>样本的数目</strong>才是最重要的评判指标。</p>
+<h4 id="渐进方差"><a href="#渐进方差" class="headerlink" title="渐进方差"></a>渐进方差</h4><p>定义上述基于随机游走的无偏估计器的渐进方差</p>
+<script type="math/tex; mode=display">\sigma^2(f) \stackrel{\Delta}{=} lim_{t \rightarrow \infty} t \cdot Var(\hat{\mu}_t(f))</script><p><strong>极限中心定理（CLT, Central Limit Theorem）</strong>表明$\sigma^2(f)$是$\hat{\mu}_t(f)$的方差，可以根据$\sigma^2(f)$来决定，在保证一定精确度的情况下所需要的采样样本的数目。$\sigma^2(f)$值越小，则对应的基于随机游走的无偏估计器的效率就越高，即在保证相同精确度的情况下所需要的样本数目越少。</p>
+<p><strong>该篇论文的目标：通过减小$\sigma^2(f)$的值来减少基于随机游走的无偏估计器所需要的样本数目。</strong></p>
+<h3 id="基于随机游走的采样算法"><a href="#基于随机游走的采样算法" class="headerlink" title="基于随机游走的采样算法"></a>基于随机游走的采样算法</h3><h4 id="SRW-rw"><a href="#SRW-rw" class="headerlink" title="SRW-rw"></a>SRW-rw</h4><p>在图上进行简单的随机游走（SRW, Simple Random Walk），其访问的节点序列组成一个马尔可夫链${X_t}$，其对应的状态转移矩阵为$P={P(i,j)=\frac{1}{d_i}}$，稳态分布为$\pi={\pi(i)=\frac{d_i}{2m}}$。</p>
+<p>根据随机游走获取的样本进行无偏估计，可以设置无偏估计的权重$w(i)=\frac{u(i)}{\pi(i)}=\frac{2m}{nd_i}$，则无偏估计器为</p>
+<script type="math/tex; mode=display">\hat{\mu}_t(wf) \stackrel{\Delta}{=} \frac{1}{t} \sum_{s=1}^t{w(X_s)f(X_s)}</script><p>当$t \rightarrow \infty$，$\hat{\mu}_t(wf) \rightarrow E_{\pi}(wf) = E_{u}(f) a.s.$。</p>
+<p>但是，由于$n$和$m$在很多场景下是未知的，所以$w(i)=\frac{2m}{nd_i}$无法计算，所以可以使用另一种替代的无偏估计的方法：</p>
+<script type="math/tex; mode=display">\frac{\hat{\mu}_t(wf)}{\hat{\mu}_t(w)} \stackrel{\Delta}{=} \frac{\sum_{s=1}^t{w(X_s)f(X_s)}}{\sum_{s=1}^t{w(X_s)}}</script><p>此时，可以设置$w(i)=\frac{1}{d_i}$，计算结果相同。</p>
+<h4 id="MHRW"><a href="#MHRW" class="headerlink" title="MHRW"></a>MHRW</h4><p>主要思想：调整随机游走的状态转移概率，使得其马尔可夫链对于的稳态分布$\pi=u$。</p>
+<p><strong>（1）MH（Metropolis-Hastings）算法</strong></p>
+<p>MH算法首先设置一个<strong>建议概率（proposal probability）$Q(i,j)$</strong>（$Q(i,j)&gt;0$当且仅当$Q(j,i)&gt;0$，即只给与互为邻居的节点之间正的转移概率），然后建议状态过渡到$X_{t+1} =j$后以一定的<strong>接受概率（acceptance probability）$A(i,j)$</strong>接收该次转移，$A(i,j)= min(1,\frac{\pi(j)Q(j,i)}{\pi(i)Q(i,j)})$。最终，MH算法真实是状态转移概率为：</p>
+<script type="math/tex; mode=display">P(i,j)=min(Q(i,j),Q(j,i)\frac{\pi(j)}{\pi(i)}</script><p><strong>（2）MHRW采样</strong></p>
+<p>设置建议概率$Q(i,j)=\frac{1}{d_i}$，则状态转移概率为$P(i,j)=min(\frac{1}{d_i},\frac{1}{d_j}), if (i,j) \in E$。</p>
+<p>上述状态转移矩阵所对应的是一个时间可逆的马尔可夫链，所以$\pi_iP_{ij}=\pi_jP{ji}$，又因为$P_{ij}=P{ji}$，</p>
+<p>$\Rightarrow \pi_i=\pi_j, if (i,j) \in E$，</p>
+<p>$\Rightarrow \pi_i=\frac{1}{n}$，</p>
+<p>$\Rightarrow \pi=u$。</p>
+<h4 id="存在问题-amp-Idea"><a href="#存在问题-amp-Idea" class="headerlink" title="存在问题 &amp; Idea"></a>存在问题 &amp; Idea</h4><p>存在问题：SRW和MHRW都容易回到之前一步访问过的节点，导致短时间内产生重复样本，带来较大的渐进方差。</p>
+<p>Idea：修改随机游走的状态转移概率，避免回到前一步访问过的节点。</p>
+<p>待解决的的挑战：1）如何保证不改变原本的稳态分布；2）如何实现最小的额外开销；3）证明能减小采样算法的渐进方差。</p>
+<h3 id="避免回溯的随机游走图采样"><a href="#避免回溯的随机游走图采样" class="headerlink" title="避免回溯的随机游走图采样"></a>避免回溯的随机游走图采样</h3><h4 id="从可逆到不可逆"><a href="#从可逆到不可逆" class="headerlink" title="从可逆到不可逆"></a>从可逆到不可逆</h4><p>若要实现不回溯的随机游走，随机游走的下一跳选择不仅取决于当前节点，还取决于上一步的节点，所以在状态空间$N$上的不回溯的随机游走，不再是一般意义上的马尔可夫链了。</p>
+<p>构建新的状态空间$\Omega \stackrel{\Delta}{=} ( (i,j), i,j\in N, s.t. P(i,j)&gt;0 )$， 其中一个状态表示为$e_{ij}$。在状态空间$\Omega$上构建新的马尔可夫链，对于的状态转移概率和稳态分布分别表示为$P’(e_{ij},e_{jk})$和$\pi’(e_{ij}$。</p>
+<p>如果新的马尔可夫链满足：$\pi’(e_{ij}=\pi(i)P(i,j)$，且原来的马尔可夫链是时间可逆的，则$\pi’(e_{ij})=\pi’(e_{ji})$。</p>
+<p>且新的马尔可夫链在达到稳态分布时，停留在节点$j$的概率就等于原马尔可夫链的概率$\pi(j)$，即：</p>
+<script type="math/tex; mode=display">\sum_{e_{ij}\in \Omega}{\pi'(e_{ij})} = \sum_{i \in N}{\pi(i)P(i,j)}=\pi(j)</script><p>我们可以利用新的马尔可夫链进行无偏采样：令$g(e_{ij})=f(j)$，则$E_{\pi’}(g)=\sum_{e_{ij} \in \Omega}{g(e_{ij})\pi’(e_{ij})}=E_{\pi}(f)$。</p>
+<p><strong>定理3（由一个可逆的马尔可夫链构建其相应的不可逆的马尔可夫链）：</strong></p>
+<p><em>假定$X_t$是状态空间 $N$上的一个不可约且可逆的马尔可夫链，其状态转移概率和稳态分布分别为$P={P(i,j)}$和$\pi$。构建状态空间 $\Omega$上的一个新的马尔可夫链$Z_t$，使得其转移概率$P’={P’(e_{ij},e_{lk})}$满足下面两个条件：</em></p>
+<script type="math/tex; mode=display">P(j,i)P'(e_{ij},e_{jk})=P(j,k)P'(e_{kj},e_{ji})</script><script type="math/tex; mode=display">P'(e_{ij},e_{jk}) \geq P(j,k)</script><p><em>那么$Z_t$是一个不可约且不可逆的马尔可夫链，其存在唯一的一个稳态分布$\pi’$，且满足$\pi’(e_{ij})=\pi(i)P(i,j)$，并且对任意一个函数$f$，满足$\sigma’^2(f) \leq \sigma^2(f)$。</em></p>
+<h4 id="NBRW-rw"><a href="#NBRW-rw" class="headerlink" title="NBRW-rw"></a>NBRW-rw</h4><h4 id="MHDA"><a href="#MHDA" class="headerlink" title="MHDA"></a>MHDA</h4><h3 id="模拟实验"><a href="#模拟实验" class="headerlink" title="模拟实验"></a>模拟实验</h3>
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+
+        
+        <li>
+            <a target="_blank"  href="mailto:wangrui1994@126.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3125304081">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/rwang067">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
+        <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
+        <span>/</span>
+        
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: 'NBRW(SIGMETRICS 2012) 不回溯的无偏图采样',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+
+
+
+</html>
