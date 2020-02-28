@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rui Wang&#39;s blog">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        Neo4j Graph Database(2007) - Rui&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 热爱学习，热爱生活 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar radius">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Rui Wang</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#背景"><span class="toc-text">背景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#图计算与图数据库"><span class="toc-text">图计算与图数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#挑战"><span class="toc-text">挑战</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Neo4j"><span class="toc-text">Neo4j</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Neo4j的底层存储"><span class="toc-text">Neo4j的底层存储</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#存储模型"><span class="toc-text">存储模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#样例阐述"><span class="toc-text">样例阐述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#存储文件"><span class="toc-text">存储文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cypher查询语言"><span class="toc-text">Cypher查询语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他图数据库"><span class="toc-text">其他图数据库</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 热爱学习，热爱生活 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        Neo4j Graph Database(2007)
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-02-18 14:55:12</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#graph database" title="graph database">graph database</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p><strong>参考文献</strong>：</p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzU1NDA4NjU2MA==&amp;mid=2247500325&amp;idx=2&amp;sn=b828e5a137824eb3c5d44f7fc97270eb&amp;chksm=fbea7beacc9df2fcdba3728949ebb203e89697b481d8d7e2faade508c3c6695352829ae90659&amp;mpshare=1&amp;scene=1&amp;srcid=&amp;sharer_sharetime=1581673402114&amp;sharer_shareid=9d59fa79978018715cd685e03310e51e&amp;key=7545a23db0fbfa9b5f0039cac3b60f89c2ce5b6cd17c7617fe4e09156d4503be9062141d013a723ae3abef3ba1920cac7fb49498aa8162433400cbb458132696ec706f3a9015d6abf70e9f9940764384&amp;ascene=1&amp;uin=MjA1MjM0NjAyMQ%3D%3D&amp;devicetype=Windows+10&amp;version=62080079&amp;lang=zh_CN&amp;exportkey=AXhym5sv3VTHIiJ5BN9dfag%3D&amp;pass_ticket=nfR9DyVPFn2dHSZyBtvPwZAMprhQskPslekF8pSDwnsA60LS%2FS6yaS%2FSODTBsAd1" target="_blank" rel="noopener">[1] 图数据库竞争日趋激烈，淘汰正在进行</a></p>
+<p><a href="https://neo4j.com/" target="_blank" rel="noopener">[2] Neo4j官网</a></p>
+<p><a href="https://sunxiang0918.cn/2015/06/27/neo4j-%E5%BA%95%E5%B1%82%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90/" target="_blank" rel="noopener">[3] Neo4j 底层存储结构分析</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/76544669" target="_blank" rel="noopener">[4] 知识图谱里的知识存储：neo4j的介绍和使用</a></p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><h4 id="图计算与图数据库"><a href="#图计算与图数据库" class="headerlink" title="图计算与图数据库"></a>图计算与图数据库</h4><p><em>2019 年年初，Gartner 数据与分析峰会上将图列为 2019 年十大数据和分析趋势之一，并预计到 2022 年，全球图处理及图数据的应用将以每年 100% 的速度迅猛增长，2020 年保守估计将达到 80 亿美元</em>[1]。</p>
+<p><strong>图计算</strong>重点包括两点：1）重点关注在线事务处理(<strong>OLTP</strong>)的<strong>图数据库</strong>，擅长事务性查询，但并不能高效地进行离线分析；2）重点关注离线图分析处理(<strong>AP</strong>)的<strong>图分析引擎</strong>，却不能对属性图进行管理，且不支持实时查询。</p>
+<p>大数据时代的业务增长带来的数据关联的复杂化催生了数据库的变革和创新。图数据库由于<em>提供了对关联数据最直接的表达</em>，以及<em>图模型对异构数据天然的包容力</em>。</p>
+<h4 id="挑战"><a href="#挑战" class="headerlink" title="挑战"></a>挑战</h4><p>图要实现大规模应用并不是一个简单的问题，从应用层面来看，存在以下几个问题：</p>
+<p>1、<strong>技术实现难</strong>：数据加载是性能瓶颈，动态增量图数据不能实时及时更新；超级顶点问题；OLTP与OLAP融合问题；图划分；流式图数据处理问题等。</p>
+<p>2、<strong>业务理解难</strong>图数据库的实施流程一般包括：业务理解、图 Schema 设计、业务数据加工、业务验证和监控运维 5 个步骤。但目前企业应用中，数据质量、应用方法不成熟，用户需求不明确。理解业务数据和业务问题，将业务问题映射成图问题，并确认数据来源、存储介质、更新方式、容灾方案等，并匹配相应的软硬件资源等困难。</p>
+<p>3、<strong>选择差异大</strong>：从市场竞争角度，很多不同类型的图数据库产品优势不同，差异大，需要从性能、查询能力、计算能力等各方面去考虑。</p>
+<h4 id="Neo4j"><a href="#Neo4j" class="headerlink" title="Neo4j"></a>Neo4j</h4><p>Neo4j是2007年开始的一个开源项目[2]，是不仅利用数据而且利于数据之间的关系来建造的一个高度可伸缩的本地图数据库。使用Neo4j，开发人员可以构建智能应用程序，实时地遍历当今大型的、相互连接的数据集。由本机进行图存储和处理引擎支持，Neo4j为独特的、可操作的见解提供了直观、灵活和安全的数据库。其应用场景包括人工智能、知识图谱、诈骗检测、社交网络和实时推荐系统等等。</p>
+<h3 id="Neo4j的底层存储"><a href="#Neo4j的底层存储" class="headerlink" title="Neo4j的底层存储"></a>Neo4j的底层存储</h3><h4 id="存储模型"><a href="#存储模型" class="headerlink" title="存储模型"></a>存储模型</h4><p>neo4j的数据存储形式主要是节点（node）和 边（edge）来组织数据。node可以代表知识图谱中的实体，edge可以用来代表实体间的关系，关系可以有方向，两端对应开始节点和结束节点。另外，可以在node上加一个或多个标签（Node Label）表示实体的分类，以及一个键值对集合来表示该实体除了关系属性之外的一些额外属性，关系也可以附带额外的属性[4]。</p>
+<ul>
+<li><strong>Node的存储</strong>：每个Node保存了第1个Property和第1个Relationship。</li>
+</ul>
+<hr>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">inUse</th>
+<th style="text-align:center">nextRelId</th>
+<th style="text-align:center">nextPropId</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<ul>
+<li><strong>Relationship的存储</strong>：每个关系通过一个双向链表，保存其源节点和目的节点的Id以及他们的上一个和下一个关系。</li>
+</ul>
+<hr>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">sid</th>
+<th style="text-align:center">prep</th>
+<th style="text-align:center">next</th>
+<th style="text-align:center">tid</th>
+<th style="text-align:center">prep</th>
+<th style="text-align:center">next</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<ul>
+<li><strong>Property的存储</strong>：Node和Relationship的Property都使用一个基于Key-Value的双向列表来保存。</li>
+</ul>
+<h4 id="样例阐述"><a href="#样例阐述" class="headerlink" title="样例阐述"></a>样例阐述</h4><ul>
+<li>样例图</li>
+</ul>
+<!-- ![](/img/neo4j/case_graph.png) -->
+<div align="center" width="80%">
+  <img width="250" src="/img/neo4j/case_graph.png">
+</div>
+
+<ul>
+<li>Node的存储</li>
+</ul>
+<!-- ![](/img/neo4j/node.png) -->
+<div align="center" width="80%">
+  <img width="150" src="/img/neo4j/node.png">
+</div>
+
+<ul>
+<li>Relationship的存储</li>
+</ul>
+<!-- ![](/img/neo4j/relationship.png) -->
+<div align="center" width="80%">
+  <img width="300" src="/img/neo4j/relationship.png">
+</div>
+
+<p>若想要访问某个node的所有邻居节点，首先通过该node找到其第一个relationship，然后通过递归访问当前relationship的next指针找到该node的下一个relationship，直至next指向null。这样可以遍历该node的所有relationship，然后可以到达与其有relationship的第1层Nodes，在通过遍历第1层Nodes的relationship，可以达到第2层Nodes……</p>
+<h4 id="存储文件"><a href="#存储文件" class="headerlink" title="存储文件"></a>存储文件</h4><p>neo4j中，节点、关系、标签等文件是以<strong>数组</strong>作为核心存储结构，各个类型的每个数据项都会分配一个唯一的ID，在存储时以该ID作为数组的下标。这样，在访问时通过其ID作为下标，实现快速定位。另外，节点和关系的属性采用基于<strong>KV</strong>的存储结构。具体的，Neo4j中由下列存储文件。</p>
+<hr>
+<p><strong>存储 node 的文件</strong></p>
+<p>1.存储节点数据及其序列Id</p>
+<ul>
+<li>neostore.nodestore.db：存储节点数组，数组的下标即是该节点的ID</li>
+<li>neostore.nodestore.db.id：存储最大的ID及已经free的ID</li>
+</ul>
+<p>2.存储节点label及其序列Id</p>
+<ul>
+<li>neostore.nodestore.db.labels：存储节点label数组数据，数组的下标即是该节点label的ID</li>
+<li>neostore.nodestore.db.labels.id：存储最大的ID及已经free的ID</li>
+</ul>
+<hr>
+<p><strong>存储 relationship 的文件</strong></p>
+<p>1.存储关系数据及其序列Id</p>
+<ul>
+<li>neostore.relationshipstore.db：存储关系record数组数据，数组的下标即是该条关系（边）的ID</li>
+<li>neostore.relationshipstore.db.id：存储最大的ID及已经free的ID</li>
+</ul>
+<p>2.存储关系组数据及其序列Id</p>
+<ul>
+<li>neostore.relationshipgroupstore.db：存储关系group数组数据，数组的下标即是该关系组的ID</li>
+<li>neostore.relationshipgroupstore.db.id：存储最大的ID及已经free的ID</li>
+</ul>
+<p>3.存储关系类型及其序列Id</p>
+<ul>
+<li>neostore.relationshiptypestore.db：存储关系类型数组数据，数组的下标即是该关系类型的ID</li>
+<li>neostore.relationshiptypestore.db.id：存储最大的ID及已经free的ID</li>
+</ul>
+<p>4.存储关系类型的名称及其序列Id</p>
+<ul>
+<li>neostore.relationshiptypestore.db.names：存储关系类型token数组数据，数组的下标即是该关系类型token的ID</li>
+<li>neostore.relationshiptypestore.db.names.id：存储最大的ID及已经free的ID</li>
+</ul>
+<hr>
+<p><strong>存储 label 的文件</strong></p>
+<p>1.存储label token数据及其序列Id</p>
+<ul>
+<li>neostore.labeltokenstore.db：存储lable token 数组数据，数组的下标即是该label token的ID</li>
+<li>neostore.labeltokenstore.db.id：存储最大的ID及已经free的ID</li>
+</ul>
+<p>2.存储label token名字数据及其序列Id</p>
+<ul>
+<li>neostore.labeltokenstore.db.names：存储label token的names数据，数组的下标即是该label token的name的ID</li>
+<li>neostore.labeltokenstore.db.names.id：存储最大的ID及已经free的ID</li>
+</ul>
+<hr>
+<p><strong>存储 property 的文件</strong></p>
+<p>1.存储属性数据及其序列Id</p>
+<ul>
+<li>neostore.propertystore.db：存储property数据，数组的下标即是该property的ID</li>
+<li>neostore.propertystore.db.id：存储最大的ID及已经free的ID</li>
+</ul>
+<p>2.存储属性数据中的数组类型数据及其序列Id</p>
+<ul>
+<li>neostore.propertystore.db.arrays：存储property (key-value 结构)的<strong>Value值是数组</strong>的数据。</li>
+<li>neostore.propertystore.db.arrays.id</li>
+</ul>
+<p>3.属性数据为长字符串类型的存储文件及其序列Id</p>
+<ul>
+<li>neostore.propertystore.db.strings：存储property (key-value 结构)的<strong>Value值是字符串</strong>的数据。</li>
+<li>neostore.propertystore.db.strings.id</li>
+</ul>
+<p>4.属性数据的索引数据文件及其序列Id</p>
+<ul>
+<li>neostore.propertystore.db.index：存储property (key-value 结构)的<strong>key的索引数据</strong>。</li>
+<li>neostore.propertystore.db.index.id</li>
+</ul>
+<p>5.属性数据的键值数据存储文件及其序列Id</p>
+<ul>
+<li>neostore.propertystore.db.index.keys：存储property (key-value 结构)的<strong>key的字符串值</strong>。</li>
+<li>neostore.propertystore.db.index.keys.id</li>
+</ul>
+<hr>
+<p><strong>其他的文件</strong></p>
+<p>1.存储版本信息</p>
+<ul>
+<li>neostore</li>
+<li>neostore.id</li>
+</ul>
+<p>2.存储 schema 数据</p>
+<ul>
+<li>neostore.schemastore.db</li>
+<li>neostore.schemastore.db.id</li>
+</ul>
+<p>3.活动的逻辑日志</p>
+<ul>
+<li>nioneo_logical.log.active</li>
+</ul>
+<p>4.记录当前活动的日志文件名称</p>
+<ul>
+<li>active_tx_log</li>
+</ul>
+<h3 id="Cypher查询语言"><a href="#Cypher查询语言" class="headerlink" title="Cypher查询语言"></a>Cypher查询语言</h3><p>neo4j采用自己设计的查询语言cypher，其特点和sql有很多相似的地方。match、where、return是最常用到的关键词：</p>
+<ul>
+<li><p><strong>match</strong>: 相当于 sql中的select，用来说明查询匹配的数据模式（或者说图模式）；</p>
+</li>
+<li><p><strong>where</strong>: 用来限制node或者关系中部分属性的属性值，从而返回我们想要的数据；</p>
+</li>
+<li><p><strong>return</strong>: 返回节点或者关系。</p>
+</li>
+</ul>
+<p><strong>查询举例</strong>：找出所有公司中，指向其他公司的连接关系数超过75条的公司。</p>
+<hr>
+<p>MATCH (c:company)-[r:INTERLOCK]-&gt;() WITH c, count(r) as relaNum WHERE relaNum&gt;=75 RETURN c,relaNum</p>
+<hr>
+<p><strong>neo4j还内置实现了一套图搜索算法，并提供了相关函数接口。</strong></p>
+<ul>
+<li>比如你想查询两个节点之间的最短路径，就可以调用查询语句：shortestPath()。</li>
+</ul>
+<h3 id="其他图数据库"><a href="#其他图数据库" class="headerlink" title="其他图数据库"></a>其他图数据库</h3><div align="center" width="80%">
+  <img width="500" src="/img/neo4j/gdb.jfif">
+</div>
+
+<p>图数据库领域，远没有达到目前传统RDBMS的成熟程度，还处于发展阶段，具体表现在：</p>
+<ul>
+<li><p>图数据库产品极大丰富，出现几家具有垄断性地位的玩家，性能和功能全面碾压其他产品。</p>
+</li>
+<li><p>图数据查询语言完成ISO标准化（目前OpenCypher和GSQL处于“绝对赢家”地位），并且大部分产品都遵循这个标准，并出现数据交换标准。</p>
+</li>
+<li><p>用户受到普遍教育，能像使用RDBMS一样很自然地接受图数据库应用，出现大量第三方图应用程序开发商和集成商。</p>
+</li>
+</ul>
+<p>相较之下，图分析引擎的成熟度弱于图数据库，目前偏学术性研究的有不少，但是工业级的产品非常少，并且缺乏专门为图分析设计的框架和产品，目前很多一线公司都还是使用 Spark、Flink、MapReduce 等通用计算框架来做图计算，性能肯定不如专门为图分析设计和优化的系统。</p>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+
+        
+        <li>
+            <a target="_blank"  href="mailto:wangrui1994@126.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3125304081">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/rwang067">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
+        <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
+        <span>/</span>
+        
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: 'Neo4j Graph Database(2007)',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+
+
+
+</html>

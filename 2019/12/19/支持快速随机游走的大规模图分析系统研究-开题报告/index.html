@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rui Wang&#39;s blog">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        支持快速随机游走的大规模图分析系统研究--开题报告 - Rui&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 热爱学习，热爱生活 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar radius">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Rui Wang</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#研究背景"><span class="toc-text">研究背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#大规模动态图并发图分析场景"><span class="toc-text">大规模动态图并发图分析场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于随机游走的图分析"><span class="toc-text">基于随机游走的图分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#应用案例——个性化的PageRank"><span class="toc-text">应用案例——个性化的PageRank</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#复杂图分析场景带来的问题"><span class="toc-text">复杂图分析场景带来的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#I-O是性能瓶颈"><span class="toc-text">I/O是性能瓶颈</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#并发图处理任务间相互影响性能"><span class="toc-text">并发图处理任务间相互影响性能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态图场景下响应不及时"><span class="toc-text">动态图场景下响应不及时</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#国内外研究现状和发展趋势"><span class="toc-text">国内外研究现状和发展趋势</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#I-O与计算性能优化"><span class="toc-text">I/O与计算性能优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#并发图分析优化"><span class="toc-text">并发图分析优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态图存储优化"><span class="toc-text">动态图存储优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基于随机游走的系统优化"><span class="toc-text">基于随机游走的系统优化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#研究内容和研究方法"><span class="toc-text">研究内容和研究方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主要研究内容"><span class="toc-text">主要研究内容</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#存储管理与计算模型"><span class="toc-text">存储管理与计算模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#并发图处理优化"><span class="toc-text">并发图处理优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态图优化"><span class="toc-text">动态图优化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#研究目标"><span class="toc-text">研究目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#研究方法与技术路线"><span class="toc-text">研究方法与技术路线</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#存储管理与计算框架"><span class="toc-text">存储管理与计算框架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#并发图处理优化-1"><span class="toc-text">并发图处理优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动态图处理优化"><span class="toc-text">动态图处理优化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可行性分析"><span class="toc-text">可行性分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创新点"><span class="toc-text">创新点</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 热爱学习，热爱生活 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        支持快速随机游走的大规模图分析系统研究--开题报告
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2019-12-19 14:27:21</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#random walks" title="random walks">random walks</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#graph processing system" title="graph processing system">graph processing system</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#my work" title="my work">my work</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h2 id="研究背景"><a href="#研究背景" class="headerlink" title="研究背景"></a>研究背景</h2><h3 id="大规模动态图并发图分析场景"><a href="#大规模动态图并发图分析场景" class="headerlink" title="大规模动态图并发图分析场景"></a>大规模动态图并发图分析场景</h3><p>图因其可以很好地表达真实世界中实体之间的联系，而在许多领域的广泛应用，比如网页链接[1,2]、社交网络[3,4]、导航系统[5,6]和推荐系统[7,8]等。近年来，随着信息技术和人类社会活动的不断发展，图数据的规模也不断增大，例如很多网络图已经达到数十亿的节点和数千亿的边[9]。随着网络图数据的快速发展及普及，越来越多的大型图分析算法也不断涌现，用来，服务于各个行业，比如网页排序、市场营销、风投分析等。很多这些图分析算法可能并发地从不同方面去分析同一个底层图数据[10]，带来“并发图分析”。此外，图数据本身可能也在不断动态变化[11]，比如社交网络中注册新用户，添加新的好友关系等，带来“动态图分析”。真实世界的应用场景中，同一个数据平台上，超大规模的动态变化的图数据上可能并发地运行着各类图分析算法。</p>
+<h3 id="基于随机游走的图分析"><a href="#基于随机游走的图分析" class="headerlink" title="基于随机游走的图分析"></a>基于随机游走的图分析</h3><p>面对这样大规模的图数据，很多迭代遍历的图算法由于过高的计算复杂度而难以实现，此时通过采样的方法来实现近似计算是一种可行的替代方案，其中基于随机游走的方法能够很好的表达很多算法。随机游走是图数据分析和机器学习中一个重要的分析工具，可以利用图中节点之间的集成路径提取信息，经常被应用于一些重要的图分析、排序和嵌入式算法中，比如个性化的PageRank[12,13]、SimRank[14]、DeepWalk[15]和node2vec[16]等。因而被广泛的应用于很多图分析场景中，例如个性化的PageRank[12,13]、相似性计算[14]、影响力传播[17]以及机器学习等一些其他应用场景[18-22].。近年来，学术界和工业界也有越来越多的工作关注随机游走，根据微软学术的统计结果，2018年就要大约1700篇学术论文是关于随机游走[23]，而工业界的很多大公司比如Facebook、谷歌、微软、阿里巴巴和腾讯等也都使用了随机游走相关的技术。</p>
+<p>基于随机游走的算法通常开始时同时启动多个随机游走，每个随机游走具有一定的行走长度，然后图数据系统利用它们的访问模式进行图数据分析。一个随机游走首先从一个初始节点开始，随机选择当前节点的一个邻居节点并跳转到该节点，重复上述过程直至满足预设的终止条件，比如随机游走达到一定的步长或者随机游走在每一步有一定的概率终止。</p>
+<h3 id="应用案例——个性化的PageRank"><a href="#应用案例——个性化的PageRank" class="headerlink" title="应用案例——个性化的PageRank"></a>应用案例——个性化的PageRank</h3><p>PageRank是Google著名的网页排序算法。而该算法一个更为复杂的版本是个性化的PageRank，即根据用户的个性化的偏好，进行个性化的网页排序推荐。通常PageRank算法是可以用幂法迭代进行计算，但是个性化的PageRank，尤其当要对很多用户甚至是全部用户同时进行个性化的PageRank算法计算时，用幂法迭代计算往往需要很高的时间和空间开销，对计算（尤其是大规模图数据上的计算）带来困难。</p>
+<p>此时基于随机游走的近似算法是个常用的替代算法，通过在图上模拟一定数量的随机游走，并统计图上各个节点被这些随机游走访问的概率，即可近似得到个性化的PageRank值。具体的算法如下：要计算图上一个节点的个性化的PageRank值，我们从该节点出发，模拟一条很长的基于重启的随机游走（random walk with restart），即随机游走在每一步以一定的概率回到初始节点。随机游走在走到一定的步数后会到达收敛状态，在其收敛以后，统计该条随机游走访问各个节点的访问频率，近似计算的得到该节点的个性化的PageRank值。</p>
+<p>为了达到收敛以保证近似计算的准确度，从该节点出发的基于重启的随机游走的步数通常需要很长，对于一些大规模的图数据，甚至需要成千上万步随机游走，这也给计算带来了很大的时间开销，尤其是针对基于磁盘的大规模图数据的处理场景。所以一种常见的做法是，将这一条很长的基于重启的随机游走，在其每次重启的地方切割，转换成很多条很短的随机游走，然后通过并发执行来提升计算效率。具体的算法执行过程可修改如下：要计算图上一个节点的个性化的PageRank值，我们从该节点同时出发很多条的基于重启的随机游走，并将每条随机游走的重启条件变成终止条件。这样我们就可以快速得到很多短的随机游走，我们统计这些随机游走对图中各个节点的访问频率，即可快速近似计算的得到该节点的个性化的PageRank值。理论上可以证明这种基于拆分拼接的方法不会带来任何计算误差。</p>
+<p>这种基于拼接的随机游走方法，将一条很长的随机游走的计算转换成了很多条短随机游走的并发计算，大大提升了计算效率。但与此同时，这种方法也给图上带来了大量并发的随机游走，尤其是需要同时计算多个节点的个性化的PageRank，甚至是同时计算所有节点的个性化的PageRank的时候，更是进一步加倍了图上并发的随机游走的个数。</p>
+<p>如何在大规模的图数据上进行这样大规模的并发随机游走？如何管理这样大规模的图数据和walk数据？目前有一些针对通用图算法的基于磁盘的单机图处理系统，但是这些系统在支持随机游走时可能会表现出一些局限性，比如I/O效率低，walk管理开销大等问题。所以需要一个支持快速随机游走的大规模图分析系统来支持这些基于随机游走应用的计算效率。</p>
+<h3 id="复杂图分析场景带来的问题"><a href="#复杂图分析场景带来的问题" class="headerlink" title="复杂图分析场景带来的问题"></a>复杂图分析场景带来的问题</h3><p>虽然基于随机游走的算法降低了图分析的时间复杂度，但是复杂的图分析场景依然给基于随机游走的图分析带来很多实现上的问题，主要包含以下几个方面。</p>
+<h4 id="I-O是性能瓶颈"><a href="#I-O是性能瓶颈" class="headerlink" title="I/O是性能瓶颈"></a>I/O是性能瓶颈</h4><p>这些超大规模的图数据很难放入一台机器的内存中，必须存储在磁盘上。由于图数据中节点之间连接紧密且复杂，会带来对磁盘的大量的随机I/O，而随机游走本身的随机邻居选择更增加了对图数据的访问的随机性。图3展示了一个样例图的随机游走对图中节点和边的随机访问过程。其中图3（a）表示样例图上的一个6步长的随机游走，游走轨迹为；图3（b）和图3（c）分别表示样例图的节点列表和边列表，图中的箭头代表访问数据的顺序。从图中可以看出，随机游走对图中节点和边的访问都会带来大量的随机访问。当这些数据放在磁盘上的时候，就会带来对磁盘的大量随机I/O。因此分析这些需要驻留在磁盘中的大规模图数据非常耗时，对于某些应用，需要运行几个小时甚至几天的时间才能得到一些计算结果。</p>
+<p>目前的图分析系统通常采用一种基于迭代的计算模型，当一个图太大而不能放入内存时，它们会根据顶点或边将整个图划分成许多区间，并将每个区间作为一个块存储在磁盘上。为了进行图形分析，他们采用了基于迭代的模型。在每个迭代中，一个块被依次加载到内存中，然后与加载的子图相关的分析被执行。通过这种方式，它们将大量的随机访问转化为对磁盘的一系列连续访问，大大降低一些算法的运算开销。但是我们发现这些基于迭代模型的图系统更适用于那些需要整个图数据的算法和应用，而不能有效地支持基于随机游走的图算法。原因有两个方面：（1）随机游走过程中的随机的邻居选择进一步加剧了算法对图数据的随机访问，且对各个子图分区访问很不均衡；（2）许多在线图数据查询算法也是基于随机游走实现的，此时随机游走只需要访问整个图数据的一部分，而基于迭代的模型迭代的加载整个图数据信息，在执行基于随机游走的算法时I/O效率不高。</p>
+<p>我们通过实验观察一个典型的图处理系统GraphChi[24]的I/O效率。我们定义I/O利用率为被随机游走使用的边数除以系统一次加载的图数据中的总边数，通过真实世界的数据集上的实验发现，GraphChi在Friendster数据集[25]上运行一亿条10步的随机游走，平均I/O利用率只有，当walk数目更少时，每次I/O的利用率将更低。这意味着每次系统花费很多时间读入大量的图数据块，但是其中真正被用来计算随机游走的部分却很少。而大量花费在I/O上的时间造成了整个计算过程的性能瓶颈。</p>
+<h4 id="并发图处理任务间相互影响性能"><a href="#并发图处理任务间相互影响性能" class="headerlink" title="并发图处理任务间相互影响性能"></a>并发图处理任务间相互影响性能</h4><p>很多基于随机游走的图分析算法可能并发地从不同方面去分析同一个底层图数据，带来“基于随机游走的并发图分析”。根据一个真实大型社交网络平台的追踪结果，平均就有大约10个并发图处理任务提交到这一个公共数据平台，分发的分析同一个图数据，而在峰值的时候更是有超过20个并发图分析任务[10]。<br>在并发图分析场景下，各个并发图分析任务之间竞争CPU、I/O及内存等资源，并且相互干扰缓存，所以各并发图分析任务的性能都会因为相互影响而下降。图4展示了四个基于随机游走的图分析任务的标准化后的执行开销，从中可以看出，将四个算法并发执行后，总的时间开销有一点点下降，但是单个图分析任务的时间开销却显著增加。并且CGraph[10]中指出，随着并发图分析任务的数量的进一步增加，各个图分析任务的平均执行时间进一步显著延长，而他们延长的时间开销主要来源于更高的数据访问成本。</p>
+<h4 id="动态图场景下响应不及时"><a href="#动态图场景下响应不及时" class="headerlink" title="动态图场景下响应不及时"></a>动态图场景下响应不及时</h4><p>现实中的很多应用场景都是动态图场景，比如网页链接中插入新网页、电商平台用户购买产品、社交媒体中删除推文和社交网络中好友取消关注等，都会带来节点和边的插入或删除，造成图结构的改变。而一般动态图的处理场景图大多是一种在线实时的处理场景，往往需要实时得到反馈。但目前来说，大多数系统考虑的是静态图的处理场景，不能很好的支持动态增量图数据的实时插入和更新。一种通用的方式是采用快照的方式单独存储动态图场景下的增量数据，即静态图数据与动态增量图数据分离存储。这种方式虽然能很快的插入图数据的更新信息，但是在进行图分析计算时，需要分别访问静态图数据以及动态增量图数据，造成额外的查询开销，影响分析计算的性能。</p>
+<h3 id="国内外研究现状和发展趋势"><a href="#国内外研究现状和发展趋势" class="headerlink" title="国内外研究现状和发展趋势"></a>国内外研究现状和发展趋势</h3><p>近年来，人们提出了许多图形系统，来提高这种大规模图数据的分析性能。其中有一部分是基于分布式集群的图处理，比如[26-34]。然而，分布式图数据系统通常需要高效的图数据划分和机器之间低成本的通信和同步。另一种做法就是将大规模的图数据存放在单个机器的磁盘上，比如HDD或SSD，并通过合适的存储模型、I/O调度策略和计算模型，在单机上也能实现对大规模图数据很好的处理性能。因此，基于单机的磁盘驻留图的图处理系统也备受关注[24,35-43]。接下来，我们分别介绍这些单机图处理系统在I/O性能优化、并发图分析优化和动态图场景优化这三个方面的研究现状和发展趋势。</p>
+<h4 id="I-O与计算性能优化"><a href="#I-O与计算性能优化" class="headerlink" title="I/O与计算性能优化"></a>I/O与计算性能优化</h4><p>针对图分析算法对磁盘驻留图的大量随机I/O问题，很多基于磁盘的单机图处理系统提出I/O优化方法。GraphChi是这类工作的先驱，我们首先以GraphChi[24]为例介绍这类工作的存储和计算过程。</p>
+<ol>
+<li><p><strong>图的划分与存储</strong>，当图数据太大，无法放入内存时，GraphChi将所有顶点分割成P个不相交的区间，并为每个区间与关联一个”shard”，存储目标顶点位于此区间内的所有边。每个shard中的边根据它们的源顶点ID进行排序。图5(a)显示了图3(a)中的示例图的shard的数据组织。</p>
+</li>
+<li><p><strong>子图加载</strong>，GraphChi每一次将一个区间节点所对应的子图加载到内存中进行分析。为了加载子图，它首先从相应的shard加载入边，然后从其他P – 1个shard中加载出边，如图5(b)所示。由于在每个shard中都是根据源顶点来对边排序的，所以总共只需要P个连续的磁盘读取来加载一个区间对应的子图。通过这种方式，GraphChi将对磁盘的随机访问转换为一系列连续的访问，极大地提高了磁盘驻留图数据处理的性能。</p>
+</li>
+<li><p><strong>子图上的分析计算</strong>，GraphChi使用一个以顶点为中心的计算模型，该模型在Pregel中首次提出[38]。它遍历所加载的子图上的所有顶点，对于每个顶点v，首先从v的入边收集（Gather）信息，然后执行（Apply）顶点v上定义的更新函数f(v)，最后将更新后的信息通过出边散播（Scatter）出去，这种方法也被称为以顶点为中心的GAS计算模型。另一个计算模型是X-Stream[44]中提出的以边为中心的模型，它通过遍历边来工作。图6分别展示了以点为中心的计算模型和以边为中心的计算模型，这是分布式和单机图处理系统中最常用的两种模型。</p>
+</li>
+<li><p><strong>基于迭代的子图调度</strong>，为了同步各个节点上计算任务的进度，GraphChi使用基于迭代的模型加载所有的子图，在GraphChi中称为并行滑动窗口(parallel slide window, PSW)，如图5(b)所示。在每个迭代中，它按顺序循环加载子图，这保证了整个图上所有计算任务之间的同步。这种基于迭代的模型在许多图数据系统中得到了广泛的应用。</p>
+</li>
+</ol>
+<p>随后，有很多研究工作在GraphChi的基础上进一步优化基于磁盘的单机图处理的性能。X-Stream[35]通过将对图数据的存储转化为边数据流的方式，进一步减少了随机I/O，并且避免了对边数据排序的巨大开销。GridGraph[36]提出一种二维图划分的方式，并采用双重滑动窗口的方式对边进行流处理。FlashGraph[37]是一个半外核的图系统，它将顶点数据存储在内存中，将边数据存储在用户空间的flash文件系统中，以提高小型I/Os的性能。ODS[38]提出使用动态分区来调整图数据的布局。CLIP[39]采用了复用已加载子图的思想，充分利用了每一个I/O。Graphene[40]通过采用I/O中心计算模型和基于位图的异步IO技术优化了I/O管理。GraFBoost [41]和V-Part [42]利用高性能的新兴设备进行存储或计算来进一步提升基于磁盘的单机图处理系统的性能。</p>
+<p>上述所有图系统都采用基于迭代的I/O模型，迭代地加载磁盘上的所有图数据分区，在每轮迭代中，顺序地加载所有需要的分区一次。但是，由于随机游走步骤中随机邻居的选择加剧了对图数据的随机访问，且造成各个子图分区之间的访问非常不均衡，均匀的加载每个子图并不是一个合适的方式；另外许多在线图数据查询算法也是基于随机游走实现的，此时随机游走只需要访问整个图数据的一部分，迭代的加载所有图数据更造成大量的无效I/O。所以，这种基于迭代的I/O模型不能有效地支持基于随机游走的图算法。</p>
+<h4 id="并发图分析优化"><a href="#并发图分析优化" class="headerlink" title="并发图分析优化"></a>并发图分析优化</h4><p>为了多任务并发的图处理场景下，各个并发图分析任务之间竞争CPU、I/O及内存等资源导致的相互干扰的问题，目前也有几个研究工作专门针对多任务并发的图处理场景的优化。Seraph[44]通过数据解耦的方式，允许多个并发图分析任务共享内存中的图数据，通过减少内存需求提高并发图分析任务的吞吐率。CGraph[10]进一步挖掘各个并发图计算任务之间的关联性，并采用一种以数据为中心的LTP（load-trigger-pushing）模型来进行图数据的调度和各个图分析任务的并发计算。图7展示了CGraph的以数据为中心的LTP计算模型，包含加载（Load）图分块、触发（Trigger）各图处理任务的并发执行和数据推送（Pushing）实现master和mirror的状态同步三个阶段。</p>
+<ol>
+<li><p><strong>加载图分块</strong>，CGraph首先实现图结构数据和图处理任务状态数据的分离。图结构数据为所有并发图计算任务的共享数据，各图处理任务分别有一个状态数据。图结构数据被划分为多个块存储，CGraph采用切割节点的方式，所有的边被均匀划分到不同的分块，跨越不同分块的节点建立master和mirror。CGraph每次加载一个块的共享图数据进入内存进行计算。</p>
+</li>
+<li><p><strong>触发各图处理任务的并发执行</strong>，CGraph加载一个子图分区进入到内存以后，在该图分区上有计算任务的图处理任务进行并发计算。当要并发处理的任务数量大于CPU的核数时，这些并发图处理任务被分配为不同的批处理。</p>
+</li>
+<li><p><strong>数据推送实现master和mirror的状态同步</strong>，CGraph在计算处理一个图分块时，是没有cache miss的，因为不同的图分块的节点之间是没有通信的。但是在不同图分块上，具有副本的顶点需要同步它们的状态。mirror节点需要推送（push）它的新状态到它的master节点，master节点获取到来自所有mirror节点的状态更新之后计算出当前轮最终的状态值，并推送到各个mirror节点。在这样的节点状态同步的过程中，私有状态表的许多图分区经常被加载到缓存中，导致较高的cache miss率。为了解决上述问题，CGraph将每个mirror节点的更新状态保存到一个缓冲区中。在数据同步阶段再隐式发送到master节点以进行批量顶点状态同步。</p>
+</li>
+</ol>
+<p>为了提高每个加载的图分块的利用率，CGraph还提出一种基于核心子图的调度算法：首先筛选出所有的核心节点（度数大于某阈值的节点）以及他们之间的连接边，构成一个核心子图；然后将这个子图的边放到几个大小相同的图分块中，其余的边被划分到其他大小相同的图分块中。这样，对核心节点的频繁加载和处理，带来的对相同分区中早期收敛顶点的加载开销更小。然后，CGraph给每个图分块一个优先级，优先调度优先级更高的图分块进入内存进行处理。（1）当大多数任务需要对一个块进行处理时，给它更高的优先级；（2）当一个块有更高的平均度或者更多的节点状态更新时，给它更高的优先级。具体的优先级的值设置为。通过这种方法，加载到缓存中的图分块可以服务尽可能多的图处理任务，而其他图分块在一段时间间隔后有更多的机会被更多的任务需要，通过降低平均数据访问成本进一步提高了吞吐量。<br>另外，最近也有一些工作专门被提出用于支持对图数据的并发查询。例如，TAO[45]提供了一个简单的数据模型来存储和查询图形数据。Wukong[46]使用一种基于RDMA的方法，提供大规模RDF图数据集上的低延迟并发查询。<br>上述几个针对并发图处理场景的工作虽然能很好地降低平均数据访问成本，提升总的并发图执行运行性能。但是依然存在一定的局限性，比如Seraph和CGraph更适用于需要迭代地处理整个图数据很多轮的重负载的图计算任务，轻负载的图查询任务由于只访问一小部分图数据而将长时间处于等待状态，响应时间将大大增加。而TAO和Wukong等图查询引擎又不适用于重负载的图计算任务。所以对于计算与查询混合的应用场景，上述系统不能实现很好的支持。</p>
+<h4 id="动态图存储优化"><a href="#动态图存储优化" class="headerlink" title="动态图存储优化"></a>动态图存储优化</h4><p>近年来最常用的一种存储图数据的方式为压缩稀疏行，即CSR（Compressed Sparse Row）。CSR使用两个序列来存储图数据，CSR序列用来顺序存储每个节点的出边邻居的ID，beg_pos序列用来存储每个节点在CSR序列中开始位置。图8直观地展示了CSR存储格式的数据表示以及数据查询方式。其中图8（a）为样例图；图8（b）为它的边列表表示；图8（c）为它的CSR表示，CSR序列中顺序写入各节点的出边邻居，分别为1和2、有3、0和3、1和2，beg_pos序列中顺序写入各节点在CSR序列中的开始位置分别为0、2、3、5，最后再加上一个总边数7。通过这种方式，CSR存储格式将一个图数据的存储开销减少到，相比之下邻接矩阵的存储开销高达。同时，CSR存储格式的查询开销也很低，比如查询节点2的邻居节点，只需要首先访问beg_pos序列中第二个值和第三个值，分别为3和5，我们就可以得知CSR序列中区间存储的是节点2的邻居，读取得知为节点0和节点3。由于其很低的存储开销和查询访问开销，CSR存储格式被广泛地应用于各个图分析系统中。</p>
+<p>但是，CSR存储格式只适用于静态图的存储。在动态图场景下，当有新的节点或边数据插入时，想要融入增量图数据，CSR需要重构CSR序列和beg_pos序列的存储内容。而当不断有增量数据插入时，重构的开销就非常大，在真实的场景中往往难以实现。</p>
+<p>现在的图处理系统中往往采用一种快照的方式，将静态图数据与动态插入的增量图数据分开存储。这种方式虽然能很快的插入图数据的更新信息，但是在进行图分析计算时，需要分别访问静态图数据以及动态增量图数据，造成额外的查询开销，影响分析计算的性能。而且随着增量图数据的不断增加，也越来越难以维护，存储和计算开销都将变得越来越困难。</p>
+<h4 id="基于随机游走的系统优化"><a href="#基于随机游走的系统优化" class="headerlink" title="基于随机游走的系统优化"></a>基于随机游走的系统优化</h4><p>Walk信息的管理成本也限制了图系统在运行随机游走时的效率。由于每个顶点上的行走数是动态的，不可预测的，所以在当前的图数据系统中，walk数量通常是用大量的动态数组来存储的，例如，GraphChi[24]以边为单位管理walk数据，也就是说，每个边关联一个动态数组，存储当前通过它的walk。这种设计会产生很大的内存开销，例如，要在YahooWeb数据集（14亿个顶点，66亿个边）上运行一些随机游走，仅仅存储该图上walk的动态数组的索引信息就至少需要26.4 GB。其他一些图系统可能使用以顶点为单位来管理walk信息，但它仍然会带来较高的内存成本，例如，也需要5.6 GB的内存来存储YahooWeb[47]这样的中等规模的图上的walk的动态数组的索引信息。在加上walk本身的数据信息，将大大占用内存开销，限制了这些图处理系统能够支持的图数据的规模以及上面能支持的随机游走的规模。</p>
+<p>DrunkardMob[13]将每个walk编码为32位或64位数组，并将相邻128个顶点的walk放入相同的walk缓冲区中，以减少walk索引的总大小，如图9所示。它有效地将walk索引的大小减少到以节点为单位的管理方式的1/128，例如，YahooWeb只有44.8 MB。然而，DrunkardMob中的每个行走缓冲区还是由一个动态数组管理的，这仍然对计算造成了限制。首先，对于大规模图图数据，DrunkardMob需要创建了太多的动态数组，例如，为YahooWeb创建了1120万个动态数组，这会导致频繁地重新分配内存，不仅引入了内存片段，而且带来了额外的时间成本，限制了可分析的图数据的规模。其次，DrunkardMob将所有的walk保存在内存中，由于与walk索引相关的文件太多，将它们刷新到磁盘的成本非常高。因此，DrunkardMob能够分析的walk的规模也是有限的。</p>
+<p>最近于2019年SOSP上提出的KnightKing[23]，是一个专门的随机游走图系统。KnightKing主要针对复杂的动态随机游走（即随机游走的每一步的邻居选择的概率是根据walk状态变化的）提出一种拒绝采样的策略。拒绝采样开始用于通用的任意概率的采样，将一个一维的采样过程转换成一个二维的采样过程。具体对应到随机游走的边采样过程为：随机地产生一个位置，其中是从当前节点的出边中均匀随机选取的一条边e，，其中是当前节点的出边的动态转移概率的最大值。当，则e被接收，当前walk通过e跳转。否则，e被拒绝，需要重新采样并重复上面过程，直至walker成功跳转。通过拒绝采样的方式，消除了对当前节点所有出边的访问去获取他们的转移概率。一般只需要几次尝试就可以成功采样一条边（复杂度为）。大大减少了对高度节点的采样开销。图10展示了KnightKing中的拒绝采样，其中图10（a）展示了一个样例图以及当前walk在节点v对各个边的动态转移概率，图10（b）展示了当前walk在节点v的拒绝采样过程。</p>
+<p>KnightKing主要是针对复杂随机游走中随机邻居选择的优化，没有考虑太多系统层面的存储管理、I/O调度以及计算框架等方面的优化。存储管理方面，KnightKing也没有专门针对walk数据管理的优化，walk数据的索引开销依旧很大；I/O调度方面，KnightKing底层还是沿用现有系统中的基于迭代的计算模型，导致支持随机游走的应用时I/O的效率还是不高。</p>
+<h2 id="研究内容和研究方法"><a href="#研究内容和研究方法" class="headerlink" title="研究内容和研究方法"></a>研究内容和研究方法</h2><h3 id="主要研究内容"><a href="#主要研究内容" class="headerlink" title="主要研究内容"></a>主要研究内容</h3><p>考虑到随机游走的广泛应用场景，本报告拟研究基于随机游走的大规模图分析系统。具体地，针对基于磁盘的单机图处理场景，向下支持大规模的图数据，向上支持基于随机游走的图算法及应用。如图11所示，研究内容分三个层次来实现，分别存储管理与计算框架、并发图处理优化和动态图处理优化。其中存储管理与计算框架针对静态图下单任务的场景，实现对大规模图数据下的随机游走的系统支持，并发图处理优化和动态图处理优化分别针对多任务并发图处理场景和动态增量图处理场景进行进一步的优化支持。</p>
+<h4 id="存储管理与计算模型"><a href="#存储管理与计算模型" class="headerlink" title="存储管理与计算模型"></a>存储管理与计算模型</h4><p>本报告首先考虑一种相对简单的静态图下单任务的随机游走图分析场景，拟设计对随机游走的存储管理与计算模型的支持。如图12所示，本报告拟开展下面三个方面的研究，图数据与walk数据的分离存储管理、walk状态感知的按需调度策略和以walk为中心的计算框架。</p>
+<ol>
+<li><p>考虑随机游走中walk数据分布的动态性和不均衡性，以节点或边为单位的walk数据管理会带来巨大的动态数组索引开销。因此本报告拟设计图数据与walk数据的分离存储管理，以最小化图数据和walk数据的存储和 管理开销。</p>
+</li>
+<li><p>考虑基于迭代的I/O模型在支持随机游走时会带来严重的I/O不高效的问题，本报告拟根据图中各个随机游走的状态，设计walk状态感知的按需调度策略，每次从磁盘调度最需要的图数据块进入内存，以保证最优的I/O效率。</p>
+</li>
+<li><p>为了最大化每次I/O的利用率，本报告拟设计一种I/O效率最大化的计算框架，使得能够充分利用每次I/O加载的子图数据，尽可能多地进行walk的转发，直至所有walk都跳出该子图为止。这样可以进一步提升每次I/O的效率，减少总的I/O次数，提升基于随机游走的图分析性能。</p>
+</li>
+</ol>
+<h4 id="并发图处理优化"><a href="#并发图处理优化" class="headerlink" title="并发图处理优化"></a>并发图处理优化</h4><p>基于上面针对随机游走的存储管理和计算框架的优化，本报告进一步考虑多个基于随机游走的应用并发处理的场景，优化多任务并发图处理的性能。如图13所示，本报告拟开展以下研究。</p>
+<ol>
+<li><p>考虑多个并发的随机游走图分析任务中可能存在重复的随机游走任务，本报告拟设计一种walk共享的机制，考虑不同的算法可能会产生一些不同类型的随机游走，设计随机游走的分类共享，即同一类型的随机游走之间实现复用，以减少随机游走的存储和计算开销。</p>
+</li>
+<li><p>对于同一类型的随机游走任务，检测它们之间随机游走的重复部分，设计walk任务的去重派发方案，实现多并发图处理任务之间的walk共享，并在计算完成之后分别反馈相应的计算结果。通过这样walk共享的实现，提升总体图分发任务的运行性能。</p>
+</li>
+<li><p>考虑基于随机游走的图分析任务之中同时包含需要全局计算的图计算任务和只针对局部图数据的查询任务，为了实现对这两类应用的混合支持和及时响应，拟设计一种查询计算混合应用的均衡调度策略，在提高整体运行性能的情况下，提高单个图分析任务的运行性能。</p>
+</li>
+</ol>
+<h4 id="动态图优化"><a href="#动态图优化" class="headerlink" title="动态图优化"></a>动态图优化</h4><p>本报告进一步考虑大规模动态变化的图数据场景，优化动态图上的图处理的性能。如图14所示，本报告拟开展以下研究。</p>
+<ol>
+<li><p>考虑键值（KV，key-value）存储系统可以支持数据的快速插入和查询，本报告拟设计基于KV的图存储结构，以实现对大规模动态图数据中节点和边数据的存储管理。</p>
+</li>
+<li><p>基于KV的图存储结构，拟设计对动态增量图数据的插入合并方案，实现对图中节点和边数据的快速插入或删除。</p>
+</li>
+<li><p>基于KV的图存储结构，拟设计对图数据的快速查询访问机制，以支持上层图分析任务的快速执行。</p>
+</li>
+</ol>
+<h3 id="研究目标"><a href="#研究目标" class="headerlink" title="研究目标"></a>研究目标</h3><p>本项目拟研究基于随机游走的大规模图分析系统，拟达到以下研究目标：</p>
+<ol>
+<li>设计图数据和walk数据分离存储管理策略，减少walk数据的存储开销到原来的20%，使得留出更多的内存空间，可以用来存放更多的图数据和walk数据，使得系统能够支持数十亿节点、数千亿边的大规模的图数据，以及能够支持数百亿条、长达数万步的并发执行的大规模随机游走；</li>
+<li>设计walk感知的按需调度策略以及I/O效率最大化的计算框架，提高每次I/O的利用率至少到原来的2倍，使得一次I/O能进行更多的walk转发，加速随机游走的进程，提高算法的执行效率；</li>
+<li>设计基于walk共享的随机游走并发图处理机制，减少walk数据的总量到原来的80%，从而减少整体存储和计算的开销，提升基于随机游走的并发图处理的性能。</li>
+<li>设计基于key-value的动态图存储管理策略，减少动态增量图数据的合并时间到原来的50%，同时实现高效的数据查询访问，以支持动态图场景下的快速图分析处理。</li>
+</ol>
+<h3 id="研究方法与技术路线"><a href="#研究方法与技术路线" class="headerlink" title="研究方法与技术路线"></a>研究方法与技术路线</h3><h4 id="存储管理与计算框架"><a href="#存储管理与计算框架" class="headerlink" title="存储管理与计算框架"></a>存储管理与计算框架</h4><p>面对基于磁盘的大规模图数据，首先需要设计图数据的划分方式和存储格式，使得每次加载的一个子图数据能够放入内存，以支持后续的计算；其次，针对随机游走产生的walk数据，需要设计轻量级的walk存储格式和索引查询；然后，需要根据当前图中walk的状态，设计walk感知的按需调度策略，加载一个最合适的子图数据块进入内存；最后，为了尽可能地提高每次I/O的利用率，需要设计I/O效率最大化的计算框架来利用加载子图数据进行walk的转发计算。按照上述技术路线，本报告拟按以下方法开展研究：</p>
+<ol>
+<li><p><strong>设计图数据的存储格式和划分方式</strong>：为了最小化图数据的存储开销，拟采用压缩行矩阵（CSR）的存储格式来存储图数据，即所有节点的出边邻居顺序存放到一个CSR文件中，并再使用一个index文件来存储每个节点在CSR文件中的开始位置。以此为基础，本报告拟设计一个轻量级的图划分方式，根据顶点ID将图划分为很多图数据块。具体地，按照顶点ID的升序顺序，将该节点及其出边邻居添加到当前图数据块中，直到块中的数据量超过预定义的块大小，然后创建一个新块。图15展示了图3（a）中的样例图在该方案下的数据布局。这种图划分方案只需要一次性的遍历读取index文件即可完成，并且只需要记录每个图数据块的开始节点ID。所以图划分的计算和存储开销都非常低，是一种非常轻量级的图划分方式。</p>
+</li>
+<li><p><strong>设计walk数据的存储结构和索引管理</strong>：为了最小化每个walk的存储开销，拟采用一种压缩的64位long类型的数据结构来存储一条walk，记录关于这个walk的始发节点（source）、当前节点（current），步长（step）这三个变量的信息，具体位分配如图7中所示。然后，为了减少walk数据的索引开销，拟设计一种以块为中心的walk管理机制，对于每个图数据块，在内存中采用一个定长的walk buffer来存储当前落在该图数据块的所有walk，当该图数据块的walk数量超过buffer的长度时，再将该walk buffer的所有walk都追加写到磁盘上与其对用的walk pool中。图16展示了walk数据的存储结构和索引管理策略。这种方式下，存储walk内存开销只有定长的walk buffer，可以通过控制buffer长度来严格控制。</p>
+</li>
+<li><p><strong>设计walk感知的按需调度策略</strong>：为了提高I/O效率，拟设计一种按需加载策略来管理图数据块的I/O调度，具体的，首先记录每个图数据块中的walk数，并将其称为walk需求，每次加载需求最大的那个图数据块进入内存。这种随需应变的图加载策略使得通过一次I/O，能够让最多的walk向前移动最少一步，因此可以提高I/O的利用率。图17展示了图数据的按需加载策略。</p>
+</li>
+<li><p><strong>设计I/O效率最大化的计算框架</strong>：为了使每次加载的图数据能够被充分利用，拟设计一种以walk为中心的计算框架。对于每个walk，允许它尽可能向前转发，直到到达当前图数据块边界为止。完成一个walk后，选择另一个walk来处理，直到所有的walk都被处理完成，然后根据前面描述的按需调度的方式加载另一个图数据块进行处理。为了加速计算，拟采用多线程在walk之间并行计算。图18展示了以walk为中心的计算框架。</p>
+</li>
+</ol>
+<h4 id="并发图处理优化-1"><a href="#并发图处理优化-1" class="headerlink" title="并发图处理优化"></a>并发图处理优化</h4><p>面向多任务并发的随机游走图处理场景，考虑多个并发的随机游走任务之间可能存在大量重复的walk任务，图19展示了四个典型的随机游走算法的walk计算任务，它们之间有很多重叠部分，这部分的walk数据实际上可以实现共享复用，以大大减少各个基于随机游走的图分析任务的计算开销。本报告拟按以下技术路线开展研究：</p>
+<ol>
+<li><p><strong>设计随机游走的分类共享策略</strong>：首先我们需要分析哪些图分析任务的随机游走之间可以实现共享复用，以此为基础对随机游走任务进行分类，本报告拟采用一种按照随机游走的随机邻居的选择时的不同选择概率进行分类的策略，拥有相同的随机邻居选择策略的随机游走任务之间实现walk的共享复用。</p>
+</li>
+<li><p><strong>设计walk任务的去重派发机制</strong>：基于随机游走的分类共享策略，本报告拟设计一种基于共享的walk去重派发机制，避免共享walk的重复计算，并在计算完成之后分别反馈相应的计算结果。图20展示了四个典型的随机游走算法在去重后派发到随机游走引擎的共享walk任务。</p>
+</li>
+<li><p><strong>设计查询计算混合应用的均衡调度策略</strong>：针对查询和计算混合的应用场景，本报告拟设计一种轻量级查询任务友好型的均衡的共享图数据的调度策略，减轻轻量级查询任务的饥饿等待的问题，以实现各单个任务的及时响应策略。</p>
+</li>
+</ol>
+<h4 id="动态图处理优化"><a href="#动态图处理优化" class="headerlink" title="动态图处理优化"></a>动态图处理优化</h4><p>面向动态变化的大规模图处理场景，为了同时实现动态增量数据的快速插入合并以及图分析任务对图数据的快速访问，本报告拟按以下技术路线开展研究：</p>
+<ol>
+<li><p><strong>设计基于KV的图存储结构</strong>：为了能支持大规模动态图数据的快速插入和查询，本报告拟设计一种key-value的图存储结构，如图21所示，其中key是节点的ID，进行节点的唯一标识；value包含该节点的总邻居数以及各个邻居节点的ID。</p>
+</li>
+<li><p><strong>设计动态增量数据的插入合并</strong>：基于设计的key-value的图存储结构，本报告拟设计动态增量数据的插入合并，具体地，添加或删除一个节点只需要删除一个KV对，添加或删除一条边只需要修改相应KV对的值。</p>
+</li>
+<li><p><strong>设计图数据的访问查询机制</strong>：基于设计的key-value的图存储结构，本报告拟设计对图数据的快速访问查询机制，例如快速查询一个节点的邻居信息，以支持上层图处理任务对图数据的快速分析，得到计算结果。</p>
+</li>
+</ol>
+<h3 id="可行性分析"><a href="#可行性分析" class="headerlink" title="可行性分析"></a>可行性分析</h3><ol>
+<li><p><strong>在存储管理与计算框架方面</strong>：拟设计如图22所示的基于随机游走的图分析系统。为实现内存容量受限的情况下的大规模图数据处理，设计基于CSR的压缩图存储格式并将图数据划分成多个数据块存在磁盘，每次加载一个块进入内存进行处理；为了减少动态不均衡的walk数据的索引开销，设计以图数据块为单位的walk管理策略，存放当前落在该子图数据块的所有walk信息，并在内存中使用一个定长的walk buffer来存储，将超出buffer长度的walk信息信息也保存在磁盘上，以控制walk数据的内存开销；为了最大化I/O效率，设计按需调度图数据块的策略，根据当前图中walk的分布状态，加载需求最大的图数据块进入内存，以保证最多的walk能进行至少一步的转发；为了最大化每一次I/O的利用率，设计以walk为中心的计算框架，以walk为单位进行转发更新每一条walk，持续向前移动walk直至到达当前子图的边界。系统架构的设计从存储管理到I/O调度再到计算框架，自下向上提供支持，使得整个系统架构的设计是合理的，且在技术实现上也是可行的。</p>
+</li>
+<li><p><strong>在并发图处理优化方面</strong>：通过分析多种典型的基于随机游走的图算法可知，不同分析任务之间存在大量的walk冗余，所以设计基于walk共享的随机游走并发图处理策略是合理的，且预期能带来一定的性能提升；按照随机游走的随机邻居的选择时的不同选择概率对不同随机游走处理任务进行分类，同一类的随机游走在理论上是可以被共享复用的。</p>
+</li>
+<li><p><strong>在动态图处理优化方面</strong>：基于key-value的存储系统由于能实现对数据的快速插入和查询访问而被应用于现实的很多场景中。通过将动态变化的图数据存储为基于KV的存储结构，能够实现对增量图数据的快速插入合并，同时支持上次图分析任务对图数据的快速查询访问。同时，本人所在的课题组有一个小组专门做key-value的存储系统的性能优化，所以结合组里的现有研究工作，能更快的设计针对动态图场景下的KV优化策略。</p>
+</li>
+</ol>
+<h2 id="创新点"><a href="#创新点" class="headerlink" title="创新点"></a>创新点</h2><p>本报告的特色之处在于着手于图分析上一类重要的应用场景——基于随机游走的图分析场景，并从系统设计的角度出发， 研究大规模图数据上随机游走的性能优化。下面分别从研究内容、拟采用的研究方法和技术路线这三个方面来介绍本报告的创新之处。</p>
+<ol>
+<li><p><strong>研究内容的创新</strong>：不同于以往的通用图分析处理系统的设计优化，本报告着手于随机游走这一类算法的系统设计优化，通过研究图数据和walk数据的存储管理、I/O调度以及计算模型等方面优化大规模图数据上的基于随机游走的图分析的性能。 </p>
+</li>
+<li><p><strong>技术路线的创新</strong>：考虑现实世界中图分析应用中存在数据规模大、多任务并发图处理、图数据不断动态变化等复杂的应用场景，本报告采用循序渐进的研究技术路线，首先考虑静态图下单任务的随机游走图处理场景，进行存储管理和计算框架的优化；然后考虑考虑现实应用中的多任务并发的图处理场景，本报告进一步研究并发随机游走图处理的优化；最后考虑实应用中的动态变化的大规模图处理场景，本报告进一步研究动态图处理的优化。</p>
+</li>
+<li><p><strong>研究方法的创新</strong>：考虑现有图处理系统中的基于迭代的I/O模型对随机游走的支持呈现I/O效率差的问题，本报告拟采用按需I/O调度的方法，并结合存储管理和计算框架的优化，提升随机游走在图处理系统中的I/O效率，从而提升计算性能；考虑基于随机游走的并发图处理的多任务之间存在很多的walk重叠，本报告拟采用walk共享的方法实现walk复用从而提升计算性能；考虑动态变化的大规模图数据场景下，增量数据维护困难的问题，拟采用基于KV的动态图数据的存储管理，实现对增量图数据的快速插入合并，且支持上层应用对更新后的图数据的快速查询访问。</p>
+</li>
+</ol>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+
+        
+        <li>
+            <a target="_blank"  href="mailto:wangrui1994@126.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3125304081">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/rwang067">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
+        <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
+        <span>/</span>
+        
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: '支持快速随机游走的大规模图分析系统研究--开题报告',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+
+
+
+</html>

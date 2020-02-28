@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rui Wang&#39;s blog">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        CNARW工作扩展 - Rui&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 热爱学习，热爱生活 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar radius">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Rui Wang</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#CNARW算法"><span class="toc-text">CNARW算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Journal扩展思路"><span class="toc-text">Journal扩展思路</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#初步扩展思路"><span class="toc-text">初步扩展思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#review意见"><span class="toc-text">review意见</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#计划扩展点"><span class="toc-text">计划扩展点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#进一步优化接受概率的设置。"><span class="toc-text">进一步优化接受概率的设置。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#将NBRW的思想应用到CNARW算法中。"><span class="toc-text">将NBRW的思想应用到CNARW算法中。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#考虑更大的真实世界的数据集。"><span class="toc-text">考虑更大的真实世界的数据集。</span></a></li></ol></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 热爱学习，热爱生活 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        CNARW工作扩展
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-02-09 11:14:34</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#random walks" title="random walks">random walks</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#theoretical analysis" title="theoretical analysis">theoretical analysis</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#graph sampling" title="graph sampling">graph sampling</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#my work" title="my work">my work</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p>CNARW的主要思想是利用walk前一步访问过的节点信息来优化下一步跳转的邻居选择。具体的，CNARW考虑当前节点和下一跳候选节点的公共邻居数量来进行下一跳的邻居选择。</p>
+<h3 id="CNARW算法"><a href="#CNARW算法" class="headerlink" title="CNARW算法"></a>CNARW算法</h3><p>目前的CNARW算法采用拒绝采样的策略，主要包含以下两个步骤：</p>
+<ol>
+<li>1&gt; 以随机均匀的选择概率 b_uv = 1/d 随机选择当前节点的一个邻居节点；</li>
+<li>2&gt; 以一个接受概率 q_uv = 1 - C_uv / min(d_u, d_v) 决定是否接受该节点进行跳转。<br>（此处接受概率 q_uv的设置需要满足对称性，即 q_uv=q_vu，因为只有在满足对称性的情况下，可以根据可逆公式来推导出马尔科夫链的稳态分布。）</li>
+</ol>
+<h3 id="Journal扩展思路"><a href="#Journal扩展思路" class="headerlink" title="Journal扩展思路"></a>Journal扩展思路</h3><h4 id="初步扩展思路"><a href="#初步扩展思路" class="headerlink" title="初步扩展思路"></a>初步扩展思路</h4><p>（1）考虑其他转移概率设计（为什么需要对称性）。</p>
+<p>（2）扩展到有向图。</p>
+<p>（3）理论证明CNARW的收敛速度快，即第二大特征值小。</p>
+<p>（4）应用NBRW和CNRW的设计优化到CNARW上，进一步加速收敛。</p>
+<p>（5）考虑更多大数据集。</p>
+<h4 id="review意见"><a href="#review意见" class="headerlink" title="review意见"></a>review意见</h4><p>（1）将所有符号列成一张表。</p>
+<p>（2）为什么要采用带拒绝的采样策略？</p>
+<p>（3）转移概率设计为什么需要对称？</p>
+<p>（4）* 理论证明收敛速度。</p>
+<p>（5）相对误差定义。</p>
+<p>（6）使用真实数据集，大数据集，比如Epinion。</p>
+<p>（7）提出的算法似乎不能在有向图上运行。</p>
+<p>（8）有些描述不清晰，比如X_{t}是什么？</p>
+<p>（9）更多的讨论MHRW。 —&gt;</p>
+<h3 id="计划扩展点"><a href="#计划扩展点" class="headerlink" title="计划扩展点"></a>计划扩展点</h3><p>目前考虑的可做的有下面三个扩展点：</p>
+<h4 id="进一步优化接受概率的设置。"><a href="#进一步优化接受概率的设置。" class="headerlink" title="进一步优化接受概率的设置。"></a>进一步优化接受概率的设置。</h4><p>关于CNARW算法第二步中接受概率q_uv的设计可以引入一个参数 a 来调节C_uv 和  min(d_u, d_v)影响的权重，即设置接受概率为：q_uv = 1 - a*C_uv / min(d_u, d_v)。当 a &gt; 1, C_uv影响更大；当 a &lt; 1, min(d_u, d_v)影响更大。<br>可以通过实验验证，对于不同实验环境（比如不同的数据集）下，不同的a的设置对算法收敛速度的影响，总结实验结果，启发式地设置一个合适的a值。</p>
+<h4 id="将NBRW的思想应用到CNARW算法中。"><a href="#将NBRW的思想应用到CNARW算法中。" class="headerlink" title="将NBRW的思想应用到CNARW算法中。"></a>将NBRW的思想应用到CNARW算法中。</h4><p>NBRW的主要思想是针对随机游走采样容易产生大量重复样本的问题，设计修改随机游走的状态转移概率，避免回到前一步访问过的节点。这样在保证相同准确度的情况下，可以大大减少随机游走采样所需要的样本数目。<br>将NBRW的思想融入到CNARW算法，只需修改CNARW算法第一步中的选择概率 b_uv， 即记录随机游走上一步访问的节点为w，设置：b_uv=0, if v = w; b_uv = 1/(d-1), if v != w。<br>可以引用NBRW论文中的理论证明，保证该修改做法不会改变其原马尔科夫链的稳态分布。</p>
+<h4 id="考虑更大的真实世界的数据集。"><a href="#考虑更大的真实世界的数据集。" class="headerlink" title="考虑更大的真实世界的数据集。"></a>考虑更大的真实世界的数据集。</h4><p>比如Epinion。</p>
+<p>另外，也尽量尝试一下理论证明CNARW算法能带来更快的收敛速度，即CNARW算法的状态转移矩阵具有更小的第二大特征值。（理论证明可能会比较困难，因为状态转移矩阵的第二大特征值与具体的图结构相关，且计算非常复杂。）</p>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+
+        
+        <li>
+            <a target="_blank"  href="mailto:wangrui1994@126.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3125304081">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/rwang067">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
+        <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
+        <span>/</span>
+        
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: 'CNARW工作扩展',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+
+
+
+</html>

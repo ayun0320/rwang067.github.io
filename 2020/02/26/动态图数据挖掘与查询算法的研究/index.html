@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rui Wang&#39;s blog">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        动态图数据挖掘与查询算法的研究 - Rui&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 热爱学习，热爱生活 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar radius">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Rui Wang</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#摘要"><span class="toc-text">摘要</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 热爱学习，热爱生活 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        动态图数据挖掘与查询算法的研究
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-02-26 13:36:37</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#paper reading" title="paper reading">paper reading</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#dynamic graphs" title="dynamic graphs">dynamic graphs</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p><a href="http://cdmd.cnki.com.cn/Article/CDMD-10213-1013045186.htm" target="_blank" rel="noopener">动态图数据挖掘与查询算法的研究</a></p>
+<p>杨雅君 《哈尔滨工业大学》 2013年</p>
+<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>随着信息科技的高速发展，各个应用领域的的信息量都呈现了爆炸性的增长趋势。因此，不同应用领域所关注的实体对象之间的关系也变得愈加庞大和复杂。在这些复杂关系的背后，往往蕴含着巨大的科学价值和商业价值。近年来，许多领域的研究者都开始专注于实体对象之间关系的研究。“图”作为计算机科学中一般性的数据结构，它可以很好的反映数据对象之间的复杂关系。因此，图数据被广泛地用来刻画现实世界中各种各样实体间的复杂关系。 然而，在现实世界中，实体对象间的关系每时每刻都在发生着变化。例如：在蛋白质交互网络中，各类蛋白质分子相互作用有着先后顺序，这使得整个蛋白质交互过程要随着时间顺序进行；在社会关系网络中，各类人和各类社会团体之间的交互关系会随着时间发生变化；在交通网络中，通过每条公路的时间和费用因交通拥塞的发生而随着时间发生变化。因此，描述实体间关系的图数据也会随着时间发生变化。 动态图是指会随时间发生变化的图数据。动态图可以根据其变化的形式分为两类：(1)图中拓扑结构关系发生变化；(2)图中顶点和边所代表数据对象内容、或者图中某一特定对象的评价方式发生变化。我们分别称之为图的结构变化和图的内容变化。由于动态图在现实世界中广泛存在，因此对动态图上各类问题的研究就有着十分重要的意义。然而，传统静态图数据上解决各类问题的算法无法用于解决动态图数据上的各类问题，主要有以下几个原因：第一，传统的静态图模型无法描述图数据随时间发生演绎与进化的情况；第二，传统的静态图模型上的各类问题的定义在动态图模型上不再适用；第三，图数据的动态性使得各类问题的计算复杂性大大增加，原有的静态图上的各类方法将无法有效地解决这些问题。此外，现有的动态数据管理的研究主要关注于数据流和传统关系数据的动态维护，这些方法无法处理结构复杂的图数据。 本文运用计算复杂性和算法学的理论和知识，分别对基于结构变化和基于内容变化的动态图上的相关问题开展了研究工作，主要研究成果如下： (1)本文研究了动态图上结构变化最频繁子图挖掘问题，提出了一个基于“累积连通度变化”概念的评分函数来评价子图的结构变化的频繁程度。本文提出一个两段式算法来计算动态图中任意一对顶点之间的累积连通度变化。进一步地，本文提出一个基于“划分树”结构的算法挖掘目标子图，该算法逐步地将不属于目标子图中的顶点从全图中移除。本文分析了算法的时间复杂度和空间复杂度。真实数据上的实验结果表明，本文算法所挖掘到的子图在整个动态图中变化最频繁。同时，本文算法具有很高的的时间效率。 (2)本文研究了动态图上连通度变化最大的k-顶点集挖掘问题，提出了一种名为“连通等价类树”的结构，利用该结构可以高效地计算图中所有顶点对之间的连通度变化。本文提出了一个高效的连通等价类树构建算法和更新算法。其中，更新算法是一个逐边增量式算法，当动态图发生变化时，该算法只需要更新图中一小部分顶点之间的连通度即可完成连通等价类树的更新。本文证明，在相同的空间复杂度下，本文提出连通等价类树更新算法的时间复杂度远远小于现有最快的连通度更新算法。进一步地，本文提出一种分支界限算法和三种高效的剪枝策略用于挖掘连通度变化最大的k-顶点集。真实数据上的实验结果表明，本文算法所挖掘到的顶点子集可以良好的反映整张动态图中连通度变化情况，因此，其可以作为动态图连通关系变化的一个概括。同时，实验结果表明，本文中算法具有很高的时间效率。 (3)本文研究了多维代价图上动态最优路径查询问题。本文证明了多维代价图上动态最优路径查询问题是一个NP-难问题，并提出了一个分支界限算法和三种高效的剪枝策略用于计算动态最优路径。进一步地，本文提出了一种新的索引结构，k-簇索引，使得本文算法在大规模图上是时间高效和空间高效的。k-簇索引利用“contour skyline”加速查询进程。本文证明计算“contourskyline”是一个NP-难的问题，并提出一个2-近似的算法。本文证明了不存在近似比小于2的多项式时间算法。同时，本文提出一个顶点过滤算法，该算法可将图中大部分不属于最优路径的顶点过滤掉，进一步提高了算法效率。真实数据上的实验结果表明，本文算法具有非常高的时间效率和空间效率。 (4)本文研究了时间依赖图上满足时间限制的费用代价最优路径查询问题，提出了一个两阶段算法计算满足时间限制的费用代价最优路径。算法在第一阶段计算了起点到终点满足时间限制的最小费用代价，在第二阶段根据最小费用代价计算了起点到终点的最优路径。本文分析了查询算法的时间复杂度和空间复杂度。真实数据上的实验结果表明，本文提出的查询算法具有非常高的时间效率和空间效率。<br>【学位授予单位】：哈尔滨工业大学<br>【学位级别】：博士<br>【学位授予年份】：2013<br>【分类号】：TP311.13</p>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+
+        
+        <li>
+            <a target="_blank"  href="mailto:wangrui1994@126.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3125304081">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/rwang067">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
+        <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
+        <span>/</span>
+        
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: '动态图数据挖掘与查询算法的研究',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+
+
+
+</html>

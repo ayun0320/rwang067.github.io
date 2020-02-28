@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rui Wang&#39;s blog">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        基于KV的动态图存储优化 - Rui&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 热爱学习，热爱生活 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar radius">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Rui Wang</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#动态图场景下的图处理需求"><span class="toc-text">动态图场景下的图处理需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态图存储的研究现状"><span class="toc-text">动态图存储的研究现状</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#图处理系统"><span class="toc-text">图处理系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#图数据库"><span class="toc-text">图数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#KV存储系统"><span class="toc-text">KV存储系统</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Idea"><span class="toc-text">Idea</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工作计划"><span class="toc-text">工作计划</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 热爱学习，热爱生活 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        基于KV的动态图存储优化
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-02-09 15:58:49</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#graph processing system" title="graph processing system">graph processing system</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#my work" title="my work">my work</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#dynamic graphs" title="dynamic graphs">dynamic graphs</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#graph database" title="graph database">graph database</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#KV graph storage" title="KV graph storage">KV graph storage</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h3 id="动态图场景下的图处理需求"><a href="#动态图场景下的图处理需求" class="headerlink" title="动态图场景下的图处理需求"></a>动态图场景下的图处理需求</h3><p>现实中的很多应用场景都是动态图场景，比如网页链接中插入新网页、电商平台用户购买产品、社交媒体中删除推文和社交网络中好友取消关注等，都会带来节点和边的插入或删除，造成图结构的改变。而一般动态图的处理场景图大多是一种在线实时的处理场景，往往需要实时得到反馈。因此，动态图场景下的图处理的性能需要得到保证。</p>
+<h3 id="动态图存储的研究现状"><a href="#动态图存储的研究现状" class="headerlink" title="动态图存储的研究现状"></a>动态图存储的研究现状</h3><h4 id="图处理系统"><a href="#图处理系统" class="headerlink" title="图处理系统"></a>图处理系统</h4><p>现有的图处理系统中大多采用CSR的格式来存储图数据。但是，CSR存储格式只适用于静态图的存储。在动态图场景下，当有新的节点或边数据插入时，想要融入增量图数据，CSR需要重构CSR序列和beg_pos序列的存储内容。而当不断有增量数据插入时，重构的开销就非常大，在真实的场景中往往难以实现。</p>
+<p>现在的图处理系统中往往采用一种快照的方式，将静态图数据与动态插入的增量图数据分开存储。这种方式虽然能很快的插入图数据的更新信息，但是在进行图分析计算时，需要分别访问静态图数据以及动态增量图数据，造成额外的查询开销，影响分析计算的性能。而且随着增量图数据的不断增加，也越来越难以维护，存储和计算开销都将变得越来越困难。</p>
+<h4 id="图数据库"><a href="#图数据库" class="headerlink" title="图数据库"></a>图数据库</h4><p>近年来，传统的关系型数据库已经无法满足日益复杂的关联数据信息的分析需求。因此，一种重点描述数据之间关系的数据库—图数据库应运而生，图数据库善于高效处理大量的、复杂的、互连的、多变的数据，计算效率远远高于传统的关系型数据库。</p>
+<p>现有的图数据库有；Neo4j, Titan, arangoDB, OrientDB, GUN等。这些图数据库在底层将不同类型的节点和边分别存储为一个集合，每个集合采用KV的方式进行存储。这些图数据库可以很好的支持动态图场景下节点和边数据的插入，即向对应的集合中增加条目。</p>
+<p>图数据库的应用场景主要是面向图数据的查询，比如查询某个节点的邻居节点信息。而且目前的图数据库还尚未成熟，在多维查询的场景下性能会大大下降。因此，目前的图数据库很难应用于一些图算法的计算。</p>
+<h4 id="KV存储系统"><a href="#KV存储系统" class="headerlink" title="KV存储系统"></a>KV存储系统</h4><p>基于key-value的存储系统也是一种新型的非关系型数据库，能实现对数据的快速插入和查询访问。</p>
+<h3 id="Idea"><a href="#Idea" class="headerlink" title="Idea"></a>Idea</h3><p>可以设计一种基于KV的存储结构，用于存储图结构。将增量图数据的插入转化为KV对的修改或插入，以实现对大规模动态图数据中节点和边数据的存储管理。</p>
+<p>基于设计的存储结构，设计对图数据的快速查询访问机制，以支持上层图分析任务的快速执行。</p>
+<h3 id="工作计划"><a href="#工作计划" class="headerlink" title="工作计划"></a>工作计划</h3><ol>
+<li>读论文，进一步了解目前的图数据库中图数据的存储管理策略。</li>
+<li>尝试从实验上验证：设置key为节点，value为其出边邻居时，增量图数据的插入开销和一些图算法的计算开销。</li>
+</ol>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+
+        
+        <li>
+            <a target="_blank"  href="mailto:wangrui1994@126.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3125304081">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/rwang067">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
+        <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
+        <span>/</span>
+        
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: '基于KV的动态图存储优化',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+
+
+
+</html>

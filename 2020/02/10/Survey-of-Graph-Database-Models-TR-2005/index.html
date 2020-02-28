@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rui Wang&#39;s blog">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        Survey of Graph Database Models(TR 2005) - Rui&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 热爱学习，热爱生活 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar radius">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Rui Wang</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库模型"><span class="toc-text">数据库模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图数据建模"><span class="toc-text">图数据建模</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#图数据模型的定义"><span class="toc-text">图数据模型的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么需要图数据模型"><span class="toc-text">为什么需要图数据模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#对比其他数据模型"><span class="toc-text">对比其他数据模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#应用场景"><span class="toc-text">应用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图数据库模型"><span class="toc-text">图数据库模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#发展概述"><span class="toc-text">发展概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据结构"><span class="toc-text">数据结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实体的表示"><span class="toc-text">实体的表示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关系的表示"><span class="toc-text">关系的表示</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#完整性约束"><span class="toc-text">完整性约束</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#模式-实例一致性"><span class="toc-text">模式-实例一致性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对象标识符和引用完整性约束"><span class="toc-text">对象标识符和引用完整性约束</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#函数依赖项"><span class="toc-text">函数依赖项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询和操作语言"><span class="toc-text">查询和操作语言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#现有图数据库模型"><span class="toc-text">现有图数据库模型</span></a></li></ol></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 热爱学习，热爱生活 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        Survey of Graph Database Models(TR 2005)
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-02-10 10:54:06</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#paper reading" title="paper reading">paper reading</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#graph database" title="graph database">graph database</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <h2 id="数据库模型"><a href="#数据库模型" class="headerlink" title="数据库模型"></a>数据库模型</h2><ol>
+<li><p><strong>概念</strong>：表述真实世界中的实体以及实体之间关系的概念性工具的集合。</p>
+</li>
+<li><p><strong>定义</strong>：一个数据库模型可以定义为下面三个部分的结合：数据结构类型的集合，操作或推导规则的集合以及通用的完整性约束规则的集合。</p>
+</li>
+<li><p><strong>用途</strong>：数据库模型是重要的抽象工具，比如指定数据的许可类型、数据库的通用设计方法、数据库演变过程的备份等。</p>
+</li>
+<li><p><strong>发展史</strong>：物理数据模型（分层数据库模型&amp;网络数据库模型） —&gt; 关系型数据库模型 —&gt; 语义数据库模型 —&gt; 面向对象的数据库模型 —&gt; <em>图数据库模型</em> —&gt; 半结构化的数据库模型 —&gt; XML。</p>
+</li>
+<li><p><strong>相关工作</strong>：图视觉化、外存设备的图数据结构和算法、数据库的图方法、通用图数据库系统的实现等。</p>
+</li>
+</ol>
+<h2 id="图数据建模"><a href="#图数据建模" class="headerlink" title="图数据建模"></a>图数据建模</h2><h3 id="图数据模型的定义"><a href="#图数据模型的定义" class="headerlink" title="图数据模型的定义"></a>图数据模型的定义</h3><p>一个图数据库模型有下面三个组成部分：</p>
+<ol>
+<li><p><strong>数据结构</strong>：由图表示的数据或模式。</p>
+</li>
+<li><p><strong>转换语言</strong>：由图形转换来表示的数据操作。</p>
+</li>
+<li><p><strong>完整性约束</strong>：完整性约束的存在加强了数据的一致性。这些约束可以按照模式实例一致性、身份和引用完整性、功能和包含依赖关系进行分组。</p>
+</li>
+</ol>
+<p>总之，一个图数据库模型是一个 <em>表达模式或实例的数据结构被建模为一个图，数据操作被表达为图操作和类型构造，并且图结构具有适当的完整性约束</em> 的模型。</p>
+<h3 id="为什么需要图数据模型"><a href="#为什么需要图数据模型" class="headerlink" title="为什么需要图数据模型"></a>为什么需要图数据模型</h3><p>图数据库模型通常应用于数据之间的关系信息比数据信息本身更重要或者同样重要的场景。具体的，引入<em>图</em>作为建模工具有下面几个优点：</p>
+<p>（1）图结构对用户可见，允许一种自然的处理应用程序数据的方式，比如超链接和地理数据库。</p>
+<p>（2）查询可以直接引用图结构。</p>
+<p>（3）图数据库可以为提供特殊的存储图结构以及实现特殊操作的图算法。</p>
+<h3 id="对比其他数据模型"><a href="#对比其他数据模型" class="headerlink" title="对比其他数据模型"></a>对比其他数据模型</h3><ol>
+<li><p><strong>物理数据模型</strong>：最早用来组织大规模数据集合的数据库模型，接近于物理实现，具有代表性的有分层模型和网络模型。这种模型缺乏好的抽象级别，数据结构很难灵活的应用于非传统的应用场景。</p>
+</li>
+<li><p><strong>关系型数据模型</strong>：强调抽象级别的概念，引入物理和逻辑级别的分离。关系型数据库模型逐渐地将焦点转移到应用和用户看到的建模数据，当时，应用领域都是些简单的基本类型的数据，比如银行、会计、商业和管理应用。关系型模型为数据建模提供了数学基础，基于简单的关系的表示且结合代数和逻辑，使得关系型模型成为数据库研究的基础模型。关系型数据库的查询语言SQL也成为数据库查询的范例语言。</p>
+</li>
+</ol>
+<p>但是，关系型数据库模型指向简单的结构已知的<em>记录-类型</em>的数据，他的模式是固定的且很难扩展。他的查询语言也不能够探索数据之间关系的图结构，比如路径，邻居、图模式等。</p>
+<ol>
+<li><p><strong>语义数据模型</strong>：从用户的角度将一组较丰富的语义纳入数据库，允许数据库设计人员以一种自然和清晰的方式表示对象及其关系(类似于用户查看应用程序的方式)，使用高级抽象概念，比如聚合、分类和实例化、子和超排序、属性继承和层次结构等。与图数据库模型研究相关。</p>
+</li>
+<li><p><strong>面向对象的数据模型</strong>：用对象和方法来表述数据，追求更丰富的数据结构类型，但是仍然需要所有数据都遵循一个预定义的模式。</p>
+</li>
+<li><p><strong>半结构化的数据模型</strong>：在半结构化的数据中,结构是不规范的、隐含的、部分的，模式不限制数据，只描述它，是非常大和快速的演进，与模式相关的信息包含在数据中。通常，半结构化的数据通常被表示成树形的结构。</p>
+</li>
+</ol>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p>真实生活的很多场景中，关于它的连接性的信息是一个显著的特征，主要可以分为<em>经典应用</em>和<em>复杂网络应用</em>。</p>
+<h2 id="图数据库模型"><a href="#图数据库模型" class="headerlink" title="图数据库模型"></a>图数据库模型</h2><h3 id="发展概述"><a href="#发展概述" class="headerlink" title="发展概述"></a>发展概述</h3><p>围绕图数据库的研究在上世纪九十年代蓬勃发展，之后就几乎消失了，主要原因如下：1）数据库社区逐渐转向半结构化的数据；2）XML的出现吸引了超链接工作的所有注意力；3）图数据的研究者开始转向一些具体的应用场景，比如空间数据，web，文档等；4）树形结构的数据类型对于大多数应用场景已经足够。</p>
+<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><p>图数据库模型的基础是：实体和关系的表示，实体或对象表示作为单个完整单元存在的事物，关系是在两个或多个实体之间建立连接的属性或谓词。</p>
+<p>图数据库最显著的特征是其连接实体之间的关系的表示方式，区分于关系型模型中的属性、语义模型中的标准抽象、面向对象模型中的复合对象或半结构化模型中的组合关系。</p>
+<p>所有的图数据库模型都以图的基本数学定义作为它们的形式基础，在这个基本层之上，模型受到语义或面向对象方法的影响，呈现出不同的特性。</p>
+<h4 id="实体的表示"><a href="#实体的表示" class="headerlink" title="实体的表示"></a>实体的表示</h4><p>模型同时表示实例和模式级别的实体。具体来说，实体类型、关系类型和模式限制与数据库模式的定义相关，实体和关系的实例符合数据库实例。</p>
+<p>很多图数据库模型都将模式和实例表示为一个带标签的有向图。</p>
+<ul>
+<li><p>一个<strong>模式图</strong>定义了：1）实体类型，表示为标记了类型名称的节点；2）基本实体，表示为标记了实体类型的节点；3）关系，表示为标记了关系名称的边，关系只定义了实体类型(基本实体没有属性)，每个基本实体都有一个相关的常量域。</p>
+</li>
+<li><p>一个<strong>实例图</strong>包含：1）具体实体，表示为标记了实体类型或对象标识符的节点；2）基本值，表示为标记了一个基本实体域内的值；3）关系，表示为标记了对应的关系名称的边。</p>
+</li>
+</ul>
+<p>上述方法在其他模型中得到了扩展，图的基本结构(节点和边)通过使用超节点和超图得到了补充。基于简单模型和基于扩展图结构模型之间的一个共同特征是支持定义非传统数据类型，即通过定义复杂对象获得的特性。</p>
+<h4 id="关系的表示"><a href="#关系的表示" class="headerlink" title="关系的表示"></a>关系的表示</h4><p>粗略的，我们可以区分图数据库模型中的两种关系：1）简单关系，通过一个简单的语义连接两个实体（比如属性），在图中表示为边的标签；2）复杂关系，使用额外的语义(如组合)来符合关系网络(如层次结构)，其表示取决于每个模型提供的数据结构。</p>
+<p>接下来，我们讨论图数据库模型中特定的几种关系类型：</p>
+<ol>
+<li><p><strong>属性</strong>，表示一个属性(单值或多值)直接连接到一个实体。大多数图数据库模型通过使用与节点直接相关的标记边来表示属性。</p>
+</li>
+<li><p><strong>实体</strong>，如果两个或多个对象的关系概念地描述了一个不同的模型对象,那么这种关系被认为是一个实体。这种方法意味着对高阶关系的支持,即关系之间的关系。</p>
+</li>
+<li><p><strong>邻居关系</strong>，具有基本图形结构的模型提供了简单的支持和可视化的邻域关系。</p>
+</li>
+<li><p><strong>标准抽象</strong>，最常用的是聚集（关系的一部分）和他的相反组合（由关系组成），关联以及分组或集合。</p>
+</li>
+<li><p><strong>衍生和继承</strong>，这些抽象表示为模式级别上的子类和超类的关系以及实例级别上的实例化的关系。</p>
+</li>
+<li><p><strong>嵌入关系</strong>，由嵌套对象定义的递归指定关系。该特性通过使用超节点或超图结构自然地支持。</p>
+</li>
+</ol>
+<h3 id="完整性约束"><a href="#完整性约束" class="headerlink" title="完整性约束"></a>完整性约束</h3><p>完整性约束是一般的语句和规则，它定义了一致的数据库状态或状态的改变的集合。</p>
+<h4 id="模式-实例一致性"><a href="#模式-实例一致性" class="headerlink" title="模式-实例一致性"></a>模式-实例一致性</h4><h4 id="对象标识符和引用完整性约束"><a href="#对象标识符和引用完整性约束" class="headerlink" title="对象标识符和引用完整性约束"></a>对象标识符和引用完整性约束</h4><h4 id="函数依赖项"><a href="#函数依赖项" class="headerlink" title="函数依赖项"></a>函数依赖项</h4><h3 id="查询和操作语言"><a href="#查询和操作语言" class="headerlink" title="查询和操作语言"></a>查询和操作语言</h3><p>查询语言是一种操作符的集合，也可以应用于建模的数据结构类型的任何有效实例，目的是在需要的任何组合中操作和查询这些结构中的数据。</p>
+<p>在图数据库模型中，有大量的工作集中在查询语言、查询图的问题、结果的可视化显示和图查询语言。</p>
+<h3 id="现有图数据库模型"><a href="#现有图数据库模型" class="headerlink" title="现有图数据库模型"></a>现有图数据库模型</h3>
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+
+        
+        <li>
+            <a target="_blank"  href="mailto:wangrui1994@126.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3125304081">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/rwang067">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
+        <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
+        <span>/</span>
+        
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: 'Survey of Graph Database Models(TR 2005)',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+
+
+
+</html>

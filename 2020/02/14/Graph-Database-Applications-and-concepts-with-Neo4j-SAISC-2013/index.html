@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Rui Wang&#39;s blog">
+    <meta name="keyword" content>
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+        Graph Database Applications and concepts with Neo4j(SAISC 2013) - Rui&#39;s Blog
+        
+    </title>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/aircloud.css">
+    <link rel="stylesheet" href="/css/gitment.css">
+    <!--<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">-->
+    <link href="//at.alicdn.com/t/font_620856_pl6z7sid89qkt9.css" rel="stylesheet" type="text/css">
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+<body>
+
+<div class="site-nav-toggle" id="site-nav-toggle">
+    <button>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+        <span class="btn-bar"></span>
+    </button>
+</div>
+
+<div class="index-about">
+    <i> 热爱学习，热爱生活 </i>
+</div>
+
+<div class="index-container">
+    
+    <div class="index-left">
+        
+<div class="nav" id="nav">
+    <div class="avatar-name">
+        <div class="avatar radius">
+            <img src="/img/avatar.jpg" />
+        </div>
+        <div class="name">
+            <i>Rui Wang</i>
+        </div>
+    </div>
+    <div class="contents" id="nav-content">
+        <ul>
+            <li >
+                <a href="/">
+                    <i class="iconfont icon-shouye1"></i>
+                    <span>主页</span>
+                </a>
+            </li>
+            <li >
+                <a href="/tags">
+                    <i class="iconfont icon-biaoqian1"></i>
+                    <span>标签</span>
+                </a>
+            </li>
+            <li >
+                <a href="/archives">
+                    <i class="iconfont icon-guidang2"></i>
+                    <span>存档</span>
+                </a>
+            </li>
+            <li >
+                <a href="/about/">
+                    <i class="iconfont icon-guanyu2"></i>
+                    <span>关于</span>
+                </a>
+            </li>
+            
+            <li>
+                <a id="search">
+                    <i class="iconfont icon-sousuo1"></i>
+                    <span>搜索</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    
+        <div id="toc" class="toc-article">
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#背景"><span class="toc-text">背景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#关系型数据库"><span class="toc-text">关系型数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#图数据库"><span class="toc-text">图数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#VS-图处理系统"><span class="toc-text">VS 图处理系统</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图数据库的应用场景"><span class="toc-text">图数据库的应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#软件设计"><span class="toc-text">软件设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据查询和操作"><span class="toc-text">数据查询和操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#查询语言"><span class="toc-text">查询语言</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查询样例"><span class="toc-text">查询样例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#可靠性"><span class="toc-text">可靠性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结论"><span class="toc-text">结论</span></a></li></ol>
+</div>
+    
+</div>
+
+
+<div class="search-field" id="search-field">
+    <div class="search-container">
+        <div class="search-input">
+            <span id="esc-search"> <i class="icon-fanhui iconfont"></i></span>
+            <input id="search-input"/>
+            <span id="begin-search">搜索</span>
+        </div>
+        <div class="search-result-container" id="search-result-container">
+
+        </div>
+    </div>
+</div>
+
+        <div class="index-about-mobile">
+            <i> 热爱学习，热爱生活 </i>
+        </div>
+    </div>
+    
+    <div class="index-middle">
+        <!-- Main Content -->
+        
+
+
+<div class="post-container">
+    <div class="post-title">
+        Graph Database Applications and concepts with Neo4j(SAISC 2013)
+    </div>
+
+    <div class="post-meta">
+        <span class="attr">发布于：<span>2020-02-14 10:02:53</span></span>
+        
+        <span class="attr">标签：/
+        
+        <a class="tag" href="/tags/#paper reading" title="paper reading">paper reading</a>
+        <span>/</span>
+        
+        <a class="tag" href="/tags/#graph database" title="graph database">graph database</a>
+        <span>/</span>
+        
+        
+        </span>
+        <span class="attr">访问：<span id="busuanzi_value_page_pv"></span>
+</span>
+</span>
+    </div>
+    <div class="post-content ">
+        <p>近年来，图数据库成为关系型数据库的一种可行的替代选择。像化学、生物、语义网、社交网络和推荐引擎等应用场景，都可以使用一种更自然的形式来建模表示。</p>
+<p>图数据库由于提供了对关联数据最直接的表达，以及图模型对异构数据天然的包容力，使得图数据库迎来飞速发展的状态。</p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><h4 id="关系型数据库"><a href="#关系型数据库" class="headerlink" title="关系型数据库"></a>关系型数据库</h4><p><strong>简介</strong>：关系型数据库大约出现于1960s，它已被证明能稳定地提供持久性、并发控制和集成机制。关系型数据库维护由行列集合定义的表的信息。一行表示一个对象，一列表示对象的一个属性信息。</p>
+<p><strong>不足</strong>：1）关系型数据库很难显示地捕捉需要的语义。涉及复杂的相互关联的信息的大数据问题在科学中越来越普遍，使用传统的关系型数据库来存储、检索和操作这些复杂的数据变得越来越繁重；2）关系型数据库中基于模型的数据类型的定义也限制了如何存储信息，当新类型的数据来临，需要手动调整重新设计数据模式。</p>
+<p>对比来说，关系型数据库对聚合数据进行了优化，Neo4j等图数据库对高度连接的数据进行了优化。</p>
+<h4 id="图数据库"><a href="#图数据库" class="headerlink" title="图数据库"></a>图数据库</h4><p><strong>图</strong>是由节点和边组成的数据结构。<strong>图数据库</strong>是关注实体之间关系的有效数据建模工具，建模对象和它们之间的关系意味着几乎任何东西都可以在相应的图中表示。</p>
+<p>大多数系统支持的常见图类型是<strong>属性图</strong>。属性图可以有效地建模所有其他类型的图。图数据库优化了密集、相关联的数据的高效处理。该设计允许构建预测模型，并检测相关性和模式。这种高度动态的数据模型中，所有节点都通过关系连接，允许在顶点之间的边缘进行快速的遍历。一个特别的好处是，遍历是本地化的，不需要考虑不相关数据的帐户集，这是SQL中一个固有的问题。</p>
+<h4 id="VS-图处理系统"><a href="#VS-图处理系统" class="headerlink" title="VS 图处理系统"></a>VS 图处理系统</h4><p><strong>图处理系统</strong>区分于图数据库，比如谷歌的Pregel或Apache Hama，致力于解决另一种类型的问题——在线分析处理（online analytical processing, <strong>OLAP</strong>），旨在快速响应高性能处理的多维度分析查询，比如大规模图数据上的一些图算法的快速计算。</p>
+<p><strong>图数据库</strong>比如Neo4j，致力于解决在线事务处理（online transaction processing, <strong>OLTP</strong>）问题，是为了促进和管理面向事务的查询。</p>
+<h3 id="图数据库的应用场景"><a href="#图数据库的应用场景" class="headerlink" title="图数据库的应用场景"></a>图数据库的应用场景</h3><p>图数据库在一些数据互连信息或拓扑结构非常重要的领域非常实用，在这些领域的应用中，数据之间的关系和数据本身同等重要。很多公司为了满足图数据库系统的需求都开发了内部的实现，比如Facebook的Open Graph，Google的Knowledge Graph，Twitter的FlockDB等。</p>
+<p>下面介绍一些通过图数据库的方法能带来很多收益的系统场景，这些系统中也可以使用关系型数据库系统（RDBMS），但是功能有限且代价昂贵，其处理能力主要受限于查询朋友的朋友等类型的问题带来的递归连接（JOINs）操作。</p>
+<ul>
+<li><p><strong>社交网络</strong>，需要量化个体之间的连接关系，比如查询某个用户的朋友的朋友，在图数据库中只需要沿着连接边进行两层查找；但是在关系型数据库中，遍历图中每一条边都需要一个<em>连接（JOIN）</em>操作。连接在RDBMS上是非常昂贵的,而GDB中遍历边成本非常小。</p>
+</li>
+<li><p><strong>推荐系统</strong>，包括<em>基于内容的过滤（content based filtering）</em>，侧重于分析项目特征，找到相似的项目，并推荐这些项目；和<em>协同过滤（collaborative filtering）</em>一种通过从大样本集中收集信息来自动预测用户兴趣的技术。</p>
+</li>
+<li><p><strong>生物信息学</strong>，生物信息学使用图数据库来联系一个复杂的信息网络，包括基因、蛋白质和酶。</p>
+</li>
+</ul>
+<h3 id="软件设计"><a href="#软件设计" class="headerlink" title="软件设计"></a>软件设计</h3><p>在软件设计中，通常将项目中的实体建模为图，实体有其属性，实体之间由各种关系连接。</p>
+<p>当使用关系型数据库来建模时，由于数据模型的灵活可变性，每当一个新类型的实体加入，就需要提交一个新的表结构，限制了模型的可扩展性。而在图数据库中，支持灵活的各种类型的实体作为新的节点加入图中。</p>
+<h3 id="数据查询和操作"><a href="#数据查询和操作" class="headerlink" title="数据查询和操作"></a>数据查询和操作</h3><h4 id="查询语言"><a href="#查询语言" class="headerlink" title="查询语言"></a>查询语言</h4><p>查询语言是操作符或推理规则的集合，这些操作符或推理规则可应用于模型数据结构类型的任何有效实例，其目标是以所需的任何组合操作和查询这些结构中的数据。</p>
+<p>RDBMS系统使用一种称为SQL(Structured Query Language，结构化查询语言)的共享标准来进行数据插入、更新和删除、查询以及模式创建和修改。SQL基于关系代数和元组关系计算。这种通用的一致性方法使得从不同RDBMS实现中学习的概念具有极大的可移植性。</p>
+<p>图数据库中，遍历是数据检索的基本操作。遍历和SQL查询之间的一个主要区别是遍历是本地化操作，没有全局邻接索引，而是图中的每个顶点和边都存储一个与之连接的对象的“迷你索引”。这意味着图的大小对遍历和SQL中执行的代价高昂的分组操作没有性能影响。（需要注意的是，全局索引确实存在于Neo4J中，但是它们只在尝试查找遍历的起始点时使用。）</p>
+<p>图数据库的世界还没有统一的遍历和插入语言。这种标准化的缺乏导致了数据交互的实现和框架的巨大差异。现有的实现包括Neo4j的Java API、REST接口、Gremlin和Cypher。Gremlin和Cypher是用于遍历Neo4J图的两种主要语言。</p>
+<h4 id="查询样例"><a href="#查询样例" class="headerlink" title="查询样例"></a>查询样例</h4><p><strong>查询请求</strong>：哪些用户给了《黑衣人》五星?他们给了其他什么电影五星?(只返回5个结果)</p>
+<p><strong>查询命令</strong>：g.V.filter{it.title==”MeninBlack(1997)”}.inE(‘rated’).filter{it.getProperty(‘stars’)==5}.outV.outE(‘rated’).filter{it.getProp<br>stars’)==5}.inV.title[0..4]</p>
+<p><strong>查询步骤</strong>：</p>
+<ul>
+<li>1.从节点《黑衣人》开始遍历——g.V.filter{it.title==”MeninBlack(1997)”}；</li>
+<li>2.获得所以“评分”的入边——inE(‘rated’)；</li>
+<li>3.过滤掉那些评分不是5的边——filter{it.getProperty(‘stars’)==5}；</li>
+<li>4.获取剩余边的源节点的用户——outV；</li>
+<li>5.获取这些用户顶点的“评分”边——outE(‘rated’)；</li>
+<li>6.过滤掉那些评分不是5的边——filter{it.getProperty(‘stars’)==5}；</li>
+<li>7.获取剩余边的目的顶点的影片——inV；</li>
+<li>8.获取这些影片顶点的“标题”——title；</li>
+<li>9.只输出前5个标题——[0..4]。</li>
+</ul>
+<h3 id="可靠性"><a href="#可靠性" class="headerlink" title="可靠性"></a>可靠性</h3><p>在数据库存储中，ACID(atomicity, consistency, isolation, durability)是保证事务能被可靠执行的四大限制条件。Neo4j完全兼容这些限制。</p>
+<ul>
+<li><strong>原子性</strong>：如果事务的任何部分失败，数据库状态将保持不变。</li>
+<li><strong>一致性</strong>：任何事务都会使数据库保持一致的状态。</li>
+<li><strong>隔离性</strong>：在事务处理期间，修改后的数据不能被其他操作访问。</li>
+<li><strong>持久性</strong>：DBMS总是可以恢复已提交的事务的结果。</li>
+</ul>
+<p>另外，Neo4j还提供一些其他事务管理的细节，以及高可用性，备份和安全性。</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>图数据库带来了一种新的建模和遍历互联数据的方法，这在信息存储领域是无可比拟的。随着生产级系统(如使用GDB的Neo4j)的出现，可以不用在RDBMS上使用有限的实现来解决问题。图数据库在生物学、语义学、网络和推荐系统中有一个自然的应用，这些系统只需要它们能够提供的数据模型类型。</p>
+<p>这个图形数据库准备好完全取代RDBMS了吗?这是一个错误的问题。RDBMS适合大多数数据存储需求。它们得到了良好的文档记录、支持，并被证明是稳定的。使用图形数据库的决定不应该基于不使用RDBMS。如果需要一个表示高度连接数据的动态数据模型，那么图形数据库是最好的解决方案。对于大多数常见的问题，RDMBS是一个更合适的解决方案</p>
+
+        
+            <div class="donate-container">
+    <div class="donate-button">
+        <button id="donate-button">赞赏</button>
+    </div>
+    <div class="donate-img-container hide" id="donate-img-container">
+        <img id="donate-img" src="" data-src="/img/donate.jpg">
+        <p> 感谢鼓励 </p>
+    </div>
+</div>
+        
+        <br />
+        <div id="comment-container">
+        </div>
+        <div id="disqus_thread"></div>
+
+        <div id="lv-container">
+        </div>
+
+    </div>
+</div>
+
+    </div>
+</div>
+
+
+<footer class="footer">
+    <ul class="list-inline text-center">
+
+        
+        <li>
+            <a target="_blank"  href="mailto:wangrui1994@126.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-linkedin"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+        
+
+        
+        <li>
+            <a target="_blank" href="http://weibo.com/3125304081">
+                            <span class="fa-stack fa-lg">
+                                  <i class="iconfont icon-weibo"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+        
+        <li>
+            <a target="_blank"  href="https://github.com/rwang067">
+                            <span class="fa-stack fa-lg">
+                                <i class="iconfont icon-github"></i>
+                            </span>
+            </a>
+        </li>
+        
+
+        
+
+    </ul>
+    
+    <p>
+        <span>/</span>
+        
+        <span><a href="https://rwang067.github.io/">Rui&#39;s Blog</a></span>
+        <span>/</span>
+        
+        <span><a href="http://home.ustc.edu.cn/~rwang067/">Rui&#39;s Page</a></span>
+        <span>/</span>
+        
+        <span><a href="http://niexiaotao.cn/">AirCloud&#39;s Blog</a></span>
+        <span>/</span>
+        
+    </p>
+    
+    <p>
+        <span id="busuanzi_container_site_pv">
+            <span id="busuanzi_value_site_pv"></span>PV
+        </span>
+        <span id="busuanzi_container_site_uv">
+            <span id="busuanzi_value_site_uv"></span>UV
+        </span>
+        Created By <a href="https://hexo.io/">Hexo</a>  Theme <a href="https://github.com/aircloud/hexo-theme-aircloud">AirCloud</a></p>
+</footer>
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+<script>
+    // We expose some of the variables needed by the front end
+    window.hexo_search_path = "search.json"
+    window.hexo_root = "/"
+    window.isPost = true
+</script>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<script src="/js/gitment.js"></script>
+<script>
+    var gitment = new Gitment({
+        id: 'Graph Database Applications and concepts with Neo4j(SAISC 2013)',
+        owner: 'rwang067',
+        repo: 'rwang067.github.io',
+        oauth: {
+            client_id: '366668f038aaa3679510',
+            client_secret: 'c30b890b606327a4b145e1b0c801698ec724460e',
+        },
+    })
+    gitment.render('comment-container')
+</script>
+
+
+
+
+</html>
